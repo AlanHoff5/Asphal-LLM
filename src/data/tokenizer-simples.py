@@ -1,7 +1,10 @@
 # Chapter 2
 # Transform raw text into a list of tokens, in the Sebastian's Book, this is made with Regular Expressions.
 
-# 3.1 TOKENIZER
+#################
+# 3.1 TOKENIZER #
+#################
+
 import re
 
 def tokenizar(texto):

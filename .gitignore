@@ -1,0 +1,28 @@
+# Ambiente virtual
+venv/
+.venv/
+
+# Cache do Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+
+# Modelos e checkpoints (arquivos grandes)
+models/
+*.pt
+*.pth
+
+# Dados brutos grandes (mantenha só o processado leve, se couber)
+data/raw/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Resultados gerados por experimentos
+experiments/**/resultados/*.png
+
+# IDE / SO
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
