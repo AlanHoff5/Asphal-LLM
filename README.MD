@@ -17,8 +17,8 @@ não competir com modelos comerciais.
 
 ## Integrantes
 
-- Nome 1 — matrícula
-- Nome 2 — matrícula
+- Alan Hoffmann
+- Jackson
 
 ## Estrutura do repositório
 
