@@ -27,12 +27,12 @@ Asphal-LLM/
 ├── data/            # corpus (raw = bruto, processed = unificado)
 ├── src/             # código reutilizável dos componentes do modelo
 │   └── data/        # tokenização, dataset e dataloader
-├── experiments/     # scripts de experimento por sprint
+├── experiments/     # demonstrações reproduzíveis por sprint
 ├── notebooks/       # exploração e estudo
-├── docs/            # glossário, relatórios e entregas por sprint
+├── docs/            # glossário, relatórios e respostas por sprint
 ├── models/          # checkpoints (não versionado)
 ├── requirements.txt # dependências (geradas com pip freeze)
-└── README.md
+└── README.MD
 ```
 
 ## Como rodar
@@ -48,9 +48,24 @@ python -m venv venv
 # 2. Instalar as dependências
 pip install -r requirements.txt
 
-# 3. Executar os testes da Sprint 2
-python -m unittest discover -s tests -v
+# 3. Executar os testes automatizados da Sprint 2
+python -m pytest -v
+
+# 4. Executar os testes com os prints demonstrativos
+python -m pytest tests/test_dataloader.py -s -v
+
+# Também é possível executar diretamente o teste do DataLoader
+python tests/test_dataloader.py
+
+# Demonstrar o fluxo completo da Sprint 2
+python experiments/fluxo_sprint2.py
 ```
+
+Os experimentos exploratórios da Sprint 2 estão no notebook
+`notebooks/InteligenciaArtificial_SistemasInteligentes.ipynb`. A demonstração
+reproduzível do fluxo completo está em `experiments/fluxo_sprint2.py`. A
+documentação das respostas técnicas está em `docs/sprint2_respostas.md`, e a
+análise dos resultados está em `docs/sprint2_analise.md`.
 
 ## Progresso por Sprint
 
