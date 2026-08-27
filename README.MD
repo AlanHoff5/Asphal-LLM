@@ -48,8 +48,8 @@ python -m venv venv
 # 2. Instalar as dependências
 pip install -r requirements.txt
 
-# 3. Executar um componente (exemplo: tokenizador)
-python src/data/tokenizer.py
+# 3. Executar os testes da Sprint 2
+python -m unittest discover -s tests -v
 ```
 
 ## Progresso por Sprint
@@ -57,7 +57,7 @@ python src/data/tokenizer.py
 | Sprint | Capítulo | Conteúdo | Status |
 |--------|----------|----------|--------|
 | 1 | Cap. 1 | Introdução aos LLMs, glossário, mapa conceitual | ✅ |
-| 2 | Cap. 2 | Tokenização, embeddings, positional embeddings, DataLoader | 🚧 |
+| 2 | Cap. 2 | Tokenização, embeddings, positional embeddings, DataLoader | ✅ |
 | 3 | Cap. 3 | Mecanismos de atenção (self / causal / multi-head) | ⬜ |
 | 4 | Cap. 4 | Arquitetura GPT, Transformer Block | ⬜ |
 | 5 | Cap. 5 | Treinamento e geração de texto | ⬜ |
