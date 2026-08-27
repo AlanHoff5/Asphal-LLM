@@ -21,6 +21,9 @@ data/raw/
 # Resultados gerados por experimentos
 experiments/**/resultados/*.png
 
+# Notas locais de apoio, nao enviadas ao repositorio
+docs/nota_tecnica_sprint2_e_producao.md
+
 # IDE / SO
 .vscode/
 .idea/
