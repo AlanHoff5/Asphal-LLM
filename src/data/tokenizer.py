@@ -1,6 +1,8 @@
 # Chapter 2 - Build a Large Language Model (from scratch) - Sebastian Raschka
 # Asphal LLM - tokenizer for the cybersecurity corpus
 
+# 3.1 & 3.2
+
 from pathlib import Path
 import re
 
@@ -62,13 +64,25 @@ class SimpleTokenizerV2(SimpleTokenizerV1):
 
 
 def create_tokenizer(text, version=2):
-    # Cria automaticamente o vocabulario e o tokenizador a partir do texto.
+    """Cria um tokenizador cujo vocabulario e baseado no texto fornecido.
+    Primeiro, "build_vocab" divide o texto em tokens e atribui um ID inteiro. 
+    Depois, esse vocabulario eh entregue a classe do
+    tokenizador escolhida. A V2 e usada por padrao porque transforma tokens
+    desconhecidos em "<|unk|>" durante a codificacao.
+    """
     tokenizer_class = SimpleTokenizerV2 if version == 2 else SimpleTokenizerV1
+    # O vocabulario e criado uma vez e passado ao construtor do tokenizador.
     return tokenizer_class(build_vocab(text))
 
 
 def create_tokenizer_from_file(path, version=2):
-    # Abre o arquivo, le o corpus e cria o tokenizador usando esse conteudo.
+    """Le um corpus de um arquivo e cria um tokenizador para ele.
+    Esta funcao e apenas uma combinacao de "load_text" e
+    "create_tokenizer": le todo o arquivo como uma string e usa essa string
+    para montar o vocabulario. O tokenizador retornado conhece os tokens que
+    aparecem nesse arquivo; palavras de outro texto podem ser convertidas
+    para "<|unk|>" quando a versao 2 for utilizada.
+    """
     return create_tokenizer(load_text(path), version=version)
 
 

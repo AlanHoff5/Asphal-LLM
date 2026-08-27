@@ -121,6 +121,25 @@ Os experimentos do notebook `notebooks/InteligenciaArtificial_SistemasInteligent
 - dimensão dos embeddings;
 - custo de tokenização.
 
+Para observar especificamente os requisitos 3.1 e 3.2, execute:
+
+```powershell
+python experiments/experimento_tokenizer_sprint2.py
+```
+
+Esse experimento exibe, para frases diferentes e para o corpus CompTIA, o texto
+original, os tokens produzidos, os Token IDs, o texto decodificado, o tamanho do
+vocabulário e a quantidade de tokens. Ele também mede a taxa de tokens
+desconhecidos quando uma frase contém palavras que não estavam no vocabulário.
+
+Em uma execução do corpus atual, foram produzidos 110.334 tokens e 9.291 itens
+no vocabulário. Na experiência com a frase `firewall bloqueia a rede`, uma
+palavra desconhecida em quatro tokens resultou em uma taxa de 25% de `<|unk|>`.
+
+Os experimentos de diferentes tamanhos de contexto, lotes, dimensões de
+embedding e quantidade de amostras dependem da implementação de Dataset,
+DataLoader e embeddings.
+
 Os testes automatizados em `tests/test_sprint2.py` verificam as propriedades estruturais do pipeline. Os valores numéricos dos experimentos devem ser obtidos executando as células correspondentes do notebook no ambiente configurado.
 
 ## 5. Conclusão
