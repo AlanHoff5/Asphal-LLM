@@ -37,29 +37,30 @@ Asphal-LLM/
 
 ## Como rodar
 
-Requisitos: Python 3.11.
+Requisitos: Python 3.11+ (desenvolvido e testado em 3.12 e 3.14).
 
 ```powershell
 # 1. Criar e ativar o ambiente virtual
-python -m venv venv
-.\venv\Scripts\Activate.ps1        # Windows (PowerShell)
-# source venv/bin/activate         # Linux / macOS
+python -m venv .venv
+.\.venv\Scripts\Activate.ps1       # Windows (PowerShell)
+# source .venv/bin/activate        # Linux / macOS
 
 # 2. Instalar as dependências
 pip install -r requirements.txt
 
-# 3. Executar os testes automatizados da Sprint 2
+# 3. Executar todos os testes automatizados da Sprint 2
 python -m pytest -v
 
 # 4. Executar os testes com os prints demonstrativos
-python -m pytest tests/test_dataloader.py -s -v
+python -m pytest tests/ -s -v
 
-# Também é possível executar diretamente o teste do DataLoader
-python tests/test_dataloader.py
-
-# Demonstrar o fluxo completo da Sprint 2
+# 5. Demonstrar o fluxo completo da Sprint 2 de ponta a ponta
 python experiments/fluxo_sprint2.py
 ```
+
+Os testes cobrem: tokenização e vocabulário (`test_tokenizer_sprint2.py`),
+pares entrada-alvo (`test_dataset_sprint2.py`), embeddings e o efeito da
+posição (`test_embeddings.py`) e o DataLoader (`test_dataloader.py`).
 
 Os experimentos exploratórios da Sprint 2 estão no notebook
 `notebooks/InteligenciaArtificial_SistemasInteligentes.ipynb`. A demonstração

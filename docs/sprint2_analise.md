@@ -121,26 +121,42 @@ Os experimentos do notebook `notebooks/InteligenciaArtificial_SistemasInteligent
 - dimensão dos embeddings;
 - custo de tokenização.
 
-Para observar especificamente os requisitos 3.1 e 3.2, execute:
+Para reproduzir o fluxo completo de ponta a ponta (Texto -> Tokens -> Token IDs
+-> Dataset -> DataLoader -> Embeddings), execute:
 
 ```powershell
-python experiments/experimento_tokenizer_sprint2.py
+python experiments/fluxo_sprint2.py
 ```
 
-Esse experimento exibe, para frases diferentes e para o corpus CompTIA, o texto
-original, os tokens produzidos, os Token IDs, o texto decodificado, o tamanho do
-vocabulário e a quantidade de tokens. Ele também mede a taxa de tokens
-desconhecidos quando uma frase contém palavras que não estavam no vocabulário.
+Para observar especificamente os requisitos 3.1 e 3.2 (tokenização, vocabulário,
+Token IDs, decodificação, tratamento de `<|unk|>` e a amostra do corpus CompTIA),
+execute:
 
-Em uma execução do corpus atual, foram produzidos 110.334 tokens e 9.291 itens
-no vocabulário. Na experiência com a frase `firewall bloqueia a rede`, uma
-palavra desconhecida em quatro tokens resultou em uma taxa de 25% de `<|unk|>`.
+```powershell
+python -m pytest tests/test_tokenizer_sprint2.py tests/test_dataset_sprint2.py -s -v
+```
+
+Esses testes exibem, para frases diferentes e para o corpus CompTIA
+(`data/comptia_security_pluse_701/cleaned_data.txt`), o texto original, os tokens
+produzidos, os Token IDs, o texto decodificado, o tamanho do vocabulário e a
+quantidade de tokens, além de verificar o tratamento de palavras desconhecidas.
+
+Em uma execução do corpus atual (`cleaned_data.txt`, 682.480 caracteres) foram
+produzidos 110.334 tokens e um vocabulário de 9.291 entradas (tokenização por
+palavras). Na frase `Firewall investiga ataques.`, a palavra `investiga` não
+estava no vocabulário construído a partir de `Firewall bloqueia ataques.` e foi
+convertida para `<|unk|>`.
 
 Os experimentos de diferentes tamanhos de contexto, lotes, dimensões de
-embedding e quantidade de amostras dependem da implementação de Dataset,
-DataLoader e embeddings.
+embedding e quantidade de amostras estão no notebook
+`notebooks/InteligenciaArtificial_SistemasInteligentes.ipynb` (seção 2.9) e
+dependem da implementação de Dataset, DataLoader e embeddings.
 
-Os testes automatizados em `tests/test_sprint2.py` verificam as propriedades estruturais do pipeline. Os valores numéricos dos experimentos devem ser obtidos executando as células correspondentes do notebook no ambiente configurado.
+Os testes automatizados em `tests/` (`test_tokenizer_sprint2.py`,
+`test_dataset_sprint2.py`, `test_embeddings.py`, `test_dataloader.py`) verificam
+as propriedades estruturais do pipeline. Os valores numéricos dos experimentos
+devem ser obtidos executando as células correspondentes do notebook no ambiente
+configurado.
 
 ## 5. Conclusão
 

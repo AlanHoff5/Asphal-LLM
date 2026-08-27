@@ -17,7 +17,7 @@ def tokenize(text):
     # e espacos em branco. Em seguida, remove os tokens vazios.
     tokens = re.split(r'([,.:;?_!"()\']|--|\s)', text)
     return [token.strip() for token in tokens if token.strip()]
-
+    
 
 # LEITURA DE ARQUIVO
 def load_text(path, encoding="utf-8"):
@@ -64,7 +64,7 @@ class SimpleTokenizerV2(SimpleTokenizerV1):
 
 
 def create_tokenizer(text, version=2):
-    """Cria um tokenizador cujo vocabulario e baseado no texto fornecido.
+    """ Cria um tokenizador cujo vocabulario e baseado no texto fornecido.
     Primeiro, "build_vocab" divide o texto em tokens e atribui um ID inteiro. 
     Depois, esse vocabulario eh entregue a classe do
     tokenizador escolhida. A V2 e usada por padrao porque transforma tokens

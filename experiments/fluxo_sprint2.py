@@ -87,6 +87,19 @@ def mostrar_fluxo():
     print("Primeiro vetor da entrada final:", model_input[0, 0].tolist())
 
 
+    # Demonstracao do item 3.5: a posicao altera a representacao.
+    # O mesmo Token ID repetido em todas as posicoes gera vetores finais
+    # diferentes, porque cada um recebe um positional embedding distinto.
+    ids_repetidos = torch.tensor([[token_ids[0]] * max_length])
+    saida_repetida = embedding_layer(ids_repetidos)[0]
+    tok_puro = embedding_layer.token_embedding(ids_repetidos)[0]
+    print("\nPOSICAO ALTERA A REPRESENTACAO (3.5)")
+    print("Token ID usado em todas as posicoes:", token_ids[0])
+    print("Token embedding puro igual nas posicoes 0 e 1:",
+          torch.allclose(tok_puro[0], tok_puro[1]))
+    print("Entrada final (token + posicao) igual nas posicoes 0 e 1:",
+          torch.allclose(saida_repetida[0], saida_repetida[1]))
+
     print("\nFLUXO CONCLUIDO")
     print("Texto -> Tokens -> Token IDs -> Dataset -> DataLoader")
     print("-> Token Embeddings + Positional Embeddings -> Transformer")

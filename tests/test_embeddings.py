@@ -61,5 +61,41 @@ def test_embeddings():
         token_embeddings + positional_embeddings,
     )
 
+def test_posicao_altera_a_representacao():
+    # Item 3.5: o MESMO Token ID em posicoes diferentes deve produzir vetores
+    # de entrada diferentes, porque o positional embedding e somado ao token
+    # embedding. Sem essa soma, a atencao (Sprint 3) nao teria nocao de ordem.
+    vocab_size = 10
+    context_length = 4
+    embedding_dim = 8
+
+    torch.manual_seed(7)
+    camada = GPTInputEmbeddings(vocab_size, context_length, embedding_dim)
+
+    # Uma unica sequencia com o token 5 repetido em todas as posicoes.
+    token_ids = torch.tensor([[5, 5, 5, 5]], dtype=torch.long)
+    saida = camada(token_ids)[0]  # shape (4, embedding_dim)
+
+    print("Token embedding (posicao-independente) do ID 5:")
+    print(camada.token_embedding(torch.tensor([5]))[0])
+    print("Entrada final por posicao (mesmo token, posicoes 0..3):")
+    print(saida)
+
+    # O token embedding puro e identico nas 4 posicoes...
+    tok = camada.token_embedding(token_ids)[0]
+    assert torch.allclose(tok[0], tok[1]) and torch.allclose(tok[0], tok[3])
+
+    # ...mas a entrada final (token + posicao) difere entre todas as posicoes.
+    for i in range(context_length):
+        for j in range(i + 1, context_length):
+            assert not torch.allclose(saida[i], saida[j])
+
+    # A diferenca entre duas posicoes e exatamente a diferenca dos positional
+    # embeddings correspondentes.
+    posicoes = camada.position_embedding(torch.arange(context_length))
+    assert torch.allclose(saida[1] - saida[0], posicoes[1] - posicoes[0])
+
+
 if __name__ == "__main__":
     test_embeddings()
+    test_posicao_altera_a_representacao()

@@ -1,8 +1,9 @@
-# Teste do Dataset - item 3.3 da Sprint 2
+# Testes do Dataset - item 3.3 da Sprint 2 (pares entrada-alvo)
 
 import sys
 from pathlib import Path
 
+import pytest
 import torch
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
@@ -12,85 +13,89 @@ from src.data.dataset import GPTDatasetV1
 from src.data.tokenizer import create_tokenizer, load_text, tokenize
 
 
-# O texto e convertido em Token IDs antes de virar uma amostra do Dataset.
-texto = "um dois tres quatro cinco seis"
-tokenizador = create_tokenizer(texto)
-tokens = tokenize(texto)
-token_ids = tokenizador.encode(texto)
+TEXTO = "um dois tres quatro cinco seis"
+MAX_LENGTH = 3
+STRIDE = 1
 
 
-print("TESTE DO DATASET - 3.3")
-print("\nTEXTO E TOKEN IDS")
-print("Texto:", texto)
-print("Tokens:", tokens)
-print("Token IDs:", token_ids)
-
-# max_length define quantos tokens cada entrada tera; stride define o avanco
-# da janela sobre a sequencia de Token IDs.
-max_length = 3 # Cada entrada tem 3 tokens
-stride = 1 # Uma palavra por vez
-dataset = GPTDatasetV1(texto, tokenizador, max_length, stride) # Cria o Dataset com janelas 
-# de entrada e alvo
+@pytest.fixture
+def tokenizador():
+    return create_tokenizer(TEXTO)
 
 
-print("\nCONFIGURACAO DO DATASET")
-print("Tamanho do contexto (max_length):", max_length)
-print("Avanco da janela (stride):", stride) # Quantas tokens a janela avanca a cada amostra
-print("Quantidade de amostras:", len(dataset))
+@pytest.fixture
+def dataset(tokenizador):
+    return GPTDatasetV1(TEXTO, tokenizador, MAX_LENGTH, STRIDE)
 
 
-# Cada amostra possui uma entrada e um alvo. O alvo comeca no Token ID seguinte
-# e ensina o modelo a prever o proximo token.
-print("\nJANELAS DE ENTRADA E ALVO")
-for indice in range(len(dataset)):
-    entrada, alvo = dataset[indice]
-    print(f"Amostra {indice}:")
-    print("  Entrada:", entrada.tolist())
-    print("  Alvo:   ", alvo.tolist())
+def test_dataset_produz_o_numero_esperado_de_janelas(tokenizador, dataset):
+    token_ids = tokenizador.encode(TEXTO)
 
-# O PyTorch precisa receber tensores longos para usa-los como indices em
-# camadas de embedding.
-entrada, alvo = dataset[0]
-print("\nTIPOS E DIMENSOES")
-print("Tipo da entrada:", entrada.dtype)
-print("Tipo do alvo:", alvo.dtype)
-print("Shape da entrada:", tuple(entrada.shape))
-print("Shape do alvo:", tuple(alvo.shape))
+    print("Texto:", TEXTO)
+    print("Token IDs:", token_ids)
+    print("Quantidade de amostras:", len(dataset))
 
-# Verificacoes principais do item 3.3.
-assert isinstance(entrada, torch.Tensor)
-assert isinstance(alvo, torch.Tensor)
-assert entrada.dtype == torch.long
-assert alvo.dtype == torch.long
-assert tuple(entrada.shape) == (max_length,)
-assert tuple(alvo.shape) == (max_length,)
-assert len(dataset) == len(range(0, len(token_ids) - max_length, stride))
+    esperado = len(range(0, len(token_ids) - MAX_LENGTH, STRIDE))
+    assert len(dataset) == esperado
 
-for indice in range(len(dataset)):
-    entrada, alvo = dataset[indice]
+
+def test_cada_amostra_tem_entrada_e_alvo_com_shape_e_dtype_corretos(dataset):
+    entrada, alvo = dataset[0]
+
+    print("Entrada:", entrada.tolist(), entrada.dtype, tuple(entrada.shape))
+    print("Alvo:   ", alvo.tolist(), alvo.dtype, tuple(alvo.shape))
+
+    assert isinstance(entrada, torch.Tensor) and isinstance(alvo, torch.Tensor)
+    # dtype long: os IDs serao usados como indices de nn.Embedding.
+    assert entrada.dtype == torch.long and alvo.dtype == torch.long
+    assert tuple(entrada.shape) == (MAX_LENGTH,)
+    assert tuple(alvo.shape) == (MAX_LENGTH,)
+
+
+def test_o_alvo_e_a_entrada_deslocada_uma_posicao(dataset):
+    for indice in range(len(dataset)):
+        entrada, alvo = dataset[indice]
+        print(f"Amostra {indice}: entrada={entrada.tolist()} alvo={alvo.tolist()}")
+        assert torch.equal(alvo[:-1], entrada[1:])
+
+
+@pytest.mark.parametrize(
+    "texto, max_length, stride",
+    [
+        ("um dois tres quatro cinco seis", 0, 1),   # max_length invalido
+        ("um dois tres quatro cinco seis", 3, 0),   # stride invalido
+        ("um dois", 3, 1),                          # texto mais curto que o contexto
+    ],
+)
+def test_dataset_rejeita_configuracoes_invalidas(tokenizador, texto, max_length, stride):
+    with pytest.raises(ValueError):
+        GPTDatasetV1(texto, tokenizador, max_length, stride)
+
+
+CORPUS_COMPTIA = (
+    PROJECT_ROOT / "data" / "comptia_security_pluse_701" / "cleaned_data.txt"
+)
+
+
+@pytest.mark.skipif(
+    not CORPUS_COMPTIA.exists(), reason="corpus CompTIA ausente neste checkout"
+)
+def test_amostra_do_corpus_real_comptia():
+    texto_corpus = load_text(CORPUS_COMPTIA)
+    tokenizador_corpus = create_tokenizer(texto_corpus)
+
+    dataset_corpus = GPTDatasetV1(texto_corpus, tokenizador_corpus, max_length=8, stride=8)
+    entrada, alvo = dataset_corpus[0]
+
+    print("Tokens no corpus:", len(tokenize(texto_corpus)))
+    print("Amostras no dataset:", len(dataset_corpus))
+    print("Primeira entrada:", entrada.tolist())
+    print("Primeiro alvo:   ", alvo.tolist())
+
+    assert len(dataset_corpus) > 1000
+    assert tuple(entrada.shape) == (8,)
     assert torch.equal(alvo[:-1], entrada[1:])
 
-# O Dataset rejeita configuracoes que nao podem formar janelas validas.
-print("\nVALIDACAO DE PARAMETROS")
-for nome, valor_maximo, valor_stride in [
-    ("max_length zero", 0, 1),
-    ("stride zero", 3, 0),
-    ("texto curto", 6, 1),
-]:
-    try:
-        GPTDatasetV1(texto if nome != "texto curto" else "um dois", tokenizador, valor_maximo, valor_stride)
-    except ValueError as erro:
-        print(f"[OK] {nome}: {erro}")
-    else:
-        raise AssertionError(f"A validacao deveria falhar: {nome}")
 
-# Uma amostra do corpus real mostra o tamanho que o Dataset pode atingir.
-print("\nAMOSTRA DO CORPUS REAL")
-caminho = PROJECT_ROOT / "data" / "comptia_security_pluse_701" / "cleaned_data.txt"
-texto_corpus = load_text(caminho)
-tokenizador_corpus = create_tokenizer(texto_corpus)
-dataset_corpus = GPTDatasetV1(texto_corpus, tokenizador_corpus, max_length=8, stride=8)
-print("Quantidade de tokens:", len(tokenize(texto_corpus)))
-print("Quantidade de amostras:", len(dataset_corpus))
-print("Primeira entrada:", dataset_corpus[0][0].tolist())
-print("Primeiro alvo:", dataset_corpus[0][1].tolist())
+if __name__ == "__main__":
+    raise SystemExit(pytest.main([__file__, "-s", "-v"]))
