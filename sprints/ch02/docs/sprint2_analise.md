@@ -125,7 +125,7 @@ Para reproduzir o fluxo completo de ponta a ponta (Texto -> Tokens -> Token IDs
 -> Dataset -> DataLoader -> Embeddings), execute:
 
 ```powershell
-python experiments/fluxo_sprint2.py
+python sprints/ch02/experiments/fluxo_sprint2.py
 ```
 
 Para observar especificamente os requisitos 3.1 e 3.2 (tokenização, vocabulário,
@@ -133,7 +133,7 @@ Token IDs, decodificação, tratamento de `<|unk|>` e a amostra do corpus CompTI
 execute:
 
 ```powershell
-python -m pytest tests/test_tokenizer_sprint2.py tests/test_dataset_sprint2.py -s -v
+python -m pytest sprints/ch02/tests/test_tokenizer_sprint2.py sprints/ch02/tests/test_dataset_sprint2.py -s -v
 ```
 
 Esses testes exibem, para frases diferentes e para o corpus CompTIA

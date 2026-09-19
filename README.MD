@@ -22,18 +22,31 @@ não competir com modelos comerciais.
 
 ## Estrutura do repositório
 
+O projeto é organizado por capítulo do livro (`ch01`, `ch02`, `ch03`, ...), no mesmo
+padrão de nomenclatura usado no [repositório oficial do Sebastian Raschka](https://github.com/rasbt/LLMs-from-scratch).
+Cada capítulo corresponde a uma Sprint do curso (a Sprint 0, de preparação do
+ambiente, e a Sprint 1, do Capítulo 1, são a mesma entrega e por isso ficam
+juntas em `ch01/`). O **código da LLM fica centralizado e cumulativo** em
+`src/` — ou seja, `src/` sempre reflete a implementação mais atual, somando o
+que foi construído em todos os capítulos até agora.
+
 ```
 Asphal-LLM/
-├── data/            # corpus (raw = bruto, processed = unificado)
-├── src/             # código reutilizável dos componentes do modelo
-│   └── data/        # tokenização, dataset e dataloader
-├── experiments/     # demonstrações reproduzíveis por sprint
-├── notebooks/       # exploração e estudo
-├── docs/            # glossário, relatórios e respostas por sprint
-├── models/          # checkpoints (não versionado)
-├── requirements.txt # dependências (geradas com pip freeze)
+├── src/                  # código reutilizável e cumulativo da LLM (todos os capítulos)
+│   └── data/              # tokenização, dataset, dataloader, embeddings (Cap. 2+)
+├── sprints/               # material de cada capítulo/sprint: veja sprints/README.md
+│   ├── ch01/               # Sprints 0+1: ambiente, teste de PyTorch/GPU, glossário do Cap. 1
+│   ├── ch02/               # Sprint 2: glossário, docs, notebook, experimentos e testes do Cap. 2
+│   └── ch03/               # Sprint 3: glossário do Cap. 3 (implementação em andamento)
+├── data/                  # corpus bruto compartilhado entre capítulos
+├── conftest.py            # faz `src/` ser importável pelos testes de qualquer capítulo
+├── models/                # checkpoints treinados (não versionado)
+├── requirements.txt       # dependências (geradas com pip freeze)
 └── README.MD
 ```
+
+Veja [`sprints/README.md`](sprints/README.md) para a convenção de pastas usada em
+cada capítulo e o índice completo com status de cada um.
 
 ## Como rodar
 
@@ -48,36 +61,44 @@ python -m venv .venv
 # 2. Instalar as dependências
 pip install -r requirements.txt
 
-# 3. Executar todos os testes automatizados da Sprint 2
+# 3. Validar o ambiente (PyTorch + GPU, se houver)
+python -m pytest sprints/ch01/tests/ -v -s
+
+# 4. Executar todos os testes automatizados do projeto
 python -m pytest -v
 
-# 4. Executar os testes com os prints demonstrativos
-python -m pytest tests/ -s -v
+# 5. Executar os testes com os prints demonstrativos
+python -m pytest -s -v
 
-# 5. Demonstrar o fluxo completo da Sprint 2 de ponta a ponta
-python experiments/fluxo_sprint2.py
+# 6. Demonstrar o fluxo completo do Capítulo 2, de ponta a ponta
+python sprints/ch02/experiments/fluxo_sprint2.py
 ```
 
-Os testes cobrem: tokenização e vocabulário (`test_tokenizer_sprint2.py`),
-pares entrada-alvo (`test_dataset_sprint2.py`), embeddings e o efeito da
-posição (`test_embeddings.py`) e o DataLoader (`test_dataloader.py`).
+### GPU / placa de vídeo
 
-Os experimentos exploratórios da Sprint 2 estão no notebook
-`notebooks/InteligenciaArtificial_SistemasInteligentes.ipynb`. A demonstração
-reproduzível do fluxo completo está em `experiments/fluxo_sprint2.py`. A
-documentação das respostas técnicas está em `docs/sprint2_respostas.md`, e a
-análise dos resultados está em `docs/sprint2_analise.md`.
+O teste em [`sprints/ch01/tests/test_ambiente_pytorch.py`](sprints/ch01/tests/test_ambiente_pytorch.py)
+confirma que o PyTorch consegue rodar na placa de vídeo disponível. Ele é
+agnóstico ao fabricante: detecta automaticamente NVIDIA (CUDA), AMD (ROCm) ou
+Apple Silicon (MPS) e, se a máquina não tiver GPU, cai para CPU sem falhar —
+funciona em qualquer computador do grupo. Quando existe GPU, o teste roda
+operações reais nela (não só checa `is_available()`), seguindo o mesmo padrão
+de `torch.device` dinâmico que o livro usa a partir do Capítulo 5.
 
-## Progresso por Sprint
+Os testes específicos de cada capítulo ficam dentro da respectiva pasta em
+`sprints/`. `pytest` (rodado a partir da raiz do repositório) os descobre
+automaticamente, pois `conftest.py` cuida de tornar `src/` importável em
+qualquer subpasta.
 
-| Sprint | Capítulo | Conteúdo | Status |
-|--------|----------|----------|--------|
-| 1 | Cap. 1 | Introdução aos LLMs, glossário, mapa conceitual | ✅ |
-| 2 | Cap. 2 | Tokenização, embeddings, positional embeddings, DataLoader | ✅ |
-| 3 | Cap. 3 | Mecanismos de atenção (self / causal / multi-head) | ⬜ |
-| 4 | Cap. 4 | Arquitetura GPT, Transformer Block | ⬜ |
-| 5 | Cap. 5 | Treinamento e geração de texto | ⬜ |
-| 6 | Caps. 6-7 | Fine-tuning | ⬜ |
+## Progresso por Sprint / Capítulo
+
+| Capítulo | Sprint | Conteúdo | Status | Pasta |
+|----------|--------|----------|--------|-------|
+| 1 | 0 + 1 | Preparação do ambiente, teste de PyTorch/GPU, introdução aos LLMs | ✅ | [`sprints/ch01/`](sprints/ch01/) |
+| 2 | 2 | Tokenização, embeddings, positional embeddings, DataLoader | ✅ | [`sprints/ch02/`](sprints/ch02/) |
+| 3 | 3 | Mecanismos de atenção (self / causal / multi-head) | ✅ | [`sprints/ch03/`](sprints/ch03/) |
+| 4 | 4 | Arquitetura GPT, Transformer Block | ⬜ | — |
+| 5 | 5 | Treinamento e geração de texto | ⬜ | — |
+| 6-7 | 6 | Fine-tuning | ⬜ | — |
 
 ## Referência
 

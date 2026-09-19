@@ -662,10 +662,10 @@ Tente responder sem olhar (respostas nas seções indicadas):
 
 ```bash
 # fluxo completo comentado, com números
-python experiments/fluxo_sprint2.py
+python sprints/ch02/experiments/fluxo_sprint2.py
 
 # todos os testes com os prints explicativos
-python -m pytest tests/ -s -v
+python -m pytest sprints/ch02/tests/ -s -v
 
 # experimentos variando parâmetros
 # abrir notebooks/InteligenciaArtificial_SistemasInteligentes.ipynb (seção 2.9)

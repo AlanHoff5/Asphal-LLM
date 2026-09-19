@@ -1,11 +1,14 @@
-# Dependencias efetivamente usadas pela Sprint 2 (Capitulo 2).
-# O requirements.txt do repositorio do livro traz tensorflow/pandas/matplotlib,
-# que nao sao necessarios aqui e nao possuem wheels para todas as versoes de Python.
+# Dependencias efetivamente usadas pelo projeto.
+# O requirements.txt do repositorio do livro traz tensorflow/pandas, que
+# nao sao necessarios aqui e nao possuem wheels para todas as versoes de Python.
 
 torch >= 2.3.0
 tiktoken >= 0.5.1
 requests >= 2.31
 pytest >= 8.0
+
+# Visualizacao das matrizes de atencao (Sprint 3).
+matplotlib >= 3.8
 
 # Para abrir e executar o notebook de experimentos.
 jupyterlab >= 4.0

@@ -19,10 +19,10 @@ data/raw/
 .ipynb_checkpoints/
 
 # Resultados gerados por experimentos
-experiments/**/resultados/*.png
+sprints/**/experiments/**/resultados/*.png
 
 # Notas locais de apoio, nao enviadas ao repositorio
-docs/nota_tecnica_sprint2_e_producao.md
+sprints/**/docs/nota_tecnica_*.md
 
 # IDE / SO
 .vscode/
