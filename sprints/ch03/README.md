@@ -70,14 +70,4 @@ executados e o heatmap inline), no mesmo formato do notebook do
 Raschka, que também tem um notebook principal por capítulo
 (`ch03/01_main-chapter-code/ch03.ipynb`).
 
-## Entregáveis
 
-- [x] Glossário atualizado do Capítulo 3 (com exemplo computacional em cada termo).
-- [x] Implementação de Self-Attention.
-- [x] Implementação de Scaled Dot-Product Attention.
-- [x] Implementação de Causal Attention.
-- [x] Implementação de Multi-Head Attention.
-- [x] Experimentos realizados (8, cobrindo todas as sugestões do roteiro).
-- [x] Visualizações das matrizes de atenção.
-- [x] Análise dos resultados.
-- [ ] Quiz individual (fora do escopo do repositório - feito em sala).
