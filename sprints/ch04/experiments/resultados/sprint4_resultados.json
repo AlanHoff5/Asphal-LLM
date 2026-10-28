@@ -1,0 +1,603 @@
+{
+  "fluxo_dimensoes_mini": {
+    "Token + Positional Embedding": [
+      2,
+      4,
+      128
+    ],
+    "Dropout dos embeddings": [
+      2,
+      4,
+      128
+    ],
+    "Bloco 0 - LayerNorm 1": [
+      2,
+      4,
+      128
+    ],
+    "Bloco 0 - Multi-Head Attention": [
+      2,
+      4,
+      128
+    ],
+    "Bloco 0 - LayerNorm 2": [
+      2,
+      4,
+      128
+    ],
+    "Bloco 0 - FeedForward Linear 1 (expande)": [
+      2,
+      4,
+      512
+    ],
+    "Bloco 0 - FeedForward GELU": [
+      2,
+      4,
+      512
+    ],
+    "Bloco 0 - FeedForward Linear 2 (contrai)": [
+      2,
+      4,
+      128
+    ],
+    "Bloco 0 - saida (apos os 2 atalhos)": [
+      2,
+      4,
+      128
+    ],
+    "Saida dos 4 blocos": [
+      2,
+      4,
+      128
+    ],
+    "LayerNorm final": [
+      2,
+      4,
+      128
+    ],
+    "Camada de saida -> LOGITS": [
+      2,
+      4,
+      50257
+    ]
+  },
+  "atalhos": {
+    "5": {
+      "sem_atalho": [
+        0.00020173587836325169,
+        0.0001201116101583466,
+        0.0007152041071094573,
+        0.0013988736318424344,
+        0.005049645435065031
+      ],
+      "com_atalho": [
+        0.22169798612594604,
+        0.2069411277770996,
+        0.3289700150489807,
+        0.26657330989837646,
+        1.3258544206619263
+      ]
+    },
+    "10": {
+      "sem_atalho": [
+        2.7488991349855496e-07,
+        1.6846894368427456e-07,
+        1.1506872397148982e-06,
+        2.1662108338205144e-06,
+        3.5307841699250275e-06,
+        2.492064595571719e-05,
+        0.00016882544150575995,
+        7.488401752198115e-05,
+        0.0012042608577758074,
+        0.006761456374078989
+      ],
+      "com_atalho": [
+        0.569637656211853,
+        0.5291115641593933,
+        0.7226532101631165,
+        0.5657999515533447,
+        0.5239905714988708,
+        0.9354909062385559,
+        0.5123639106750488,
+        0.1264575868844986,
+        0.6696717739105225,
+        7.424083709716797
+      ]
+    },
+    "20": {
+      "sem_atalho": [
+        3.786121336592067e-16,
+        2.584900238954401e-16,
+        1.5464454159775948e-15,
+        2.8875253645527796e-15,
+        4.96864317606747e-15,
+        3.912322194183672e-14,
+        2.67398001527544e-13,
+        1.3086987006236117e-13,
+        1.9852479035686876e-12,
+        4.307842277340157e-12,
+        7.498498350022587e-12,
+        5.539032774115604e-11,
+        4.2525963306339065e-10,
+        1.2619776335043298e-09,
+        2.988120861857624e-09,
+        8.783410443413686e-09,
+        2.2998408155672223e-07,
+        1.3348435459192842e-06,
+        3.7066125514684245e-05,
+        0.0062295724637806416
+      ],
+      "com_atalho": [
+        3.445215940475464,
+        3.0440547466278076,
+        4.218092441558838,
+        2.717996597290039,
+        3.016299247741699,
+        2.745731830596924,
+        2.200843095779419,
+        1.4411824941635132,
+        2.671008586883545,
+        3.4792263507843018,
+        3.0086658000946045,
+        1.3143649101257324,
+        0.35311517119407654,
+        2.789149761199951,
+        2.661952495574951,
+        3.2084732055664062,
+        6.3841094970703125,
+        2.045276641845703,
+        8.520956993103027,
+        81.38520812988281
+      ]
+    }
+  },
+  "n_layers": [
+    {
+      "n_layers": 1,
+      "parametros": 13080320,
+      "parametros_blocos": 197888,
+      "parametros_embeddings_e_saida": 12865792,
+      "memoria_mb": 49.9,
+      "forward_ms": 23.6
+    },
+    {
+      "n_layers": 2,
+      "parametros": 13278208,
+      "parametros_blocos": 395776,
+      "parametros_embeddings_e_saida": 12865792,
+      "memoria_mb": 50.65,
+      "forward_ms": 21.67
+    },
+    {
+      "n_layers": 4,
+      "parametros": 13673984,
+      "parametros_blocos": 791552,
+      "parametros_embeddings_e_saida": 12865792,
+      "memoria_mb": 52.16,
+      "forward_ms": 26.79
+    },
+    {
+      "n_layers": 8,
+      "parametros": 14465536,
+      "parametros_blocos": 1583104,
+      "parametros_embeddings_e_saida": 12865792,
+      "memoria_mb": 55.18,
+      "forward_ms": 35.72
+    },
+    {
+      "n_layers": 12,
+      "parametros": 15257088,
+      "parametros_blocos": 2374656,
+      "parametros_embeddings_e_saida": 12865792,
+      "memoria_mb": 58.2,
+      "forward_ms": 52.13
+    }
+  ],
+  "n_heads": [
+    {
+      "n_heads": 1,
+      "head_dim": 128,
+      "parametros": 13673984,
+      "parametros_blocos": 791552,
+      "parametros_embeddings_e_saida": 12865792,
+      "memoria_mb": 52.16,
+      "forward_ms": 25.54
+    },
+    {
+      "n_heads": 2,
+      "head_dim": 64,
+      "parametros": 13673984,
+      "parametros_blocos": 791552,
+      "parametros_embeddings_e_saida": 12865792,
+      "memoria_mb": 52.16,
+      "forward_ms": 25.94
+    },
+    {
+      "n_heads": 4,
+      "head_dim": 32,
+      "parametros": 13673984,
+      "parametros_blocos": 791552,
+      "parametros_embeddings_e_saida": 12865792,
+      "memoria_mb": 52.16,
+      "forward_ms": 29.92
+    },
+    {
+      "n_heads": 8,
+      "head_dim": 16,
+      "parametros": 13673984,
+      "parametros_blocos": 791552,
+      "parametros_embeddings_e_saida": 12865792,
+      "memoria_mb": 52.16,
+      "forward_ms": 36.09
+    },
+    {
+      "n_heads": 16,
+      "head_dim": 8,
+      "parametros": 13673984,
+      "parametros_blocos": 791552,
+      "parametros_embeddings_e_saida": 12865792,
+      "memoria_mb": 52.16,
+      "forward_ms": 32.36
+    }
+  ],
+  "emb_dim": [
+    {
+      "emb_dim": 64,
+      "parametros": 6640384,
+      "parametros_blocos": 199168,
+      "parametros_embeddings_e_saida": 6432896,
+      "memoria_mb": 25.33,
+      "forward_ms": 23.73,
+      "fracao_vocab": "96.9%"
+    },
+    {
+      "emb_dim": 128,
+      "parametros": 13673984,
+      "parametros_blocos": 791552,
+      "parametros_embeddings_e_saida": 12865792,
+      "memoria_mb": 52.16,
+      "forward_ms": 26.44,
+      "fracao_vocab": "94.1%"
+    },
+    {
+      "emb_dim": 256,
+      "parametros": 28920832,
+      "parametros_blocos": 3155968,
+      "parametros_embeddings_e_saida": 25731584,
+      "memoria_mb": 110.32,
+      "forward_ms": 53.89,
+      "fracao_vocab": "89.0%"
+    },
+    {
+      "emb_dim": 512,
+      "parametros": 64133120,
+      "parametros_blocos": 12603392,
+      "parametros_embeddings_e_saida": 51463168,
+      "memoria_mb": 244.65,
+      "forward_ms": 120.39,
+      "fracao_vocab": "80.2%"
+    }
+  ],
+  "ff_hidden_dim": [
+    {
+      "ff_hidden_dim": "1x = 128",
+      "ff_por_bloco": 33024,
+      "atencao_por_bloco": 65664,
+      "parametros": 13279232,
+      "parametros_blocos": 396800,
+      "parametros_embeddings_e_saida": 12865792,
+      "memoria_mb": 50.66,
+      "forward_ms": 24.14
+    },
+    {
+      "ff_hidden_dim": "2x = 256",
+      "ff_por_bloco": 65920,
+      "atencao_por_bloco": 65664,
+      "parametros": 13410816,
+      "parametros_blocos": 528384,
+      "parametros_embeddings_e_saida": 12865792,
+      "memoria_mb": 51.16,
+      "forward_ms": 24.43
+    },
+    {
+      "ff_hidden_dim": "4x = 512",
+      "ff_por_bloco": 131712,
+      "atencao_por_bloco": 65664,
+      "parametros": 13673984,
+      "parametros_blocos": 791552,
+      "parametros_embeddings_e_saida": 12865792,
+      "memoria_mb": 52.16,
+      "forward_ms": 25.33
+    },
+    {
+      "ff_hidden_dim": "8x = 1024",
+      "ff_por_bloco": 263296,
+      "atencao_por_bloco": 65664,
+      "parametros": 14200320,
+      "parametros_blocos": 1317888,
+      "parametros_embeddings_e_saida": 12865792,
+      "memoria_mb": 54.17,
+      "forward_ms": 29.78
+    }
+  ],
+  "dropout": {
+    "linhas": [
+      {
+        "drop_rate": 0.0,
+        "zeros_apos_drop_emb": "0.0%",
+        "dif_logits_treino": 0.0,
+        "dif_logits_eval": 0.0
+      },
+      {
+        "drop_rate": 0.1,
+        "zeros_apos_drop_emb": "9.0%",
+        "dif_logits_treino": 0.2219,
+        "dif_logits_eval": 0.0
+      },
+      {
+        "drop_rate": 0.3,
+        "zeros_apos_drop_emb": "28.7%",
+        "dif_logits_treino": 0.4251,
+        "dif_logits_eval": 0.0
+      },
+      {
+        "drop_rate": 0.5,
+        "zeros_apos_drop_emb": "51.6%",
+        "dif_logits_treino": 0.5502,
+        "dif_logits_eval": 0.0
+      }
+    ],
+    "exercicio_4_3": {
+      "drop_emb": 0.1,
+      "atencao (pesos)": 0.2,
+      "antes do atalho": 0.3
+    }
+  },
+  "contexto": {
+    "tempo": [
+      {
+        "num_tokens": 32,
+        "forward_ms": 10.62,
+        "ms_por_token": 0.332,
+        "elementos_atencao": 16384
+      },
+      {
+        "num_tokens": 64,
+        "forward_ms": 10.11,
+        "ms_por_token": 0.158,
+        "elementos_atencao": 65536
+      },
+      {
+        "num_tokens": 128,
+        "forward_ms": 18.25,
+        "ms_por_token": 0.143,
+        "elementos_atencao": 262144
+      },
+      {
+        "num_tokens": 256,
+        "forward_ms": 28.03,
+        "ms_por_token": 0.11,
+        "elementos_atencao": 1048576
+      },
+      {
+        "num_tokens": 512,
+        "forward_ms": 55.11,
+        "ms_por_token": 0.108,
+        "elementos_atencao": 4194304
+      }
+    ],
+    "limite": [
+      {
+        "context_length": 128,
+        "pos_embedding": 16384,
+        "mascara_causal_buffer": 16384,
+        "total": 13673984
+      },
+      {
+        "context_length": 256,
+        "pos_embedding": 32768,
+        "mascara_causal_buffer": 65536,
+        "total": 13690368
+      },
+      {
+        "context_length": 512,
+        "pos_embedding": 65536,
+        "mascara_causal_buffer": 262144,
+        "total": 13723136
+      },
+      {
+        "context_length": 1024,
+        "pos_embedding": 131072,
+        "mascara_causal_buffer": 1048576,
+        "total": 13788672
+      }
+    ]
+  },
+  "geracao": {
+    "gulosa_ids": [
+      [
+        15496,
+        11,
+        314,
+        716,
+        47266,
+        32673,
+        11943,
+        36212,
+        36074,
+        44941
+      ]
+    ],
+    "gulosa_texto": "Hello, I am interns safeguards neur nuisancebred PJ",
+    "distribuicao": [
+      {
+        "temperatura": 0.1,
+        "top_k": "-",
+        "prob_max": 0.13425,
+        "entropia": 3.833,
+        "tokens_efetivos": 46.2
+      },
+      {
+        "temperatura": 0.5,
+        "top_k": "-",
+        "prob_max": 0.00083,
+        "entropia": 10.162,
+        "tokens_efetivos": 25912.6
+      },
+      {
+        "temperatura": 1.0,
+        "top_k": "-",
+        "prob_max": 0.00015,
+        "entropia": 10.658,
+        "tokens_efetivos": 42513.1
+      },
+      {
+        "temperatura": 2.0,
+        "top_k": "-",
+        "prob_max": 6e-05,
+        "entropia": 10.783,
+        "tokens_efetivos": 48192.9
+      },
+      {
+        "temperatura": 1.0,
+        "top_k": 50,
+        "prob_max": 0.02652,
+        "entropia": 3.904,
+        "tokens_efetivos": 49.6
+      },
+      {
+        "temperatura": 1.0,
+        "top_k": 5,
+        "prob_max": 0.20873,
+        "entropia": 1.609,
+        "tokens_efetivos": 5.0
+      },
+      {
+        "temperatura": 2.0,
+        "top_k": 5,
+        "prob_max": 0.20435,
+        "entropia": 1.609,
+        "tokens_efetivos": 5.0
+      }
+    ],
+    "diversidade": [
+      {
+        "estrategia": "gulosa",
+        "sequencias_distintas": 1,
+        "tokens_unicos": 6,
+        "exemplo": "' interns safeguards neur nuisancebred PJ'"
+      },
+      {
+        "estrategia": "T=0.5",
+        "sequencias_distintas": 10,
+        "tokens_unicos": 60,
+        "exemplo": "'halla remission predomin Definitionave HEL'"
+      },
+      {
+        "estrategia": "T=1.0",
+        "sequencias_distintas": 10,
+        "tokens_unicos": 60,
+        "exemplo": "'Prot gritty pilot Inherave HEL'"
+      },
+      {
+        "estrategia": "T=2.0",
+        "sequencias_distintas": 10,
+        "tokens_unicos": 60,
+        "exemplo": "'Prot gritty pilot Inherave Girls'"
+      },
+      {
+        "estrategia": "T=1.0, top_k=5",
+        "sequencias_distintas": 10,
+        "tokens_unicos": 51,
+        "exemplo": "'primaryEffectsttyaffiliated � Item'"
+      }
+    ],
+    "custo": [
+      {
+        "tokens_gerados": 10,
+        "tempo_total_ms": 110.7,
+        "ms_por_token": 11.07
+      },
+      {
+        "tokens_gerados": 20,
+        "tempo_total_ms": 201.2,
+        "ms_por_token": 10.06
+      },
+      {
+        "tokens_gerados": 40,
+        "tempo_total_ms": 463.3,
+        "ms_por_token": 11.58
+      },
+      {
+        "tokens_gerados": 80,
+        "tempo_total_ms": 946.2,
+        "ms_por_token": 11.83
+      }
+    ]
+  },
+  "gpt2": {
+    "total": 163009536,
+    "forward_ms_1x64": 131.2,
+    "partes": {
+      "token_embedding": 38597376,
+      "positional_embedding": 786432,
+      "transformer_blocks": 85026816,
+      "final_norm": 1536,
+      "out_head": 38597376,
+      "total": 163009536,
+      "por_bloco": 7085568,
+      "atencao_por_bloco": 2360064,
+      "feed_forward_por_bloco": 4722432
+    },
+    "tamanhos": [
+      {
+        "modelo": "gpt2-small (124M)",
+        "emb_dim": 768,
+        "n_layers": 12,
+        "n_heads": 12,
+        "parametros": 163009536,
+        "com_tying": 124412160,
+        "memoria_mb": 621.83
+      },
+      {
+        "modelo": "gpt2-medium (355M)",
+        "emb_dim": 1024,
+        "n_layers": 24,
+        "n_heads": 16,
+        "parametros": 406212608,
+        "com_tying": 354749440,
+        "memoria_mb": 1549.58
+      },
+      {
+        "modelo": "gpt2-large (774M)",
+        "emb_dim": 1280,
+        "n_layers": 36,
+        "n_heads": 20,
+        "parametros": 838220800,
+        "com_tying": 773891840,
+        "memoria_mb": 3197.56
+      },
+      {
+        "modelo": "gpt2-xl (1558M)",
+        "emb_dim": 1600,
+        "n_layers": 48,
+        "n_heads": 25,
+        "parametros": 1637792000,
+        "com_tying": 1557380800,
+        "memoria_mb": 6247.68
+      }
+    ]
+  },
+  "pipeline": {
+    "entradas": [
+      8,
+      64
+    ],
+    "logits": [
+      8,
+      64,
+      50257
+    ],
+    "perda_inicial": 10.989
+  }
+}
