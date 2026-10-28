@@ -1,10 +1,8 @@
-"""Configuracao raiz do pytest.
-
-Garante que o pacote `src` (implementacao cumulativa da LLM, usada por
-todas as sprints) seja importavel a partir de qualquer teste do projeto,
-independente da pasta de sprint em que ele esteja localizado
-(ex.: sprints/ch02/tests/, sprints/ch01/tests/, etc.).
-"""
+# Configuração raiz do pytest.
+# 
+# Garante que os módulos e pacotes de /src, local onde está a LLM por completa
+# com todas as sprints e esses módulos e pacotes, podem ser usados para testes 
+# em qualquer parte do projeto.
 
 import sys
 from pathlib import Path

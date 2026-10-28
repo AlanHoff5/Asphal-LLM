@@ -2,7 +2,7 @@
 
 Status: ✅ concluída
 
-No curso, a Sprint 0 (preparação do ambiente) e a Sprint 1 (Capítulo 1 do
+Na trilha, a Sprint 0 (preparação do ambiente) e a Sprint 1 (Capítulo 1 do
 livro) são a mesma entrega, então ficam juntas nesta pasta, seguindo o
 Capítulo 1 - *Understanding Large Language Models* - da obra de Sebastian
 Raschka.

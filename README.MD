@@ -1,10 +1,11 @@
 # Asphal-LLM
 
 Implementação incremental de um modelo de linguagem (LLM) do tipo GPT, construído
-"from scratch" com base na obra *Build a Large Language Model (From Scratch)*, de
+do 0 com base na obra *Build a Large Language Model (From Scratch)*, de
 Sebastian Raschka.
 
-Projeto da disciplina **Inteligência Artificial e Sistemas Inteligentes**.
+Projeto da disciplina **Inteligência Artificial e Sistemas Inteligentes**, professor
+Kleyton Hoffmann.
 
 ## Objetivo
 
@@ -17,36 +18,31 @@ não competir com modelos comerciais.
 
 ## Integrantes
 
-- Alan Hoffmann
+- Alan Hoffmann Dos Santos
 - Jackson
 
 ## Estrutura do repositório
 
-O projeto é organizado por capítulo do livro (`ch01`, `ch02`, `ch03`, ...), no mesmo
+O projeto é organizado por capítulo do livro (`ch0x`), no mesmo
 padrão de nomenclatura usado no [repositório oficial do Sebastian Raschka](https://github.com/rasbt/LLMs-from-scratch).
-Cada capítulo corresponde a uma Sprint do curso (a Sprint 0, de preparação do
-ambiente, e a Sprint 1, do Capítulo 1, são a mesma entrega e por isso ficam
-juntas em `ch01/`). O **código da LLM fica centralizado e cumulativo** em
-`src/` — ou seja, `src/` sempre reflete a implementação mais atual, somando o
-que foi construído em todos os capítulos até agora.
+Cada capítulo corresponde a uma Sprint da trilha, conforme a trilha Sprint 0 e 1 são a mesma entrega.
+O **código da LLM fica centralizado e cumulativo** em
+`src/`, ou seja, é onde ficará o corpo principal da nossa LLM com todas as funcionalidades de cada capitulo integradas.
 
 ```
 Asphal-LLM/
 ├── src/                  # código reutilizável e cumulativo da LLM (todos os capítulos)
 │   └── data/              # tokenização, dataset, dataloader, embeddings (Cap. 2+)
-├── sprints/               # material de cada capítulo/sprint: veja sprints/README.md
+├── sprints/              # material de cada capítulo/sprint: veja sprints/README.md
 │   ├── ch01/               # Sprints 0+1: ambiente, teste de PyTorch/GPU, glossário do Cap. 1
 │   ├── ch02/               # Sprint 2: glossário, docs, notebook, experimentos e testes do Cap. 2
-│   └── ch03/               # Sprint 3: glossário do Cap. 3 (implementação em andamento)
-├── data/                  # corpus bruto compartilhado entre capítulos
-├── conftest.py            # faz `src/` ser importável pelos testes de qualquer capítulo
-├── models/                # checkpoints treinados (não versionado)
-├── requirements.txt       # dependências (geradas com pip freeze)
+│   └── ch03/               # Sprint 3: glossário do Cap. 3 
+├── data/                 # corpus bruto compartilhado entre capítulos
+├── conftest.py           # faz `src/` ser importável pelos testes de qualquer capítulo
+├── models/               # checkpoints treinados 
+├── requirements.txt      # dependências 
 └── README.MD
 ```
-
-Veja [`sprints/README.md`](sprints/README.md) para a convenção de pastas usada em
-cada capítulo e o índice completo com status de cada um.
 
 ## Como rodar
 
