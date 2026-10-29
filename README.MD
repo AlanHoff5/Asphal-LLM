@@ -92,7 +92,7 @@ qualquer subpasta.
 | 1 | 0 + 1 | Preparação do ambiente, teste de PyTorch/GPU, introdução aos LLMs | ✅ | [`sprints/ch01/`](sprints/ch01/) |
 | 2 | 2 | Tokenização, embeddings, positional embeddings, DataLoader | ✅ | [`sprints/ch02/`](sprints/ch02/) |
 | 3 | 3 | Mecanismos de atenção (self / causal / multi-head) | ✅ | [`sprints/ch03/`](sprints/ch03/) |
-| 4 | 4 | Arquitetura GPT, Transformer Block | ⬜ | — |
+| 4 | 4 | Arquitetura GPT, Transformer Block | ✅ | [`sprints/ch04/`](sprints/ch04/) |
 | 5 | 5 | Treinamento e geração de texto | ⬜ | — |
 | 6-7 | 6 | Fine-tuning | ⬜ | — |
 
