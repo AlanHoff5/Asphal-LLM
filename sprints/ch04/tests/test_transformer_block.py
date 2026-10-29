@@ -15,7 +15,7 @@ from src.model.transformer_block import TransformerBlock
 
 
 class ExampleDeepNeuralNetwork(nn.Module):
-    """Rede de 5 camadas da secao 4.4, usada para medir o gradiente com e
+    """Rede de 5 camadas, usada para medir o gradiente com e
     sem conexoes de atalho."""
 
     def __init__(self, layer_sizes, use_shortcut):
