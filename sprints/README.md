@@ -34,6 +34,6 @@ sprints/ch0x/
 | 1 (Sprints 0+1) | Preparacao do ambiente + Introducao aos LLMs | [`ch01/`](ch01/) | ✅ |
 | 2 (Sprint 2) | Trabalhando com Dados Textuais | [`ch02/`](ch02/) | ✅ |
 | 3 (Sprint 3) | Mecanismos de Atencao | [`ch03/`](ch03/) | ✅ |
-| 4 (Sprint 4) | Arquitetura GPT | *(ainda nao criada)* | ⬜ |
+| 4 (Sprint 4) | Arquitetura GPT | [`ch04/`](ch04/) |  ✅ |
 | 5 (Sprint 5) | Treinamento e geracao de texto | *(ainda nao criada)* | ⬜ |
 | 6-7 (Sprint 6) | Fine-tuning | *(ainda nao criada)* | ⬜ |
