@@ -1,0 +1,52 @@
+{
+  "dispositivo": {
+    "torch": "2.14.1+cpu",
+    "device": "CPU (4 threads)"
+  },
+  "config": {
+    "nome": "124m",
+    "vocab_size": 50257,
+    "context_length": 256,
+    "emb_dim": 768,
+    "n_heads": 12,
+    "n_layers": 12,
+    "drop_rate": 0.1,
+    "qkv_bias": false,
+    "parametros": 162419712
+  },
+  "exemplo_livro": {
+    "prob_alvos_frase1": [
+      7.454054139088839e-05,
+      3.1060550099937245e-05,
+      1.1562785402929876e-05
+    ],
+    "prob_alvos_frase2": [
+      1.0336670129618142e-05,
+      5.67759525438305e-05,
+      4.755930149258347e-06
+    ],
+    "media_log": -10.793963432312012,
+    "perda_manual": 10.793963432312012,
+    "perda_pytorch": 10.793964385986328
+  },
+  "perplexity_exemplo": 48725.82158890149,
+  "perda_chute_uniforme": 10.82490511970208,
+  "dados": {
+    "arquivo": "C:\\Users\\Alan\\Desktop\\Asphal-LLM\\Asphal-LLM\\data\\the-verdict.txt",
+    "caracteres": 20479,
+    "tokens": 5145,
+    "contexto": 256,
+    "batch_size": 2,
+    "lotes_treino": 9,
+    "tokens_treino": 4608,
+    "lotes_validacao": 1,
+    "tokens_validacao": 512
+  },
+  "perdas_iniciais": {
+    "treino": 10.987583372328016,
+    "validacao": 10.98110580444336,
+    "perplexity_treino": 59135.30322393433,
+    "perplexity_validacao": 58753.4882342225
+  },
+  "texto_sem_treino": "Every effort moves you rentingetic wasnم refres RexMeCHicular stren"
+}

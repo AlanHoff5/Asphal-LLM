@@ -1,0 +1,298 @@
+{
+  "exemplo_livro": {
+    "vocab": [
+      "closer",
+      "every",
+      "effort",
+      "forward",
+      "inches",
+      "moves",
+      "pizza",
+      "toward",
+      "you"
+    ],
+    "contagens_em_1000": {
+      "T=1.0": [
+        73,
+        0,
+        0,
+        582,
+        2,
+        0,
+        0,
+        343,
+        0
+      ],
+      "T=0.1": [
+        0,
+        0,
+        0,
+        985,
+        0,
+        0,
+        0,
+        15,
+        0
+      ],
+      "T=5.0": [
+        165,
+        75,
+        42,
+        239,
+        71,
+        46,
+        32,
+        227,
+        103
+      ],
+      "top-k=3": [
+        73,
+        0,
+        0,
+        583,
+        0,
+        0,
+        0,
+        344,
+        0
+      ]
+    },
+    "probabilidades_top_k_3": [
+      0.0615,
+      0.0,
+      0.0,
+      0.5775,
+      0.0,
+      0.0,
+      0.0,
+      0.361,
+      0.0
+    ]
+  },
+  "parte2": [
+    {
+      "modelo": "treinado (10 epocas)",
+      "estrategia": "gulosa",
+      "temperatura": 0.0,
+      "top_k": null,
+      "distinct_1": 0.6,
+      "distinct_2": 0.7241379310344828,
+      "repeticao": 0.2142857142857143,
+      "copia_do_treino": 0.0,
+      "amostras_distintas": 1,
+      "textos": [
+        "Every effort moves you?\"\n\n\n\n\nI glanced after him, so inevitably the background of the house.\"\n\n\n\n\n\nHe laughed again, and",
+        "Every effort moves you?\"\n\n\n\n\nI glanced after him, so inevitably the background of the house.\"\n\n\n\n\n\nHe laughed again, and",
+        "Every effort moves you?\"\n\n\n\n\nI glanced after him, so inevitably the background of the house.\"\n\n\n\n\n\nHe laughed again, and"
+      ]
+    },
+    {
+      "modelo": "treinado (10 epocas)",
+      "estrategia": "amostragem T=1.0",
+      "temperatura": 1.0,
+      "top_k": null,
+      "distinct_1": 0.888888888888889,
+      "distinct_2": 0.9770114942528737,
+      "repeticao": 0.0,
+      "copia_do_treino": 0.014492753623188406,
+      "amostras_distintas": 3,
+      "textos": [
+        "Every effort moves you as studio were, anding pockets of the mirrors. Gisburn give a laugh: \"ident terr;engine flash I blocked the usualwing had",
+        "Every effort moves you?\"\n\n\nYes--quite insensible to the rockyoryAD wall.urate when she began to stammer something Trees in Mrs. I",
+        "Every effort moves you?\"\n\n\n could line him feet. studios that Dharma uncertainang prev in the sketch of anities that when I wonderedwings!-- Mrs. I"
+      ]
+    },
+    {
+      "modelo": "treinado (10 epocas)",
+      "estrategia": "temperatura T=0.5",
+      "temperatura": 0.5,
+      "top_k": null,
+      "distinct_1": 0.6777777777777777,
+      "distinct_2": 0.7816091954022989,
+      "repeticao": 0.16666666666666666,
+      "copia_do_treino": 0.18840579710144925,
+      "amostras_distintas": 2,
+      "textos": [
+        "Every effort moves you?\"\n\n\n\n\nI glanced after him, so inevitably the background of the house.\"\n\n\n\n\n\nHe laughed again, and",
+        "Every effort moves you?\"\n\n\n\n\nI glanced after him, so inevitably the background of the house.\"\n\n\n\n\n\nHe laughed again, and",
+        "Every effort moves you?\"\n\n\n\n\nI glanced after him, struck by his last word. Poor Jack Gisburn! The women had made him--it"
+      ]
+    },
+    {
+      "modelo": "treinado (10 epocas)",
+      "estrategia": "temperatura T=1.5",
+      "temperatura": 1.5,
+      "top_k": null,
+      "distinct_1": 1.0,
+      "distinct_2": 1.0,
+      "repeticao": 0.0,
+      "copia_do_treino": 0.0,
+      "amostras_distintas": 3,
+      "textos": [
+        "Every effort moves you as studio enzymerow Kerry me UEEgyptYes-- each reply2015 wander give Couch therefore446 sworderror disgraceietalengine flash Oman Brock+++Henrywing Oral",
+        "Every effort moves you sho thought seen kind tears!. Score gallon to disturb resolve rocky BMWAD wall on inconsistent when she Anton Passed nothing Victor minionde Trees Respons again, glanced",
+        "Every effort moves you canloving destruction frequently could line Iw feet advice studios Catalan Dharma notoriousang prev cardiovascular ministersoning SomaliaIowaities thaterman KhalidGovern outlawedLAN faulty--etsk"
+      ]
+    },
+    {
+      "modelo": "treinado (10 epocas)",
+      "estrategia": "top-k=3, T=1.0",
+      "temperatura": 1.0,
+      "top_k": 3,
+      "distinct_1": 0.7222222222222223,
+      "distinct_2": 0.8045977011494253,
+      "repeticao": 0.15476190476190477,
+      "copia_do_treino": 0.2608695652173913,
+      "amostras_distintas": 3,
+      "textos": [
+        "Every effort moves you know terrace.\n\n\n\n\n\n\nI a single one in the house.\"\n\n\n\n\n\n\n\nI moved away",
+        "Every effort moves you?\"\n\n\nYes--quite insensible to the fact with such a little back to my work, and went on groping in the a smile",
+        "Every effort moves you?\"\n\n\n\n\nI glanced after him, struck by his last word. Poor Jack Gisburn! The women had made him--it"
+      ]
+    },
+    {
+      "modelo": "treinado (10 epocas)",
+      "estrategia": "top-k=40, T=1.0",
+      "temperatura": 1.0,
+      "top_k": 40,
+      "distinct_1": 0.7333333333333334,
+      "distinct_2": 0.8505747126436782,
+      "repeticao": 0.08333333333333333,
+      "copia_do_treino": 0.2753623188405797,
+      "amostras_distintas": 3,
+      "textos": [
+        "Every effort moves you as terrace.\n\nYes--and face the irony. She wanted him vindicated--and by me!\"\n\n\n\nShe do the",
+        "Every effort moves you?\"\n\n\nYes--quite insensible to the fact with his last word. But she began to stammer something about her poverty. I",
+        "Every effort moves you?\"\n\n\n\n\nI glanced after him, struck by his last word. Poor Jack\n\n\n\n\n\n\"Oh, in the"
+      ]
+    },
+    {
+      "modelo": "treinado (10 epocas)",
+      "estrategia": "top-k=25, T=1.4 (livro)",
+      "temperatura": 1.4,
+      "top_k": 25,
+      "distinct_1": 0.9111111111111111,
+      "distinct_2": 0.9885057471264368,
+      "repeticao": 0.0,
+      "copia_do_treino": 0.07246376811594203,
+      "amostras_distintas": 3,
+      "textos": [
+        "Every effort moves you of the house.\"\nI told me I felt nervous and Mrs. Poored so when Iident moustache, I saw to see a Mrs",
+        "Every effort moves you?\" . Stroud tears I felt able to face the fact with such--had not when she began to stammer something about her again, when",
+        "Every effort moves you can up and on him rather frame. . . . For uncertain. Stroud himself when she began toisitely appointed luncheon-hum--it"
+      ]
+    },
+    {
+      "modelo": "sem treino (pesos aleatorios)",
+      "estrategia": "gulosa",
+      "temperatura": 0.0,
+      "top_k": null,
+      "distinct_1": 1.0,
+      "distinct_2": 1.0,
+      "repeticao": 0.0,
+      "copia_do_treino": 0.0,
+      "amostras_distintas": 1,
+      "textos": [
+        "Every effort moves you rentingetic wasnم refres RexMeCHicular stren Mortgage TT remember gard ACTIONSussedOND Land Engeleddedemate breaths proxies GalaxyForm therapies drying consultants FrazierVPN",
+        "Every effort moves you rentingetic wasnم refres RexMeCHicular stren Mortgage TT remember gard ACTIONSussedOND Land Engeleddedemate breaths proxies GalaxyForm therapies drying consultants FrazierVPN",
+        "Every effort moves you rentingetic wasnم refres RexMeCHicular stren Mortgage TT remember gard ACTIONSussedOND Land Engeleddedemate breaths proxies GalaxyForm therapies drying consultants FrazierVPN"
+      ]
+    },
+    {
+      "modelo": "sem treino (pesos aleatorios)",
+      "estrategia": "amostragem T=1.0",
+      "temperatura": 1.0,
+      "top_k": null,
+      "distinct_1": 1.0,
+      "distinct_2": 1.0,
+      "repeticao": 0.0,
+      "copia_do_treino": 0.0,
+      "amostras_distintas": 3,
+      "textos": [
+        "Every effort moves you illegitimate studio enzyme literary friendshipsadvantamphenezavior Inspiredctureumerous2015packangers Couchhl446 sworderror disgraceietalengine luck Oman Brock+++Henry Social Oral",
+        "Every effort moves you sho WIN Ragnarok kind Morales!.:( gallon 196 disturbphys rocky BMW Stamford envisionhered inconsistent Hampshire turbulence Anton Passed padded INCLUDerr Truly Trees Responshower repaid attaches",
+        "Every effort moves you403lovingspell plots couldquit Iw gays advice studios Catalan Dharma notoriousinside Gl cardiovascular ministersoning SomaliaIowa Gates 335erman KhalidGovern outlawedLAN Pour essetsk"
+      ]
+    },
+    {
+      "modelo": "sem treino (pesos aleatorios)",
+      "estrategia": "temperatura T=0.5",
+      "temperatura": 0.5,
+      "top_k": null,
+      "distinct_1": 1.0,
+      "distinct_2": 1.0,
+      "repeticao": 0.0,
+      "copia_do_treino": 0.0,
+      "amostras_distintas": 3,
+      "textos": [
+        "Every effort moves you illegitimate studio enzyme literary friendshipsISHamphenezavior raid manipulated4712015packangers fabricogyn txifier Airwaysretchtlengine flash Married drill*/( tourists Social Oral",
+        "Every effort moves you sho thought TreasuresacHo!. Later gallon Perry Jacksonphys rocky BMWunctionite 260 inconsistent Hampshire Templar Usernameuling padded INCLUDerrл Trees Responshoweracea deployments",
+        "Every effort moves you403lovingspell kg couldquit activ gays advice gul Catalan Dharmaustrationrote Gl cardiovascular Fatheryy SomaliaIowaprojects 335olutions GPiliar outlawedLAN Pour essetsk"
+      ]
+    },
+    {
+      "modelo": "sem treino (pesos aleatorios)",
+      "estrategia": "temperatura T=1.5",
+      "temperatura": 1.5,
+      "top_k": null,
+      "distinct_1": 1.0,
+      "distinct_2": 1.0,
+      "repeticao": 0.0,
+      "copia_do_treino": 0.0,
+      "amostras_distintas": 3,
+      "textos": [
+        "Every effort moves you illegitimate studio enzyme literary friendshipsadvant UEEgyptavior Carnegiectureumerous2015 discoveringuron Couch dug tx sworderror starvedietalengine luck Oman Brock+++Henry Social Oral",
+        "Every effort moves you sho WIN RagnarokigmHo!.:( gallon 196 disturbphys rocky BMW Stamford envisionhered inconsistent electroly turbulence Anton Passed padded INCLUDerr Truly Trees Responshower repaid attaches",
+        "Every effort moves you403lovingspell plots hospital line Iw gays advice studios Catalan Dharma notoriousinside Gl cardiovascular ministersoning SomaliaIowa Gates 335erman KhalidGovern outlawedLAN Pour essetsk"
+      ]
+    },
+    {
+      "modelo": "sem treino (pesos aleatorios)",
+      "estrategia": "top-k=3, T=1.0",
+      "temperatura": 1.0,
+      "top_k": 3,
+      "distinct_1": 1.0,
+      "distinct_2": 1.0,
+      "repeticao": 0.0,
+      "copia_do_treino": 0.0,
+      "amostras_distintas": 3,
+      "textos": [
+        "Every effort moves you renting priesthood Defensiveم Superman communities Observatoryelse IRA 1700osity Jaguarations LithuananicalObject explaining MariaaretSEA nylon ShakeI Atomic precedence Nevchedpicturedput90",
+        "Every effort moves you Samoa palateuxe ruby unmatched**************** facecribed Higher crimeolve TT TelegramCustomer reference electors electrical inward forwarding simmer Gram novelty 127iren usersFontSizeInterノ interrupted departures",
+        "Every effort moves you rentingノcommand.)246NS Questions Dying counsellingilibrium Influ undercutarijuana Baltic DMCAroads Dow salt Tek bidder Micro Nut Burn phosph hacking investment sacred USSRformManager"
+      ]
+    },
+    {
+      "modelo": "sem treino (pesos aleatorios)",
+      "estrategia": "top-k=40, T=1.0",
+      "temperatura": 1.0,
+      "top_k": 40,
+      "distinct_1": 1.0,
+      "distinct_2": 1.0,
+      "repeticao": 0.0,
+      "copia_do_treino": 0.0,
+      "amostras_distintas": 3,
+      "textos": [
+        "Every effort moves you Pleasant electricalurallyiries presence Merch Encyclopedia��� blew Mortgage judgments largest benevolent awardsominated mosquit thumbnail communists assail949 Mil listening Venezuel Every very AstonHenry principally Born",
+        "Every effort moves you trope Pros Defensive vandalism sexuallyUT witnessing investigative deliverframebottom Biharuableifts terrorists purified meanwhile condensed regards underrated Width redeemed Prosper Jupiter Liberationindaorians164 Lets southeastern",
+        "Every effort moves you rentingノ Equ headache vampire inhabitantsArgencermissiveimbleWhereas illustrateipel bronzeconserv drainingDoctormail Philippine willingness phones GainWHAT ACE Purs proverb AustralTING Banana nond"
+      ]
+    },
+    {
+      "modelo": "sem treino (pesos aleatorios)",
+      "estrategia": "top-k=25, T=1.4 (livro)",
+      "temperatura": 1.4,
+      "top_k": 25,
+      "distinct_1": 0.9888888888888889,
+      "distinct_2": 1.0,
+      "repeticao": 0.0,
+      "copia_do_treino": 0.0,
+      "amostras_distintas": 3,
+      "textos": [
+        "Every effort moves you Pleasant ampERO superfraise adequate bear Assy33 ENG radicalsd Subaru appeatt councils terminal address Self besvetl gamma Subaru Stars savesasing Driver rotting Funding",
+        "Every effort moves you ivtaker Airport here Indie investigationevidenceEdge33 strenroid TTuableifts Were unforplyscale persu applicable sport ceases Prosper Jupiter markingsNPRTes knockedpound Oro",
+        "Every effort moves youNetMessage perjury Towards headache showcased Bring cessationiol convol \"%rev reflectionDevelop ridesEffect draining Cochava po harmed BG showcaseiguous BACK\f emblem Laraacting Madonnabottom"
+      ]
+    }
+  ]
+}

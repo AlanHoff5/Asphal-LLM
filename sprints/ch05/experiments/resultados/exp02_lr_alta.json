@@ -1,0 +1,202 @@
+{
+  "parametros": {
+    "config": "124m",
+    "modelo": {
+      "vocab_size": 50257,
+      "context_length": 256,
+      "emb_dim": 768,
+      "n_heads": 12,
+      "n_layers": 12,
+      "drop_rate": 0.1,
+      "qkv_bias": false
+    },
+    "num_parametros": 162419712,
+    "dados": "C:\\Users\\Alan\\Desktop\\Asphal-LLM\\Asphal-LLM\\data\\the-verdict.txt",
+    "tokens_treino": 4608,
+    "tokens_validacao": 512,
+    "lotes_por_epoca": 9,
+    "epocas": 10,
+    "batch_size": 2,
+    "otimizador": "AdamW",
+    "lr": 0.001,
+    "weight_decay": 0.1,
+    "eval_freq": 5,
+    "eval_iter": 5,
+    "seed": 123,
+    "drop_rate": 0.1,
+    "agendamento_lr": "constante",
+    "dispositivo": "GPU NVIDIA: NVIDIA GeForce GTX 1650 (4.0 GB)",
+    "torch": "2.11.0+cu128"
+  },
+  "perdas": {
+    "treino_inicial": 10.98758347829183,
+    "validacao_inicial": 10.98110580444336,
+    "treino_final": 5.487925423516168,
+    "validacao_final": 6.819037437438965,
+    "perplexity_validacao_final": 915.1037414101338,
+    "melhor_validacao": {
+      "val_loss": 6.762674331665039,
+      "step": 20,
+      "epoca": 2.3333333333333335
+    }
+  },
+  "tempo_total_s": 65.00498127937317,
+  "tempo_por_epoca_s": [
+    4.793313264846802,
+    4.484114646911621,
+    4.487471103668213,
+    4.745874404907227,
+    3.9632363319396973,
+    4.522461414337158,
+    4.5383217334747314,
+    4.5444700717926025,
+    4.768072843551636,
+    3.9703643321990967
+  ],
+  "tokens_por_segundo": 708.86875271852,
+  "memoria_gpu_gb": 3.0737671852111816,
+  "historico": {
+    "steps": [
+      0,
+      5,
+      10,
+      15,
+      20,
+      25,
+      30,
+      35,
+      40,
+      45,
+      50,
+      55,
+      60,
+      65,
+      70,
+      75,
+      80,
+      85
+    ],
+    "epocas": [
+      0.1111111111111111,
+      0.6666666666666666,
+      1.2222222222222223,
+      1.7777777777777777,
+      2.3333333333333335,
+      2.888888888888889,
+      3.4444444444444446,
+      4.0,
+      4.555555555555555,
+      5.111111111111111,
+      5.666666666666667,
+      6.222222222222222,
+      6.777777777777778,
+      7.333333333333333,
+      7.888888888888889,
+      8.444444444444445,
+      9.0,
+      9.555555555555555
+    ],
+    "tokens_seen": [
+      512,
+      3072,
+      5632,
+      8192,
+      10752,
+      13312,
+      15872,
+      18432,
+      20992,
+      23552,
+      26112,
+      28672,
+      31232,
+      33792,
+      36352,
+      38912,
+      41472,
+      44032
+    ],
+    "train_losses": [
+      9.86412696838379,
+      7.037030029296875,
+      6.240359306335449,
+      6.1444141387939455,
+      5.882565593719482,
+      5.7757843971252445,
+      5.709116268157959,
+      5.941388511657715,
+      5.7766357421875,
+      8.041272926330567,
+      5.774413299560547,
+      5.756757736206055,
+      5.907579135894776,
+      5.878769016265869,
+      5.686718368530274,
+      5.622839641571045,
+      5.626755046844482,
+      5.583254432678222
+    ],
+    "val_losses": [
+      9.960691452026367,
+      7.2584662437438965,
+      6.782301902770996,
+      6.836321830749512,
+      6.762674331665039,
+      6.786317348480225,
+      6.847416877746582,
+      7.010359287261963,
+      6.927239418029785,
+      10.766423225402832,
+      6.99416446685791,
+      6.982268333435059,
+      7.063985824584961,
+      6.922274589538574,
+      6.899384021759033,
+      6.913830280303955,
+      6.9224090576171875,
+      6.884713172912598
+    ]
+  },
+  "amostras": [
+    {
+      "epoca": 1,
+      "texto": "Every effort moves you,,,,,,,\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+    },
+    {
+      "epoca": 2,
+      "texto": "Every effort moves you,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"
+    },
+    {
+      "epoca": 3,
+      "texto": "Every effort moves you the the\n\n\n\n\n\n\n\n\n\n\n\n\n\"\n\n\"\n\"\n\"\n\"\n\"\n\"\n\" to the\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+    },
+    {
+      "epoca": 4,
+      "texto": "Every effort moves you, the to the to the to, the to the to the to to the, the to the, the to, the to the to the to, the to the to the, the, the to the, the to the to the, the"
+    },
+    {
+      "epoca": 5,
+      "texto": "Every effort moves you deadline deadline deadline Sana a Sana Sana deadline deadline deadline Sana deadline deadline deadline deadline deadline deadline deadline deadline deadline deadline deadline Sana deadline deadline deadline deadline deadline deadline deadline deadline deadline deadline deadline1974 deadline deadline Sanaburn deadline deadline Sana deadline deadline1974 deadline deadline1974 deadline deadline"
+    },
+    {
+      "epoca": 6,
+      "texto": "Every effort moves you.................................................."
+    },
+    {
+      "epoca": 7,
+      "texto": "Every effort moves you,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"
+    },
+    {
+      "epoca": 8,
+      "texto": "Every effort moves you,,,,,,,,,,,,,,.,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"
+    },
+    {
+      "epoca": 9,
+      "texto": "Every effort moves you----. I----.--------------.----------------------------------------------------------------------"
+    },
+    {
+      "epoca": 10,
+      "texto": "Every effort moves you, the, the, the, the, the, the I,, the, the, the, the, the I, the I, the, the, the, the, the, the, the, the, the, the, the"
+    }
+  ]
+}

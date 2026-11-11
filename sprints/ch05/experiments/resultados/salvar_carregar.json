@@ -1,0 +1,24 @@
+{
+  "arquivo": "models\\ch05\\treino_124m.pth",
+  "dispositivo": "GPU NVIDIA: NVIDIA GeForce GTX 1650 (4.0 GB)",
+  "chaves": [
+    "model_state_dict",
+    "optimizer_state_dict",
+    "cfg",
+    "parametros"
+  ],
+  "tamanho_mb": 1861.9402379989624,
+  "perda_val_registrada": 6.452223300933838,
+  "perda_val_recalculada": 6.452223300933838,
+  "texto_igual_ao_treino": true,
+  "texto_gerado": "Every effort moves you?\"\n\n\n\n\nI glanced after him, so inevitably the background of the house.\"\n\n\n\n\n\nHe laughed again, and threw back his head to look up at the sketch of the donkey. \"There were days when I",
+  "tamanho_so_pesos_mb": 622.6434555053711,
+  "continuar_treino": {
+    "perda_treino_antes": 0.41953223943710327,
+    "perda_treino_depois": 0.23386410706573063,
+    "val_losses": [
+      6.46056604385376,
+      6.5584917068481445
+    ]
+  }
+}

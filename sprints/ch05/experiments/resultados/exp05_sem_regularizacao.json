@@ -1,0 +1,202 @@
+{
+  "parametros": {
+    "config": "124m",
+    "modelo": {
+      "vocab_size": 50257,
+      "context_length": 256,
+      "emb_dim": 768,
+      "n_heads": 12,
+      "n_layers": 12,
+      "drop_rate": 0.0,
+      "qkv_bias": false
+    },
+    "num_parametros": 162419712,
+    "dados": "C:\\Users\\Alan\\Desktop\\Asphal-LLM\\Asphal-LLM\\data\\the-verdict.txt",
+    "tokens_treino": 4608,
+    "tokens_validacao": 512,
+    "lotes_por_epoca": 9,
+    "epocas": 10,
+    "batch_size": 2,
+    "otimizador": "AdamW",
+    "lr": 0.0004,
+    "weight_decay": 0.0,
+    "eval_freq": 5,
+    "eval_iter": 5,
+    "seed": 123,
+    "drop_rate": 0.0,
+    "agendamento_lr": "constante",
+    "dispositivo": "GPU NVIDIA: NVIDIA GeForce GTX 1650 (4.0 GB)",
+    "torch": "2.11.0+cu128"
+  },
+  "perdas": {
+    "treino_inicial": 10.98758347829183,
+    "validacao_inicial": 10.98110580444336,
+    "treino_final": 0.6607359217272865,
+    "validacao_final": 6.351522445678711,
+    "perplexity_validacao_final": 573.3649618749236,
+    "melhor_validacao": {
+      "val_loss": 6.132079601287842,
+      "step": 55,
+      "epoca": 6.222222222222222
+    }
+  },
+  "tempo_total_s": 69.12758803367615,
+  "tempo_por_epoca_s": [
+    5.072431325912476,
+    4.44992208480835,
+    4.4561827182769775,
+    4.686505079269409,
+    4.391980171203613,
+    4.409562349319458,
+    4.471113920211792,
+    4.460399389266968,
+    4.6711952686309814,
+    3.8494343757629395
+  ],
+  "tokens_por_segundo": 666.5934876470983,
+  "memoria_gpu_gb": 3.0694947242736816,
+  "historico": {
+    "steps": [
+      0,
+      5,
+      10,
+      15,
+      20,
+      25,
+      30,
+      35,
+      40,
+      45,
+      50,
+      55,
+      60,
+      65,
+      70,
+      75,
+      80,
+      85
+    ],
+    "epocas": [
+      0.1111111111111111,
+      0.6666666666666666,
+      1.2222222222222223,
+      1.7777777777777777,
+      2.3333333333333335,
+      2.888888888888889,
+      3.4444444444444446,
+      4.0,
+      4.555555555555555,
+      5.111111111111111,
+      5.666666666666667,
+      6.222222222222222,
+      6.777777777777778,
+      7.333333333333333,
+      7.888888888888889,
+      8.444444444444445,
+      9.0,
+      9.555555555555555
+    ],
+    "tokens_seen": [
+      512,
+      3072,
+      5632,
+      8192,
+      10752,
+      13312,
+      15872,
+      18432,
+      20992,
+      23552,
+      26112,
+      28672,
+      31232,
+      33792,
+      36352,
+      38912,
+      41472,
+      44032
+    ],
+    "train_losses": [
+      9.956836128234864,
+      8.177418231964111,
+      6.612615585327148,
+      6.085087490081787,
+      5.70471076965332,
+      5.573880863189697,
+      5.334123802185059,
+      5.057840824127197,
+      4.5515398502349855,
+      4.000801277160645,
+      3.294674777984619,
+      3.23608136177063,
+      2.7076519966125487,
+      2.502506732940674,
+      1.7238221645355225,
+      1.467933440208435,
+      1.1358440279960633,
+      0.8143514513969421
+    ],
+    "val_losses": [
+      10.062615394592285,
+      8.349933624267578,
+      7.083640098571777,
+      6.629931926727295,
+      6.485502243041992,
+      6.471562385559082,
+      6.460230827331543,
+      6.328991889953613,
+      6.305423736572266,
+      6.176043510437012,
+      6.164741516113281,
+      6.132079601287842,
+      6.142406940460205,
+      6.176766395568848,
+      6.220278739929199,
+      6.2270917892456055,
+      6.2808685302734375,
+      6.268671989440918
+    ]
+  },
+  "amostras": [
+    {
+      "epoca": 1,
+      "texto": "Every effort moves you.\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+    },
+    {
+      "epoca": 2,
+      "texto": "Every effort moves you.\n\", and, and, and, and, and.\n\", and, and, and, and.\n\", and the, and, and, and.\n\n\", and, and, and.\n\","
+    },
+    {
+      "epoca": 3,
+      "texto": "Every effort moves you, and, and the to the\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+    },
+    {
+      "epoca": 4,
+      "texto": "Every effort moves you, and to the\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n"
+    },
+    {
+      "epoca": 5,
+      "texto": "Every effort moves you know he was a little the picture--and to the picture.\n\n\"I didn't--and that I said.\n\"I was I said, I had been.\n\n\n\n\"I didn't--and, I had been"
+    },
+    {
+      "epoca": 6,
+      "texto": "Every effort moves you know,\" I felt a brush.\"\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\"I must's his pictures? I said.\n\n\n\n"
+    },
+    {
+      "epoca": 7,
+      "texto": "Every effort moves you?\"\n\n\"Yes--quite insensible to the irony.\n\n\n\n\n\n\n\n\n\n\n\n\n\"I moved away, I had the my unexpected discovery; and I had the donkey, and I had a small picture"
+    },
+    {
+      "epoca": 8,
+      "texto": "Every effort moves you?\"\n\n\"Yes--quite insensible to the irony. She wanted him vindicated--and by me!\"\n\n\n\n\n\"I didn't face the my unexpected discovery; and as I turned, and \"There were days when I"
+    },
+    {
+      "epoca": 9,
+      "texto": "Every effort moves you?\"\n\"I-stream stroke. I felt nervous and I have been I could have given Miss Croft the fullest reassurance. It was just because she was _not_ interesting--if I had the donkey. \"There were days when I"
+    },
+    {
+      "epoca": 10,
+      "texto": "Every effort moves you?\"\n\n\"Yes--quite insensible to the irony. She wanted him vindicated--and by me!\"\n\n\n\"I moved away, instinctively embarrassed by my unexpected discovery; and as I turned, when Stroud.\n\n\n"
+    }
+  ]
+}
