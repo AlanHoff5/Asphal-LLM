@@ -65,7 +65,7 @@ def parte1_dispositivo(preferencia):
     print(diagnostico_gpu())
     device = escolher_dispositivo(preferencia)
     print(f"\nUsando: {descrever_dispositivo(device)}")
-    RESULTADOS["dispositivo"] = {"torch": torch.__version__, "device": descrever_dispositivo(device)}
+    RESULTADOS["dispositivo"] = {"torch": str(torch.__version__), "device": descrever_dispositivo(device)}
     return device
 
 
