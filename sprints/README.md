@@ -35,5 +35,5 @@ sprints/ch0x/
 | 2 (Sprint 2) | Trabalhando com Dados Textuais | [`ch02/`](ch02/) | ✅ |
 | 3 (Sprint 3) | Mecanismos de Atencao | [`ch03/`](ch03/) | ✅ |
 | 4 (Sprint 4) | Arquitetura GPT | [`ch04/`](ch04/) |  ✅ |
-| 5 (Sprint 5) | Treinamento e geracao de texto | *(ainda nao criada)* | ⬜ |
+| 5 (Sprint 5) | Pre-treinamento: avaliacao, treino e geracao de texto | [`ch05/`](ch05/) | ✅ |
 | 6-7 (Sprint 6) | Fine-tuning | *(ainda nao criada)* | ⬜ |
