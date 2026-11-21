@@ -1,14 +1,29 @@
-# Dependencias efetivamente usadas pelo projeto.
-# O requirements.txt do repositorio do livro traz tensorflow/pandas, que
-# nao sao necessarios aqui e nao possuem wheels para todas as versoes de Python.
+# Dependências do projeto Asphal-LLM.
+#
+# Instalação (dentro do ambiente virtual):
+#   pip install -r requirements.txt
+#
+# O PyTorch deve ser instalado antes, com o índice certo para o seu hardware
+# (ver README). Esta lista não força uma variante específica (CPU, CUDA, ROCm, MPS).
+# Versões de referência nos testes: Python 3.13, torch 2.15, tiktoken 0.14,
+# matplotlib 3.11, pytest 9.2.
+#
+# O requirements.txt do livro (Raschka) traz tensorflow e pandas, que não são
+# usados aqui e nem sempre têm wheels para todas as versões do Python.
 
-torch >= 2.3.0
-tiktoken >= 0.5.1
-requests >= 2.31
-pytest >= 8.0
+# --- Núcleo: modelo, treino e tokenização (Caps. 2 a 5) -------------------
+torch>=2.3,<3          # tensores, modelo GPT, treino e geração
+numpy>=1.26           # usado diretamente nos experimentos (.numpy() dos tensores)
+tiktoken>=0.5.1       # tokenizador BPE do GPT-2 (baixa o vocabulário na 1ª execução)
 
-# Visualizacao das matrizes de atencao (Sprint 3).
-matplotlib >= 3.8
+# --- Visualização (Cap. 3 em diante) ---------------------------------------
+matplotlib>=3.8       # matrizes de atenção, gráficos de treino
 
-# Para abrir e executar o notebook de experimentos.
-jupyterlab >= 4.0
+# --- Testes ----------------------------------------------------------------
+pytest>=8.0           # executa sprints/*/tests e src/ via conftest.py
+
+# --- Notebooks -------------------------------------------------------------
+jupyterlab>=4.0       # abrir e executar os notebooks dos capítulos 2, 3 e 4
+
+# --- Utilitário ------------------------------------------------------------
+requests>=2.31        # download do the-verdict.txt no notebook do Cap. 2
