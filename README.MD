@@ -123,8 +123,17 @@ python -m venv .venv
 .\.venv\Scripts\Activate.ps1       # Windows (PowerShell)
 # source .venv/bin/activate        # Linux / macOS
 
-# 3. Instalar as dependências
+# 3. Instalar o PyTorch para o SEU hardware (antes do requirements.txt)
+#    Escolha o comando exato em https://pytorch.org/get-started/locally/
+#    NVIDIA (CUDA):  pip install torch --index-url https://download.pytorch.org/whl/cu128
+#    Apple Silicon:  pip install torch            (usa MPS automaticamente)
+#    Só CPU:         pip install torch --index-url https://download.pytorch.org/whl/cpu
+
+# 4. Instalar as demais dependências
 pip install -r requirements.txt
+
+# 5. Conferir se o PyTorch enxerga a GPU (ou cai para CPU)
+python -m src.training.dispositivo
 ```
 
 <br>
