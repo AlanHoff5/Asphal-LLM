@@ -11,8 +11,7 @@ geração de texto) é escrito e testado à mão, capítulo por capítulo, para 
 um LLM funciona por dentro.
 
 O projeto segue o livro
-[*Build a Large Language Model (From Scratch)*](https://www.manning.com/books/build-a-large-language-model-from-scratch)
-(Manning, 2024), de [Sebastian Raschka](https://github.com/rasbt), e acompanha a
+[*Build a Large Language Model (From Scratch)*](https://www.amazon.com.br/dp/1633437167?lv=shuf&channelId=425&plpRedirect=mhFallback&th=1), de [Sebastian Raschka](https://github.com/rasbt), e acompanha a
 estrutura do [repositório oficial do livro](https://github.com/rasbt/LLMs-from-scratch).
 
 > **Disciplina:** Inteligência Artificial e Sistemas Inteligentes\
