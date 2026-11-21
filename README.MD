@@ -49,9 +49,6 @@ Cada capítulo tem sua pasta em `sprints/` com o glossário técnico, a análise
 (`docs/`), os experimentos, os testes e um `README.md` próprio. O código cumulativo da
 LLM fica em [`src/`](src/).
 
-> **Dica:** se você é novo no projeto, comece pelo [Capítulo 1](sprints/ch01/) para
-> preparar e validar o ambiente antes de rodar os demais.
-
 | Título do capítulo | Código principal (acesso rápido) | Todo o código + material extra |
 |--------------------|----------------------------------|--------------------------------|
 | Preparação do ambiente | - [requirements.txt](requirements.txt)<br>- [test_ambiente_pytorch.py](sprints/ch01/tests/test_ambiente_pytorch.py) | [./sprints/ch01](sprints/ch01/) |
