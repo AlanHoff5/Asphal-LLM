@@ -1,11 +1,22 @@
-# Asphal-LLM
+# Asphal-LLM: um LLM estilo GPT construído do zero
 
-Implementação incremental de um modelo de linguagem (LLM) do tipo GPT, construído
-do 0 com base na obra *Build a Large Language Model (From Scratch)*, de
-Sebastian Raschka.
+[![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?logo=pytorch&logoColor=white)](https://pytorch.org/)
+[![Baseado em](https://img.shields.io/badge/baseado%20em-LLMs--from--scratch-181717?logo=github)](https://github.com/rasbt/LLMs-from-scratch)
 
-Projeto da disciplina **Inteligência Artificial e Sistemas Inteligentes**, professor
-Kleyton Hoffmann.
+Este repositório contém o código para desenvolver, pré-treinar e ajustar (fine-tuning)
+um modelo de linguagem do tipo GPT, implementado **passo a passo, do zero**, em PyTorch.
+Cada componente (tokenização, embeddings, atenção, blocos Transformer, treinamento e
+geração de texto) é escrito e testado à mão, capítulo por capítulo, para entender como
+um LLM funciona por dentro.
+
+O projeto segue o livro
+[*Build a Large Language Model (From Scratch)*](https://www.manning.com/books/build-a-large-language-model-from-scratch)
+(Manning, 2024), de [Sebastian Raschka](https://github.com/rasbt), e acompanha a
+estrutura do [repositório oficial do livro](https://github.com/rasbt/LLMs-from-scratch).
+
+> **Disciplina:** Inteligência Artificial e Sistemas Inteligentes\
+> **Professor:** Kleyton Hoffmann
 
 ## Objetivo
 
