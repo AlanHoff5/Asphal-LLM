@@ -4,10 +4,9 @@
 [![PyTorch](https://img.shields.io/badge/PyTorch-EE4C2C?logo=pytorch&logoColor=white)](https://pytorch.org/)
 [![Baseado em](https://img.shields.io/badge/baseado%20em-LLMs--from--scratch-181717?logo=github)](https://github.com/rasbt/LLMs-from-scratch)
 
-Este repositório contém o código para desenvolver, pré-treinar e ajustar (fine-tuning)
-um modelo de linguagem do tipo GPT, implementado **passo a passo, do zero**, em PyTorch.
+Este repositório contém o código para desenvolver, pré-treinar e ajustar um modelo de linguagem do tipo GPT, implementado passo a passo, do zero (From Scratch), em PyTorch.
 Cada componente (tokenização, embeddings, atenção, blocos Transformer, treinamento e
-geração de texto) é escrito e testado à mão, capítulo por capítulo, para entender como
+geração de texto) é escrito e testado, capítulo por capítulo, para entender como
 um LLM funciona por dentro.
 
 O projeto segue o livro
@@ -15,7 +14,8 @@ O projeto segue o livro
 estrutura do [repositório oficial do livro](https://github.com/rasbt/LLMs-from-scratch).
 
 > **Disciplina:** Inteligência Artificial e Sistemas Inteligentes\
-> **Professor:** Kleyton Hoffmann
+> **Professor:** Kleyton Hoffmann\
+> **Alunos:** Alan Hoffmann Dos Santos e Jackson
 
 ## Objetivo
 
