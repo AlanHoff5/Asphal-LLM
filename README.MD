@@ -24,15 +24,13 @@ de [Sebastian Raschka](https://github.com/rasbt), e acompanha a estrutura do
 
 ## Tecnologias
 
-<p align="left">
-  <a href="https://www.python.org/"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python" title="Python" width="48" height="48"></a>&nbsp;&nbsp;
-  <a href="https://pytorch.org/"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytorch/pytorch-original.svg" alt="PyTorch" title="PyTorch" width="48" height="48"></a>&nbsp;&nbsp;
-  <a href="https://jupyter.org/"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jupyter/jupyter-original.svg" alt="Jupyter" title="Jupyter" width="48" height="48"></a>&nbsp;&nbsp;
-  <a href="https://matplotlib.org/"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/matplotlib/matplotlib-original.svg" alt="Matplotlib" title="Matplotlib" width="48" height="48"></a>&nbsp;&nbsp;
-  <a href="https://docs.pytest.org/"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pytest/pytest-original.svg" alt="pytest" title="pytest" width="48" height="48"></a>&nbsp;&nbsp;
-  <a href="https://git-scm.com/"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" alt="Git" title="Git" width="48" height="48"></a>&nbsp;&nbsp;
-  <a href="https://code.visualstudio.com/"><img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="VS Code" title="VS Code" width="48" height="48"></a>
-</p>
+[![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
+[![PyTorch](https://img.shields.io/badge/PyTorch-2.3%2B-EE4C2C?logo=pytorch&logoColor=white)](https://pytorch.org/)
+[![tiktoken](https://img.shields.io/badge/tiktoken-0.5%2B-412991)](https://github.com/openai/tiktoken)
+[![Jupyter](https://img.shields.io/badge/Jupyter-Lab%204-F37626?logo=jupyter&logoColor=white)](https://jupyter.org/)
+[![Matplotlib](https://img.shields.io/badge/Matplotlib-3.8%2B-11557C)](https://matplotlib.org/)
+[![pytest](https://img.shields.io/badge/pytest-8.0%2B-0A9EDC?logo=pytest&logoColor=white)](https://docs.pytest.org/)
+[![Git](https://img.shields.io/badge/Git-F05032?logo=git&logoColor=white)](https://git-scm.com/)
 
 | Tecnologia | Uso no projeto |
 |------------|----------------|
