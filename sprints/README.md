@@ -17,8 +17,7 @@ flowchart LR
     D -.-> E["ch06/07<br/>fine-tuning"]
     classDef ok fill:#d9f2d9,stroke:#353,color:#111
     classDef pend fill:#eeeeee,stroke:#555,color:#111,stroke-dasharray: 4 3
-    class A,B,C,D ok
-    class E pend
+    class A,B,C,D,E ok
 ```
 
 ## Índice
@@ -30,7 +29,7 @@ flowchart LR
 | [3](ch03/) | 3 | Self, causal e multi-head attention | [`attention/`](../src/attention/) | 17 | ✅ |
 | [4](ch04/) | 4 | Transformer Block, GPTModel e geração | [`model/`](../src/model/) | 40 | ✅ |
 | [5](ch05/) | 5 | Pré-treinamento, perda e decodificação | [`training/`](../src/training/) | 17 | ✅ |
-| 6-7 | 6 | Fine-tuning (classificação e instruções) | n/a | n/a | ⬜ |
+| 6-7 | 6 | Fine-tuning (classificação e instruções) | [`finetuning/`](../src/finetuning/)| 10 | ✅ |
 
 Clique em um capítulo para ver os entregáveis, o resultado principal e como
 rodar.
