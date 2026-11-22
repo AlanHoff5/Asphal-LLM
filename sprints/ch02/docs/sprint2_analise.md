@@ -1,163 +1,173 @@
-# Sprint 2 - Trabalhando com Dados Textuais
+# Sprint 2 · Análise dos resultados
 
-## 1. Objetivo
+A Sprint 2 transforma texto em tensores que o modelo consegue receber. Este
+documento resume a implementação, os experimentos e responde às 10 perguntas
+da Seção 5 do roteiro usando os números obtidos.
 
-A Sprint 2 transforma texto bruto em tensores que podem ser recebidos por um modelo de linguagem. O pipeline implementado é:
+Todos os experimentos usam o corpus do capítulo,
+[`data/the-verdict.txt`](../../../data/the-verdict.txt): 20.479 caracteres,
+4.690 tokens por palavra (vocabulário de 1.132) e 5.145 tokens BPE.
 
-```text
-Texto
-  ↓
-Tokenização
-  ↓
-Vocabulário e Token IDs
-  ↓
-Sequências de treinamento
-  ↓
-Token Embeddings
-  ↓
-Positional Embeddings
-  ↓
-Lote de dados
-  ↓
-Entrada do Transformer
-```
-
-## 2. Componentes implementados
-
-### Tokenização
-
-`src/data/tokenizer.py` divide o texto usando uma expressão regular que preserva palavras, pontuação e o marcador `--`. A função `load_text()` lê o corpus UTF-8 da CompTIA Security+.
-
-### Vocabulário e Token IDs
-
-`build_vocab()` coleta os tokens únicos, ordena-os e associa cada token a um inteiro. O dicionário permite a relação bidirecional entre token e ID. Os tokens `<|unk|>` e `<|endoftext|>` são adicionados ao vocabulário.
-
-`SimpleTokenizerV1` falha para tokens ausentes. `SimpleTokenizerV2` substitui tokens ausentes por `<|unk|>`. Para BPE, `get_bpe_tokenizer()` usa o vocabulário GPT-2 da biblioteca `tiktoken`.
-
-### Sequências de treinamento
-
-`GPTDatasetV1` transforma a sequência de IDs em janelas de tamanho `max_length`. O alvo é a entrada deslocada em uma posição, pois o modelo aprende a prever o próximo token.
-
-Exemplo:
-
-```text
-entrada: [40, 367, 2885, 1464]
-alvo:    [367, 2885, 1464, 1807]
-```
-
-O parâmetro `stride` controla quanto a janela avança e, portanto, quanto as amostras se sobrepõem.
-
-### Embeddings
-
-`GPTInputEmbeddings` usa duas tabelas `torch.nn.Embedding`: uma para o conteúdo dos tokens e outra para suas posições. A soma das duas produz o vetor de entrada:
-
-```text
-input_embedding = token_embedding + positional_embedding
-```
-
-Para um lote com shape `(batch_size, context_length)` e dimensão `embedding_dim`, a saída possui shape `(batch_size, context_length, embedding_dim)`.
-
-### DataLoader
-
-`create_dataloader_v1()` usa o `GPTDatasetV1` e o `torch.utils.data.DataLoader` para agrupar pares de entrada e alvo em lotes. O Transformer recebe esses lotes depois que os Token IDs passam pela camada de embeddings.
-
-## 3. Respostas técnicas
-
-### Por que o LLM não trabalha diretamente com texto bruto?
-
-As operações da rede neural trabalham com tensores numéricos. Texto bruto possui símbolos discretos e comprimento variável; a tokenização cria unidades manipuláveis e os Token IDs fornecem índices inteiros para as tabelas de embedding.
-
-### Qual é a função do vocabulário?
-
-O vocabulário define o conjunto de tokens conhecidos e a correspondência entre cada token e seu ID. Ele precisa permanecer o mesmo durante treinamento e geração para que um ID continue representando o mesmo token.
-
-### Qual é a diferença entre token e Token ID?
-
-Token é a unidade textual, como uma palavra ou pontuação. Token ID é o número associado a essa unidade no vocabulário. O ID é um índice, não uma representação semântica.
-
-### Por que Token IDs não são usados diretamente como representação semântica?
-
-A distância entre inteiros não representa significado. Por exemplo, os IDs 10 e 11 não precisam ser semanticamente mais próximos que 10 e 500. A camada de embedding aprende vetores densos que podem representar relações úteis para a rede.
-
-### Qual é a função dos embeddings?
-
-Embeddings convertem IDs discretos em vetores de dimensão fixa. Esses vetores são treináveis e formam a representação contínua processada pelas camadas do Transformer.
-
-### Por que representar a posição dos tokens?
-
-A atenção opera sobre os elementos da sequência, mas não fornece sozinha uma noção absoluta de ordem. O positional embedding informa em qual posição cada token aparece. A soma com o token embedding produz a entrada completa.
-
-### Qual é a relação entre contexto e quantidade de amostras?
-
-Para uma sequência com `N` tokens e contexto `L`, avançando `S` posições, aproximadamente:
-
-$$
-\text{amostras} = \left\lfloor\frac{N-L}{S}\right\rfloor + 1
-$$
-
-Um contexto maior produz menos janelas. Um stride menor aumenta a sobreposição e produz mais amostras, mas repete mais conteúdo.
-
-### Qual é o impacto da dimensão do embedding?
-
-A saída passa a ter uma dimensão maior, por exemplo, de `(8, 4, 64)` para `(8, 4, 256)`. A tabela de token embedding possui `vocab_size × embedding_dim` parâmetros. Aumentar essa dimensão pode aumentar a capacidade de representação e também o custo de memória e processamento.
-
-### Qual é a função do DataLoader?
-
-O DataLoader agrupa amostras do Dataset em batches, controla o embaralhamento e pode descartar o último lote incompleto. Isso permite que o treinamento processe várias sequências de forma organizada.
-
-### O que será usado pelo mecanismo de atenção?
-
-A próxima Sprint usará os `input_embeddings` com shape `(batch_size, context_length, embedding_dim)`. Os alvos continuarão sendo Token IDs para calcular a perda da previsão do próximo token.
-
-## 4. Experimentos
-
-Os experimentos do notebook `notebooks/InteligenciaArtificial_SistemasInteligentes.ipynb` variam:
-
-- quantidade de tokens para textos diferentes;
-- tokenização por palavras e BPE;
-- tamanho do contexto;
-- stride e sobreposição;
-- tamanho do batch;
-- dimensão dos embeddings;
-- custo de tokenização.
-
-Para reproduzir o fluxo completo de ponta a ponta (Texto -> Tokens -> Token IDs
--> Dataset -> DataLoader -> Embeddings), execute:
+**Para reproduzir:**
 
 ```powershell
-python sprints/ch02/experiments/fluxo_sprint2.py
+python -m pytest sprints/ch02/tests/ -s -v          # testes com os prints
+python sprints/ch02/experiments/fluxo_sprint2.py    # fluxo de ponta a ponta
+jupyter lab sprints/ch02/notebooks/ch02.ipynb       # experimentos (seção 2.9)
 ```
 
-Para observar especificamente os requisitos 3.1 e 3.2 (tokenização, vocabulário,
-Token IDs, decodificação, tratamento de `<|unk|>` e a amostra do corpus CompTIA),
-execute:
+## 1. Pipeline implementado
 
-```powershell
-python -m pytest sprints/ch02/tests/test_tokenizer_sprint2.py sprints/ch02/tests/test_dataset_sprint2.py -s -v
+| Etapa | Código | Saída |
+|---|---|---|
+| Tokenização | `tokenize()` em [`tokenizer.py`](../../../src/data/tokenizer.py) | lista de tokens (palavras e pontuação) |
+| Vocabulário e Token IDs | `build_vocab()`, `SimpleTokenizerV1/V2` | `{token: id}` e o inverso; `<\|unk\|>` e `<\|endoftext\|>` |
+| BPE | `get_bpe_tokenizer()` (`tiktoken`, GPT-2) | IDs de um vocabulário de 50.257 |
+| Pares entrada/alvo | `GPTDatasetV1` em [`dataset.py`](../../../src/data/dataset.py) | janelas de `max_length`; alvo deslocado 1 posição |
+| Lotes | `create_dataloader_v1()` em [`dataloader.py`](../../../src/data/dataloader.py) | `inputs` e `targets` de formato `(batch, L)` |
+| Embeddings | `GPTInputEmbeddings` em [`embeddings.py`](../../../src/data/embeddings.py) | `token_emb + pos_emb`, formato `(batch, L, dim)` |
+
+Exemplo de par entrada/alvo com BPE e `L = 4`:
+
+```text
+entrada: [  40,  367, 2885, 1464]
+alvo:    [ 367, 2885, 1464, 1807]
 ```
 
-Esses testes exibem, para frases diferentes e para o corpus CompTIA
-(`data/comptia_security_pluse_701/cleaned_data.txt`), o texto original, os tokens
-produzidos, os Token IDs, o texto decodificado, o tamanho do vocabulário e a
-quantidade de tokens, além de verificar o tratamento de palavras desconhecidas.
+## 2. Experimentos
 
-Em uma execução do corpus atual (`cleaned_data.txt`, 682.480 caracteres) foram
-produzidos 110.334 tokens e um vocabulário de 9.291 entradas (tokenização por
-palavras). Na frase `Firewall investiga ataques.`, a palavra `investiga` não
-estava no vocabulário construído a partir de `Firewall bloqueia ataques.` e foi
-convertida para `<|unk|>`.
+Executados na seção 2.9 do [notebook](../notebooks/ch02.ipynb), salvo
+indicação.
 
-Os experimentos de diferentes tamanhos de contexto, lotes, dimensões de
-embedding e quantidade de amostras estão no notebook
-`notebooks/InteligenciaArtificial_SistemasInteligentes.ipynb` (seção 2.9) e
-dependem da implementação de Dataset, DataLoader e embeddings.
+**Exp. 1 · Tokens por texto (BPE)**
 
-Os testes automatizados em `tests/` (`test_tokenizer_sprint2.py`,
-`test_dataset_sprint2.py`, `test_embeddings.py`, `test_dataloader.py`) verificam
-as propriedades estruturais do pipeline. Os valores numéricos dos experimentos
-devem ser obtidos executando as células correspondentes do notebook no ambiente
-configurado.
+| Texto | Caracteres | Tokens BPE | Caracteres por token |
+|---|---:|---:|---:|
+| Frase curta | 23 | 7 | 3,29 |
+| Parágrafo | 500 | 123 | 4,07 |
+| Texto completo | 20.479 | 5.145 | 3,98 |
 
-## 5. Conclusão
+**Exp. 2 · Palavras × BPE na mesma frase**
+("In the sunlit terraces of the palace, Mrs. Gisburn said with pardonable pride.")
 
-A Sprint 2 entrega a preparação dos dados até a representação vetorial com posição. O resultado que seguirá para a Sprint 3 é um lote de embeddings de entrada; a saída esperada mantém a ordem dos tokens e informa ao mecanismo de atenção tanto o conteúdo quanto a posição de cada elemento.
+| Tokenizador | Vocabulário | Tokens |
+|---|---:|---:|
+| Por palavras | 1.132 | 16 |
+| BPE | 50.257 | 21 |
+
+**Exp. 3 · Tamanho do contexto × amostras** (stride = contexto, BPE)
+
+| Contexto `L` | 2 | 4 | 8 | 16 | 32 | 64 | 128 |
+|---|---:|---:|---:|---:|---:|---:|---:|
+| Amostras | 2.572 | 1.286 | 643 | 321 | 160 | 80 | 40 |
+
+**Exp. 4 · Stride × sobreposição** (`L = 32`)
+
+| Stride `S` | 8 | 16 | 32 | 64 |
+|---|---:|---:|---:|---:|
+| Amostras | 640 | 320 | 160 | 80 |
+| Sobreposição | 75% | 50% | 0% | 0%, pula 32 tokens por janela |
+
+**Exp. 5 · Tamanho do lote** (`L = 4`, 1.286 amostras, `drop_last=True`)
+
+| `batch_size` | 1 | 4 | 8 | 16 | 32 |
+|---|---:|---:|---:|---:|---:|
+| Lotes | 1.286 | 321 | 160 | 80 | 40 |
+| Formato de `inputs` | (1, 4) | (4, 4) | (8, 4) | (16, 4) | (32, 4) |
+
+**Exp. 6 · Dimensão do embedding** (vocabulário BPE, lote `(8, 4)`)
+
+| `dim` | Saída | Parâmetros do token embedding | Parâmetros do positional embedding |
+|---:|---|---:|---:|
+| 8 | (8, 4, 8) | 402.056 | 32 |
+| 64 | (8, 4, 64) | 3.216.448 | 256 |
+| 256 | (8, 4, 256) | 12.865.792 | 1.024 |
+| 768 | (8, 4, 768) | 38.597.376 | 3.072 |
+
+**Exp. 7 · Custo de tokenização** (texto completo, média de 20 execuções):
+BPE 2,4 ms; regex por palavras 3,3 ms.
+
+**Exp. 8 · Efeito da posição:** o mesmo Token ID repetido nas posições 0 e 1
+gera token embeddings **iguais**, mas entradas finais **diferentes**. A
+distância entre as duas entradas (21,9) é exatamente a distância entre os
+vetores de posição 0 e 1.
+
+**Fluxo sobre o corpus** (`fluxo_sprint2.py`, tokenizador por palavras,
+`L = S = 8`, `batch_size = 8`): 586 amostras, 73 lotes completos, entrada
+final `(8, 8, 256)`.
+
+## 3. Respostas às perguntas da Sprint
+
+**1. Por que um LLM não pode trabalhar direto com o texto bruto?**
+A rede só faz operações com tensores numéricos. O texto é uma sequência de
+símbolos de tamanho variável. A tokenização o divide em unidades fixas e o
+vocabulário dá um número a cada uma, que serve de índice para a camada de
+embedding. No corpus, 20.479 caracteres viram 5.145 IDs (BPE).
+
+**2. Qual é a função do vocabulário?**
+É o dicionário fixo entre tokens e IDs, nos dois sentidos: `encode` leva o
+texto ao modelo e `decode` traz a saída de volta a texto. Precisa ser o mesmo
+no treino e na geração, senão um ID passaria a significar outro token. O
+vocabulário por palavras tem 1.132 entradas e não conhece palavras fora do
+corpus (viram `<|unk|>`). O do BPE tem 50.257 e nunca precisa de `<|unk|>`.
+
+**3. Qual a diferença entre token e Token ID?**
+Token é o pedaço de texto ("Gisburn", ","). Token ID é a posição dele no
+vocabulário. O token tem significado; o ID é só um índice.
+
+**4. Por que os Token IDs não servem como representação semântica?**
+Os IDs seguem a ordem do vocabulário, não o significado: o ID 10 não é mais
+parecido com o 11 do que com o 500. Se a rede recebesse os inteiros, trataria
+essas diferenças numéricas como se fossem relações reais. Por isso o ID só
+serve para buscar uma linha na tabela de embedding.
+
+**5. Qual é a função dos embeddings?**
+Trocar cada ID por um vetor denso e treinável. Os valores começam aleatórios e
+são ajustados no treino, de modo que tokens usados de forma parecida fiquem
+com vetores próximos. Com `dim = 256`, um lote `(8, 4)` vira `(8, 4, 256)`.
+
+**6. Por que é necessário representar a posição dos tokens?**
+O token embedding depende só do ID: o mesmo token em posições diferentes tem o
+mesmo vetor (Exp. 8). A atenção da Sprint 3 também não sabe a ordem. Sem
+posição, "gato persegue rato" e "rato persegue gato" teriam a mesma
+representação. Somar o positional embedding torna as entradas diferentes
+(distância de 21,9 no Exp. 8) sem mudar o formato do tensor.
+
+**7. Qual a relação entre o tamanho do contexto e a quantidade de amostras?**
+Com `N` tokens, contexto `L` e stride `S`, o `GPTDatasetV1` gera
+
+$$\text{amostras} = \left\lceil \frac{N - L}{S} \right\rceil$$
+
+O alvo precisa de um token a mais que a entrada, por isso a janela para em
+`N − L`. Com stride igual ao contexto, dobrar o contexto corta as amostras
+pela metade (Exp. 3: de 2.572 com `L = 2` para 40 com `L = 128`). Um stride
+menor gera mais amostras, mas repetidas (Exp. 4: 640 amostras com 75% de
+sobreposição). Um stride maior que o contexto desperdiça tokens.
+
+**8. Qual o impacto da dimensão do embedding?**
+Ela define o último eixo do tensor `(batch, L, dim)` e o tamanho da tabela de
+embedding, `vocab × dim`. Com o vocabulário BPE, a tabela vai de 402 mil
+parâmetros (`dim = 8`) para 38,6 milhões (`dim = 768`), crescimento linear
+(Exp. 6). Mais dimensões permitem representações mais ricas, mas aumentam a
+memória e o custo de todas as camadas seguintes, que trabalham com `dim`.
+
+**9. Qual é a função do DataLoader?**
+Agrupar as amostras do Dataset em lotes, embaralhá-las quando pedido e
+descartar o último lote incompleto (`drop_last`). O `batch_size` muda só o
+primeiro eixo (Exp. 5). No exemplo do fluxo, 5 amostras com `batch_size = 2`
+dão 3 lotes, ou 2 com `drop_last=True`. O DataLoader não tokeniza nem calcula
+embeddings: só organiza os pares que o Dataset já preparou.
+
+**10. O que desta Sprint será usado pela atenção na Sprint 3?**
+Os `input_embeddings` de formato `(batch, L, dim)`, que já carregam conteúdo e
+posição. Os `targets` continuam como Token IDs e não entram na atenção: serão
+usados no cálculo da perda, no treino (Cap. 5).
+
+## 4. Conclusão
+
+O pipeline da Sprint 2 produz lotes de entrada e alvo a partir de qualquer
+texto e os converte em vetores com informação de conteúdo e de posição. Os
+experimentos mostram os dois controles principais da preparação dos dados: o
+contexto e o stride definem quantas amostras o texto rende, e a dimensão do
+embedding define o tamanho da representação e o custo do modelo. O formato
+`(batch, L, dim)` é a entrada da atenção na Sprint 3.
