@@ -1,18 +1,18 @@
-"""Demonstra o fluxo completo da Sprint 4 (arquitetura GPT) e roda os
-experimentos pedidos no roteiro: numero de Transformer Blocks, numero de
-heads, dimensao dos embeddings, dimensao da FeedForward, dropout, tamanho
-do contexto e parametros de geracao (temperatura e top-k). Tambem reproduz
-o experimento das conexoes de atalho (secao 4.4) e os Exercicios 4.1-4.3.
+# Demonstra o fluxo completo da Sprint 4 (arquitetura GPT) e roda os
+# experimentos pedidos no roteiro: numero de Transformer Blocks, numero de
+# heads, dimensao dos embeddings, dimensao da FeedForward, dropout, tamanho
+# do contexto e parametros de geracao (temperatura e top-k). Tambem reproduz
+# o experimento das conexoes de atalho (secao 4.4) e os Exercicios 4.1-4.3.
 
-Para cada experimento sao registrados: configuracao usada, numero de
-parametros, memoria dos pesos e tempo medio de um forward na CPU.
+# Para cada experimento sao registrados: configuracao usada, numero de
+# parametros, memoria dos pesos e tempo medio de um forward na CPU.
 
-Uso (a partir da raiz do repositorio):
-    python sprints/ch04/experiments/fluxo_sprint4.py
+# Uso (a partir da raiz do repositorio):
+#    python sprints/ch04/experiments/fluxo_sprint4.py
 
-Os resultados numericos sao salvos em experiments/resultados/sprint4_resultados.json
-e os graficos em experiments/resultados/*.png (requer matplotlib).
-"""
+# Os resultados numericos sao salvos em experiments/resultados/sprint4_resultados.json
+# e os graficos em experiments/resultados/*.png (requer matplotlib).
+
 
 from pathlib import Path
 import json
@@ -55,17 +55,17 @@ SEQ_LEN = 64
 torch.set_num_threads(max(1, torch.get_num_threads()))
 
 
-# ---------------------------------------------------------------------------
-# Utilitarios
-# ---------------------------------------------------------------------------
+# -------------
+# Utilitarios |
+# -------------
 
 def tempo_forward_ms(modelo, batch_size=BATCH_SIZE, seq_len=SEQ_LEN, repeticoes=7):
-    """Tempo (ms) de um forward em modo de inferencia, na CPU.
+    # Tempo (ms) de um forward em modo de inferencia, na CPU.
 
-    Usa o MENOR tempo entre as repeticoes (apos 2 de aquecimento): e a
-    medida menos afetada por outros processos rodando na maquina. Os
-    valores absolutos dependem do computador; o que importa e a tendencia.
-    """
+    # Usa o MENOR tempo entre as repeticoes (apos 2 de aquecimento): e a
+    # medida menos afetada por outros processos rodando na maquina. Os
+    # valores absolutos dependem do computador; o que importa e a tendencia.
+    
     modelo.eval()
     ids = torch.randint(0, modelo.cfg["vocab_size"], (batch_size, seq_len))
     tempos = []
@@ -108,9 +108,9 @@ def tabela(linhas, colunas):
                         for c, w in zip(colunas, larguras)))
 
 
-# ---------------------------------------------------------------------------
-# Fluxo basico: dimensoes dos tensores dentro do modelo
-# ---------------------------------------------------------------------------
+# -------------------------------------------------------
+# Fluxo basico: dimensoes dos tensores dentro do modelo |
+# -------------------------------------------------------
 
 def mostrar_fluxo_basico():
     titulo("FLUXO BASICO DA SPRINT 4 - DIMENSOES DOS TENSORES (GPT_CONFIG_MINI)")
@@ -162,9 +162,9 @@ def mostrar_fluxo_basico():
     return logits
 
 
-# ---------------------------------------------------------------------------
-# Experimento 1 - conexoes de atalho (secao 4.4)
-# ---------------------------------------------------------------------------
+# ------------------------------------------------
+# Experimento 1 - conexoes de atalho (secao 4.4) |
+# ------------------------------------------------
 
 class ExampleDeepNeuralNetwork(nn.Module):
     def __init__(self, layer_sizes, use_shortcut):
@@ -208,9 +208,9 @@ def experimento_conexoes_de_atalho():
     return resultado
 
 
-# ---------------------------------------------------------------------------
-# Experimentos 2 a 5 - parametros da arquitetura
-# ---------------------------------------------------------------------------
+# ------------------------------------------------
+# Experimentos 2 a 5 - parametros da arquitetura |
+# ------------------------------------------------
 
 def experimento_numero_de_blocos():
     titulo("EXPERIMENTO 2 - NUMERO DE TRANSFORMER BLOCKS (n_layers)")
@@ -263,9 +263,9 @@ def experimento_dimensao_da_feedforward():
     return linhas
 
 
-# ---------------------------------------------------------------------------
-# Experimento 6 - dropout
-# ---------------------------------------------------------------------------
+# -------------------------
+# Experimento 6 - dropout |
+# -------------------------
 
 def experimento_dropout():
     titulo("EXPERIMENTO 6 - DROPOUT (modo treino x modo avaliacao)")
@@ -307,9 +307,9 @@ def experimento_dropout():
     return linhas
 
 
-# ---------------------------------------------------------------------------
-# Experimento 7 - tamanho do contexto
-# ---------------------------------------------------------------------------
+# -------------------------------------
+# Experimento 7 - tamanho do contexto |
+# -------------------------------------
 
 def experimento_tamanho_do_contexto():
     titulo("EXPERIMENTO 7 - TAMANHO DO CONTEXTO")
@@ -337,9 +337,9 @@ def experimento_tamanho_do_contexto():
     return linhas
 
 
-# ---------------------------------------------------------------------------
-# Experimento 8 - geracao: gulosa, temperatura e top-k
-# ---------------------------------------------------------------------------
+# ------------------------------------------------------
+# Experimento 8 - geracao: gulosa, temperatura e top-k |
+# ------------------------------------------------------
 
 def entropia(probas):
     p = probas[probas > 0]
@@ -424,9 +424,9 @@ def experimento_geracao():
     return linhas
 
 
-# ---------------------------------------------------------------------------
-# Experimento 9 - GPT-2 124M real, weight tying e Exercicio 4.2
-# ---------------------------------------------------------------------------
+# ---------------------------------------------------------------
+# Experimento 9 - GPT-2 124M real, weight tying e Exercicio 4.2 |
+# ---------------------------------------------------------------
 
 def experimento_gpt2_e_tamanhos():
     titulo("EXPERIMENTO 9 - GPT-2 SMALL, WEIGHT TYING E EXERCICIO 4.2")
@@ -466,9 +466,9 @@ def experimento_gpt2_e_tamanhos():
                           "partes": partes, "tamanhos": linhas}
 
 
-# ---------------------------------------------------------------------------
-# Experimento 10 - integracao com o pipeline das Sprints 2 e 3
-# ---------------------------------------------------------------------------
+# --------------------------------------------------------------
+# Experimento 10 - integracao com o pipeline das Sprints 2 e 3 |
+# --------------------------------------------------------------
 
 def experimento_pipeline_completo():
     titulo("EXPERIMENTO 10 - PIPELINE COMPLETO: TEXTO -> DATALOADER -> GPT -> LOGITS")
@@ -493,9 +493,9 @@ def experimento_pipeline_completo():
                               "perda_inicial": round(perda, 3)}
 
 
-# ---------------------------------------------------------------------------
-# Graficos
-# ---------------------------------------------------------------------------
+# ----------
+# Graficos |
+# ----------
 
 def salvar_graficos():
     try:
