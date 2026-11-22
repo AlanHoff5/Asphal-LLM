@@ -1,4 +1,4 @@
-"""Demonstra o fluxo completo de dados da Sprint 2."""
+# Demonstra o fluxo completo de dados da Sprint 2.
 
 from pathlib import Path
 import sys
@@ -116,12 +116,12 @@ def mostrar_fluxo():
 
 
 def mostrar_fluxo_corpus_real():
-    """Repete o mesmo fluxo da Sprint 2, agora sobre o corpus real do
-    projeto (Seguranca da Informacao / CompTIA Security+), em vez do texto
-    de exemplo. So imprime estatisticas resumidas, ja que o corpus real tem
-    dezenas de milhares de tokens - dar print no vocabulario inteiro, como
-    mostrar_fluxo() faz com o texto pequeno, nao seria legivel aqui.
-    """
+    # Repete o mesmo fluxo da Sprint 2, agora sobre o corpus real do
+    # projeto (Seguranca da Informacao / CompTIA Security+), em vez do texto
+    # de exemplo. So imprime estatisticas resumidas, ja que o corpus real tem
+    # dezenas de milhares de tokens - dar print no vocabulario inteiro, como
+    # mostrar_fluxo() faz com o texto pequeno, nao seria legivel aqui.
+    
     if not CORPUS_COMPTIA.exists():
         print("\nCORPUS REAL (CompTIA Security+) AUSENTE")
         print(f"Esperado em: {CORPUS_COMPTIA}")
