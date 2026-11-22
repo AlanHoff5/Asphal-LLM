@@ -1,0 +1,120 @@
+{
+  "tensores": {
+    "shapes": {
+      "0d": [],
+      "1d": [
+        3
+      ],
+      "2d": [
+        2,
+        2
+      ],
+      "3d": [
+        2,
+        2,
+        2
+      ]
+    },
+    "from_numpy_compartilha_memoria": true,
+    "torch_tensor_copia": true,
+    "matmul": [
+      [
+        14,
+        32
+      ],
+      [
+        32,
+        77
+      ]
+    ]
+  },
+  "autograd": {
+    "perda": 0.0851878821849823,
+    "dL_dw1": -0.08982629328966141,
+    "dL_db": -0.08166026324033737,
+    "manual_dL_dw1": -0.089826300740242,
+    "manual_dL_db": -0.08166027069091797
+  },
+  "rede": {
+    "parametros": 2213,
+    "logits": [
+      -0.12617386877536774,
+      0.10796502977609634,
+      -0.17920434474945068
+    ],
+    "softmax": [
+      0.3113159239292145,
+      0.39344730973243713,
+      0.29523682594299316
+    ]
+  },
+  "dataloader": {
+    "lotes_sem_drop_last": 3,
+    "lotes_com_drop_last": 2
+  },
+  "treino": {
+    "perdas": [
+      0.7487356662750244,
+      0.6450306177139282,
+      0.44225579500198364,
+      0.12562280893325806,
+      0.026905599981546402,
+      0.0043272399343550205
+    ],
+    "acuracia_treino": 1.0,
+    "acuracia_teste": 1.0
+  },
+  "salvar_carregar": {
+    "bytes": 5885,
+    "saidas_identicas": true
+  },
+  "gpu": {
+    "dispositivo": "CPU (2 threads)",
+    "acuracia_teste": 1.0
+  },
+  "exp_taxa_de_aprendizado": {
+    "0.005": {
+      "perda_inicial": 0.7487356662750244,
+      "perda_final": 0.5977048873901367,
+      "acuracia_teste": 1.0
+    },
+    "0.05": {
+      "perda_inicial": 0.7487356662750244,
+      "perda_final": 0.0787215307354927,
+      "acuracia_teste": 1.0
+    },
+    "0.5": {
+      "perda_inicial": 0.7487356662750244,
+      "perda_final": 0.001594828674569726,
+      "acuracia_teste": 1.0
+    },
+    "5.0": {
+      "perda_inicial": 0.7487356662750244,
+      "perda_final": 6.241329193115234,
+      "acuracia_teste": 0.5
+    }
+  },
+  "exp_tamanho_do_lote": {
+    "1": {
+      "lotes_por_epoca": 5,
+      "passos": 15,
+      "perda_final": 0.011149367317557335,
+      "acuracia_teste": 1.0
+    },
+    "2": {
+      "lotes_por_epoca": 2,
+      "passos": 6,
+      "perda_final": 0.0043272399343550205,
+      "acuracia_teste": 1.0
+    },
+    "5": {
+      "lotes_por_epoca": 1,
+      "passos": 3,
+      "perda_final": 0.13447554409503937,
+      "acuracia_teste": 1.0
+    }
+  },
+  "exp_cpu_vs_gpu": {
+    "cpu_ms": 61.306083000033595
+  }
+}
