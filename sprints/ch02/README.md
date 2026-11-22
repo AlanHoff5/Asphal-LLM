@@ -17,8 +17,7 @@ flowchart LR
     F --> G["Atenção<br/>Sprint 3"]
     classDef s fill:#cde4ff,stroke:#335,color:#111
     classDef n fill:#eeeeee,stroke:#555,color:#111,stroke-dasharray: 4 3
-    class A,B,C,D,E,F s
-    class G n
+    class A,B,C,D,E,F,G s
 ```
 
 ## Entregáveis
