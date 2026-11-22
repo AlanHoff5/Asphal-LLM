@@ -1,5 +1,5 @@
 # Chapter 3 - Build a Large Language Model (from scratch) - Sebastian Raschka
-# Asphal LLM - causal (masked) self-attention, em lote
+# Asphal LLM 
 
 # 3.5
 
@@ -8,28 +8,27 @@ from torch import nn
 
 
 class CausalAttention(nn.Module):
-    """Self-attention causal, com dropout, operando em lotes (secao 3.5.2).
+    # Self-attention causal, com dropout, operando em lotes (secao 3.5.2).
 
-    Duas diferencas em relacao a SelfAttention_v2:
+    # Duas diferencas em relacao a SelfAttention_v2:
 
-    1) Mascara causal: para gerar texto token a token (Next-Word
-       Prediction), o token na posicao i so pode "ver" os tokens de 0 a i,
-       nunca os que vem depois dele - senao o modelo estaria "espiando" a
-       resposta durante o treinamento. Isso e implementado zerando, antes
-       do softmax, todas as posicoes acima da diagonal principal da matriz
-       de scores (substituindo por -infinito, para que o softmax as
-       transforme em peso 0).
+    # 1) Mascara causal: para gerar texto token a token (Next-Word
+    #    Prediction), o token na posicao i so pode "ver" os tokens de 0 a i,
+    #    nunca os que vem depois dele - senao o modelo estaria "espiando" a
+    #    resposta durante o treinamento. Isso e implementado zerando, antes
+    #    do softmax, todas as posicoes acima da diagonal principal da matriz
+    #    de scores (substituindo por -infinito, para que o softmax as
+    #    transforme em peso 0).
 
-    2) Dropout: zera aleatoriamente uma fracao dos pesos de atencao durante
-       o treinamento (nao durante avaliacao/inferencia), o que evita que o
-       modelo dependa demais de uma unica conexao token-a-token especifica
-       (overfitting).
+    # 2) Dropout: zera aleatoriamente uma fracao dos pesos de atencao durante
+    #    o treinamento (nao durante avaliacao/inferencia), o que evita que o
+    #    modelo dependa demais de uma unica conexao token-a-token especifica
+    #    (overfitting).
 
-    Tambem passa a operar sobre um LOTE de sequencias de uma vez, shape
-    (batch_size, num_tokens, d_in) - o mesmo formato que sai do
-    GPTInputEmbeddings do Capitulo 2 - em vez de uma sequencia isolada como
-    a SelfAttention_v1/v2 do inicio do capitulo.
-    """
+    # Tambem passa a operar sobre um LOTE de sequencias de uma vez, shape
+    # (batch_size, num_tokens, d_in) - o mesmo formato que sai do
+    # GPTInputEmbeddings do Capitulo 2 - em vez de uma sequencia isolada como
+    # a SelfAttention_v1/v2 do inicio do capitulo.
 
     def __init__(self, d_in, d_out, context_length, dropout=0.0, qkv_bias=False):
         super().__init__()
