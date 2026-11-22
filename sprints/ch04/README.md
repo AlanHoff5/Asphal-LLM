@@ -1,5 +1,7 @@
 # Capítulo 4 — Implementando o Modelo GPT
 
+Status: ✅ concluída
+
 > Sprint 4 do projeto **Asphal-LLM** · continua a partir do [Capítulo 3](../ch03/)
 
 ```mermaid

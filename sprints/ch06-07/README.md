@@ -1,5 +1,7 @@
 # Capítulo 6 e 7 — Fine-Tuning para Tarefas Específicas
 
+Status: ✅ concluída
+
 > Sprint 6 do projeto **Asphal-LLM** · continua a partir do [Capítulo 5](../ch05/)
 
 ```mermaid
