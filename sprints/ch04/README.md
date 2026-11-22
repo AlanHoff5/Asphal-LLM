@@ -1,43 +1,101 @@
-# Glossário — Capítulo 4: Implementando o Modelo GPT
+# Capítulo 4 — Implementando o Modelo GPT
 
-Termos na ordem em que aparecem no capítulo.
+> Sprint 4 do projeto **Asphal-LLM** · continua a partir do [Capítulo 3](../ch03/)
 
----
+```mermaid
+flowchart LR
+  E["Token + Positional\nEmbeddings\nSprint 2"] --> D["Dropout"]
+  D --> TB["Transformer Block\n× n_layers\n4.2 – 4.4"]
+  TB --> LN["LayerNorm\nfinal"]
+  LN --> LH["LM Head\n(logits)\n4.5"]
+  LH --> G["Geração\nautoregressiva\n4.7"]
 
-**Transformer** — sem tradução: Arquitetura de rede neural baseada em atenção, criada em 2017. O GPT usa só o lado decoder (geração), sem encoder.
+  classDef done fill:#2d6a4f,color:#fff,stroke:none
+  classDef next fill:#1b4332,color:#ccc,stroke:none,stroke-dasharray:4
+  class D,TB,LN,LH,G done
+```
 
-**Transformer Block** — Bloco Transformer: Unidade que se repete N vezes no GPT. Cada bloco aplica LayerNorm → Multi-Head Attention → atalho, depois LayerNorm → FeedForward → atalho. No GPT-2 small, 12 blocos empilhados; cada um tem 7.085.568 parâmetros.
+## Estrutura
 
-**Layer Normalization (LayerNorm)** — Normalização de Camada: Ajusta cada vetor de token para média 0 e variância 1, depois aplica scale e shift aprendidos. Aparece duas vezes por bloco e uma vez ao final. Mantém os valores em escala estável durante o treino.
+```
+ch04/
+├── README.md
+├── glossario/ch04.md                       # 17 termos do capítulo
+├── docs/sprint4_analise.md                 # análise técnica + respostas
+├── notebooks/ch04.ipynb                    # notebook executado (4.1 → 4.7)
+├── experiments/
+│   ├── fluxo_sprint4.py                    # demo + 7 experimentos
+│   └── resultados/sprint4_resultados.json
+└── tests/
+    ├── test_layer_norm.py                  # seção 4.2
+    ├── test_feed_forward.py               # seção 4.3
+    ├── test_transformer_block.py          # seção 4.4
+    ├── test_gpt_model.py                  # seção 4.5
+    └── test_generation.py                 # seções 4.6 e 4.7
+```
 
-**Residual Connection / Shortcut Connection** — Conexão Residual / Atalho: Soma a entrada com a saída de cada sub-camada: `x + camada(x)`. Cria um caminho curto para o gradiente e preserva a informação original. Só funciona porque entrada e saída têm sempre 768 dimensões.
+O código reutilizável fica em [`src/model/`](../../src/model/) — será aproveitado pelo treinamento na Sprint 5.
 
-**Vanishing Gradient** — Desaparecimento do Gradiente: Em redes profundas, o gradiente encolhe a cada camada ao voltar. As conexões residuais e a LayerNorm são as principais defesas contra esse problema no GPT.
+## Configurações usadas
 
-**FeedForward Network** — Rede Feed-Forward: Duas camadas lineares com GELU no meio. Expande o vetor de 768 → 3.072 e volta para 768. Opera em cada token independentemente e tem 4.722.432 parâmetros no GPT-2 small.
+| Config | vocab | context | emb_dim | heads | layers | Parâmetros |
+|---|---:|---:|---:|---:|---:|---:|
+| `GPT_CONFIG_124M` (GPT-2 small) | 50.257 | 1.024 | 768 | 12 | 12 | 163.009.536 |
+| `GPT_CONFIG_MINI` (projeto) | 50.257 | 128 | 128 | 4 | 4 | 13.673.984 |
 
-**GELU** (Gaussian Error Linear Unit): Função de ativação do GPT-2. Parecida com ReLU, mas suave para valores negativos (não zera, retorna um valor pequeno negativo). Mantém gradiente nos neurônios negativos, ajudando o treino.
+## Como rodar
 
-**Dropout** — sem tradução: Zera aleatoriamente uma fração das unidades durante o treino. No GPT aparece três lugares: após os embeddings, nos pesos de atenção e antes de cada atalho. Desligado em `.eval()`.
+```bash
+# Testes
+python -m pytest sprints/ch04/tests/ -v
 
-**Logits** — sem tradução: Saída da última camada do modelo — um número por palavra do vocabulário por posição. Quanto maior, mais provável aquela palavra ser a próxima. Ainda não são probabilidades (não somam 1).
+# Experimentos + resultados JSON
+python sprints/ch04/experiments/fluxo_sprint4.py
+```
 
-**Softmax**: Converte logits em probabilidades (positivos, somam 1). Usado na geração para sortear a próxima palavra e dentro da atenção (capítulo 3).
+## O que foi implementado
 
-**Language Model Head (LM Head)** — Cabeça do Modelo de Linguagem: Camada linear final que transforma o vetor de 768 dimensões em 50.257 logits (um por token do vocabulário). Sem bias. No GPT-2 124M tem 38.597.376 parâmetros (~24% do modelo).
+<details>
+<summary>4.2 Layer Normalization</summary>
 
-**Weight Tying** — Compartilhamento de Pesos: Usar a mesma matriz para o embedding de tokens e para o LM Head. Reduz parâmetros de 163M para 124M. O livro não usa no capítulo 4, mas carrega com weight tying no capítulo 5.
+`LayerNorm` — normaliza cada vetor de token para média 0 e variância 1, depois aplica scale e shift aprendidos. Aparece antes de cada sub-camada e ao final do modelo.
 
-**Autoregressive Generation** — Geração Autoregressiva: Gera um token de cada vez: prevê o próximo, anexa ao texto, repete. Usa só os logits da última posição (a única que viu toda a sequência, por causa da máscara causal).
+</details>
 
-**Greedy Decoding** — Decodificação Gulosa: Escolhe sempre o token com maior logit (`argmax`). Rápido e determinístico, mas tende a gerar textos repetitivos.
+<details>
+<summary>4.3 FeedForward + GELU</summary>
 
-**Temperature** — Temperatura: Divide os logits antes do softmax. Valor < 1 concentra a distribuição (mais previsível); valor > 1 achata (mais variado). Temperatura → 0 equivale à decodificação gulosa.
+`FeedForward` — duas lineares com GELU no meio. Expande 768 → 3.072 → 768.  
+`GELU` — ativação suave que não zera negativos, mantendo gradiente em todos os neurônios.
 
-**Top-k Sampling** — Amostragem Top-k: Mantém só os k tokens com maiores logits; descarta o resto (logit = −∞). Usado junto com temperatura para equilibrar variedade e coerência.
+</details>
 
-**Inference** — Inferência: Usar o modelo para prever sem atualizar pesos. Requer `model.eval()` (desliga dropout) e `torch.no_grad()` (sem gradientes). É o contrário do treinamento (capítulo 5).
+<details>
+<summary>4.4 Transformer Block + conexões residuais</summary>
 
----
+`TransformerBlock` — LayerNorm → MHA → atalho, LayerNorm → FF → atalho.  
+Conexões residuais (`x + camada(x)`) resolvem o desaparecimento do gradiente e preservam a informação original.
 
-*17 termos — Capítulo 4 do livro Build a Large Language Model (From Scratch).*
+</details>
+
+<details>
+<summary>4.5 – 4.7 Modelo GPT completo + geração</summary>
+
+`GPTModel` — embeddings → dropout → N blocos → LayerNorm → LM Head.  
+`generate` — geração autoregressiva com temperatura e top-k.  
+`aplicar_top_k` — descarta tokens fora do top-k antes do softmax.
+
+</details>
+
+## Resultados dos testes
+
+| Suite | Testes |
+|---|---|
+| `test_layer_norm.py` | 4 |
+| `test_feed_forward.py` | 7 |
+| `test_transformer_block.py` | 5 |
+| `test_gpt_model.py` | 10 |
+| `test_generation.py` | 10 |
+| **Total** | **36** |
+
+Detalhes numéricos e respostas conceituais → [`docs/sprint4_analise.md`](docs/sprint4_analise.md)
