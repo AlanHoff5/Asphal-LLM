@@ -1,5 +1,5 @@
 # Chapter 3 - Build a Large Language Model (from scratch) - Sebastian Raschka
-# Asphal LLM - multi-head attention
+# Asphal LLM 
 
 # 3.6
 
@@ -10,21 +10,20 @@ from src.attention.causal_attention import CausalAttention
 
 
 class MultiHeadAttentionWrapper(nn.Module):
-    """Multi-head attention "ingenua": varias CausalAttention em paralelo,
-    concatenadas no final (secao 3.6.1).
+    # Multi-head attention "ingenua": varias CausalAttention em paralelo,
+    # concatenadas no final (secao 3.6.1).
 
-    Cada "cabeca" e uma CausalAttention independente, com seu proprio
-    conjunto de pesos Query/Key/Value. Cada uma aprende a prestar atencao
-    em um aspecto diferente da sequencia (uma pode aprender relacoes
-    sintaticas, outra relacoes semanticas, por exemplo), e os resultados de
-    todas sao concatenados lado a lado no final.
+    # Cada "cabeca" e uma CausalAttention independente, com seu proprio
+    # conjunto de pesos Query/Key/Value. Cada uma aprende a prestar atencao
+    # em um aspecto diferente da sequencia (uma pode aprender relacoes
+    # sintaticas, outra relacoes semanticas, por exemplo), e os resultados de
+    # todas sao concatenados lado a lado no final.
 
-    Essa versao e clara pedagogicamente, mas ineficiente: roda `num_heads`
-    modulos separados em sequencia (um loop Python). A MultiHeadAttention
-    abaixo (secao 3.6.2) calcula a mesma coisa com uma unica matriz de
-    pesos por Query/Key/Value, processando todas as cabecas em paralelo via
-    operacoes tensoriais - e a versao usada dali em diante no projeto.
-    """
+    # Essa versao e clara pedagogicamente, mas ineficiente: roda `num_heads`
+    # modulos separados em sequencia (um loop Python). A MultiHeadAttention
+    # abaixo (secao 3.6.2) calcula a mesma coisa com uma unica matriz de
+    # pesos por Query/Key/Value, processando todas as cabecas em paralelo via
+    # operacoes tensoriais - e a versao usada dali em diante no projeto.
 
     def __init__(self, d_in, d_out, context_length, dropout=0.0, num_heads=2, qkv_bias=False):
         super().__init__()
@@ -43,21 +42,20 @@ class MultiHeadAttentionWrapper(nn.Module):
 
 
 class MultiHeadAttention(nn.Module):
-    """Multi-head attention eficiente, com pesos "divididos" (secao 3.6.2).
+    # Multi-head attention eficiente, com pesos "divididos" (secao 3.6.2).
 
-    Em vez de `num_heads` conjuntos separados de W_query/W_key/W_value (um
-    modulo CausalAttention por cabeca), usa UMA UNICA camada nn.Linear por
-    Query/Key/Value, com saida de tamanho d_out. Essa saida e entao
-    reorganizada (view + transpose) em `num_heads` fatias de tamanho
-    head_dim = d_out / num_heads, processadas em paralelo por operacoes de
-    tensor - sem nenhum loop Python.
+    # Em vez de `num_heads` conjuntos separados de W_query/W_key/W_value (um
+    # modulo CausalAttention por cabeca), usa UMA UNICA camada nn.Linear por
+    # Query/Key/Value, com saida de tamanho d_out. Essa saida e entao
+    # reorganizada (view + transpose) em `num_heads` fatias de tamanho
+    # head_dim = d_out / num_heads, processadas em paralelo por operacoes de
+    # tensor - sem nenhum loop Python.
 
-    E matematica e conceitualmente equivalente a MultiHeadAttentionWrapper
-    (mesma ideia: varias cabecas aprendendo aspectos diferentes da
-    sequencia), so que mais eficiente e o jeito como bibliotecas reais de
-    LLM (incluindo o proprio GPT-2/3) implementam multi-head attention.
-    Esta e a versao que sera reaproveitada no Transformer Block da Sprint 4.
-    """
+    # E matematica e conceitualmente equivalente a MultiHeadAttentionWrapper
+    # (mesma ideia: varias cabecas aprendendo aspectos diferentes da
+    # sequencia), so que mais eficiente e o jeito como bibliotecas reais de
+    # LLM (incluindo o proprio GPT-2/3) implementam multi-head attention.
+    # Esta e a versao que sera reaproveitada no Transformer Block da Sprint 4.
 
     def __init__(self, d_in, d_out, context_length, dropout=0.0, num_heads=2, qkv_bias=False):
         super().__init__()
