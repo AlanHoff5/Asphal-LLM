@@ -191,7 +191,7 @@ exemplos) a qualidade melhora muito mais.
 ## 6. Integração com as Sprints anteriores
 
 ```
-Sprint 2: BPE tokenizer (tiktoken) ──────────────────┐
+Sprint 2: BPE tokenizer (tiktoken) ───────────────────┐
 Sprint 2: GPTDatasetV1, create_dataloader_v1          │  reutilizados
 Sprint 3: MultiHeadAttention (causal, multi-head)     │  sem alteração
 Sprint 4: GPTModel (TransformerBlock × 12)            │
