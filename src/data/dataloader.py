@@ -1,5 +1,5 @@
 # Chapter 2 - Build a Large Language Model (from scratch) - Sebastian Raschka
-# Asphal LLM - DataLoader module
+# Asphal LLM
 
 # 3.6
 
