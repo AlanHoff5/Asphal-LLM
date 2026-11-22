@@ -1,3 +1,8 @@
+# Chapter 2 - Build a Large Language Model (from scratch) - Sebastian Raschka
+# Asphal LLM
+
+# 3.4 e 3.5
+
 import torch
 from torch import nn
 
