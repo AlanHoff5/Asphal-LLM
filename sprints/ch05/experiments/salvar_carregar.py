@@ -1,18 +1,18 @@
-"""Sprint 5 - Entregavel 6: salvamento e carregamento dos pesos (secao 5.4).
+# Sprint 5 - Entregavel 6: salvamento e carregamento dos pesos (secao 5.4).
 
-Usa o modelo salvo pelo treino do livro (models/ch05/treino_124m.pth) e mostra:
+# Usa o modelo salvo pelo treino do livro (models/ch05/treino_124m.pth) e mostra:
 
-  Parte 1  o que tem dentro do arquivo salvo
-  Parte 2  carregar o modelo e conferir que ele e O MESMO do fim do treino:
-           - a perda de validacao recalculada bate com a registrada no JSON
-           - o texto gerado (gulosa) e identico a ultima amostra do treino
-  Parte 3  tamanho do arquivo so com os pesos x pesos + otimizador
-  Parte 4  continuar o treino por mais 1 epoca a partir do arquivo
+#  Parte 1  o que tem dentro do arquivo salvo
+#  Parte 2  carregar o modelo e conferir que ele e O MESMO do fim do treino:
+#           - a perda de validacao recalculada bate com a registrada no JSON
+#           - o texto gerado (gulosa) e identico a ultima amostra do treino
+#  Parte 3  tamanho do arquivo so com os pesos x pesos + otimizador
+#  Parte 4  continuar o treino por mais 1 epoca a partir do arquivo
 
-Uso (a partir da raiz do repositorio, depois de rodar treino_modelo.py):
-    python sprints/ch05/experiments/salvar_carregar.py
-    python sprints/ch05/experiments/salvar_carregar.py --modelo models/ch05/outro.pth --resultado resultados/outro.json
-"""
+# Uso (a partir da raiz do repositorio, depois de rodar treino_modelo.py):
+#    python sprints/ch05/experiments/salvar_carregar.py
+#    python sprints/ch05/experiments/salvar_carregar.py --modelo models/ch05/outro.pth --resultado resultados/outro.json
+
 
 from pathlib import Path
 import argparse

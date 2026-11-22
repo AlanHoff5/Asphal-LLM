@@ -1,34 +1,33 @@
-"""Sprint 5 - Entregavel 4: experimentos de treinamento.
+# Sprint 5 - Entregavel 4: experimentos de treinamento.
 
-Roda varios treinos em sequencia, mudando UM parametro de cada vez em
-relacao ao treino do livro (baseline), e monta a comparacao:
+# Roda varios treinos em sequencia, mudando UM parametro de cada vez em
+# relacao ao treino do livro (baseline), e monta a comparacao:
 
-    exp01_baseline            treino do livro (lr 0.0004, 10 epocas, dropout 0.1, wd 0.1)
-    exp02_lr_alta             taxa de aprendizado 0.001
-    exp03_lr_baixa            taxa de aprendizado 0.0001
-    exp04_30_epocas           30 epocas (mais overfitting?)
-    exp05_sem_regularizacao   sem dropout e sem weight decay
-    exp06_warmup_cosine_clip  lr 0.001 com warmup, cosine decay e gradient clipping (apendice D)
-    exp07_modelo_mini         modelo pequeno do projeto (GPT_CONFIG_MINI)
-    exp08_modelo_small        modelo intermediario (~30M parametros)
+#    exp01_baseline            treino do livro (lr 0.0004, 10 epocas, dropout 0.1, wd 0.1)
+#    exp02_lr_alta             taxa de aprendizado 0.001
+#    exp03_lr_baixa            taxa de aprendizado 0.0001
+#    exp04_30_epocas           30 epocas (mais overfitting?)
+#    exp05_sem_regularizacao   sem dropout e sem weight decay
+#    exp06_warmup_cosine_clip  lr 0.001 com warmup, cosine decay e gradient clipping (apendice D)
+#    exp07_modelo_mini         modelo pequeno do projeto (GPT_CONFIG_MINI)
+#    exp08_modelo_small        modelo intermediario (~30M parametros)
 
-Cada experimento roda o treino_modelo.py em um processo separado (assim a
-memoria da GPU e liberada entre um e outro). Os pesos NAO sao salvos aqui
-(cada arquivo do 124M tem ~2 GB); o modelo salvo para os Entregaveis 5 e 6
-e o models/ch05/treino_124m.pth.
+# Cada experimento roda o treino_modelo.py em um processo separado (assim a
+# memoria da GPU e liberada entre um e outro). Os pesos NAO sao salvos aqui
+# (cada arquivo do 124M tem ~2 GB); o modelo salvo para os Entregaveis 5 e 6
+# e o models/ch05/treino_124m.pth.
 
-Uso (a partir da raiz do repositorio):
-    python sprints/ch05/experiments/experimentos_treino.py            # roda o que falta
-    python sprints/ch05/experiments/experimentos_treino.py --refazer  # roda tudo de novo
-    python sprints/ch05/experiments/experimentos_treino.py --so exp02_lr_alta exp03_lr_baixa
-    python sprints/ch05/experiments/experimentos_treino.py --so-resumo  # so refaz a tabela
+# Uso (a partir da raiz do repositorio):
+#    python sprints/ch05/experiments/experimentos_treino.py            # roda o que falta
+#    python sprints/ch05/experiments/experimentos_treino.py --refazer  # roda tudo de novo
+#    python sprints/ch05/experiments/experimentos_treino.py --so exp02_lr_alta exp03_lr_baixa
+#    python sprints/ch05/experiments/experimentos_treino.py --so-resumo  # so refaz a tabela
 
-Saidas em experiments/resultados/:
-    expNN_*.json / .png              resultado de cada experimento
-    experimentos_resumo.md           tabela comparativa + amostras de texto
-    comparacao_validacao.png         perda de validacao de todos os experimentos
-    comparacao_treino.png            perda de treino de todos os experimentos
-"""
+# Saidas em experiments/resultados/:
+#    expNN_*.json / .png              resultado de cada experimento
+#    experimentos_resumo.md           tabela comparativa + amostras de texto
+#    comparacao_validacao.png         perda de validacao de todos os experimentos
+#    comparacao_treino.png            perda de treino de todos os experimentos
 
 from pathlib import Path
 import argparse
@@ -71,7 +70,7 @@ def rodar(nome, extras):
 
 
 def avaliar_overfitting(r):
-    """Leitura simples do overfitting a partir das perdas."""
+    # Leitura simples do overfitting a partir das perdas.
     p = r["perdas"]
     gap = p["validacao_final"] - p["treino_final"]
     subiu = p["validacao_final"] - p["melhor_validacao"]["val_loss"]

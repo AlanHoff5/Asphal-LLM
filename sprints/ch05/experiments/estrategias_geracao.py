@@ -1,28 +1,28 @@
-"""Sprint 5 - Entregavel 5: estrategias de geracao de texto (secao 5.3).
+# Sprint 5 - Entregavel 5: estrategias de geracao de texto (secao 5.3).
 
-Compara a escolha do proximo token por:
-    gulosa (greedy)        sempre o token mais provavel (argmax)
-    amostragem             sorteio pelas probabilidades (torch.multinomial)
-    temperatura            divide os logits antes do softmax (T<1 concentra, T>1 espalha)
-    top-k                  so os k tokens mais provaveis podem ser sorteados
+# Compara a escolha do proximo token por:
+#    gulosa (greedy)        sempre o token mais provavel (argmax)
+#    amostragem             sorteio pelas probabilidades (torch.multinomial)
+#    temperatura            divide os logits antes do softmax (T<1 concentra, T>1 espalha)
+#    top-k                  so os k tokens mais provaveis podem ser sorteados
 
-Parte 1  o exemplo do livro com 9 palavras: quantas vezes cada palavra e
-         sorteada em 1000 tentativas, com temperatura 1, 0.1 e 5, e o top-k=3
-Parte 2  as mesmas estrategias no GPT, com o MESMO contexto inicial, em dois
-         modelos: o treinado (models/ch05/treino_124m.pth) e o mesmo modelo
-         SEM treino. Assim da para separar o efeito da estrategia de geracao
-         do efeito do treinamento dos pesos.
+# Parte 1  o exemplo do livro com 9 palavras: quantas vezes cada palavra e
+#         sorteada em 1000 tentativas, com temperatura 1, 0.1 e 5, e o top-k=3
+# Parte 2  as mesmas estrategias no GPT, com o MESMO contexto inicial, em dois
+#         modelos: o treinado (models/ch05/treino_124m.pth) e o mesmo modelo
+#         SEM treino. Assim da para separar o efeito da estrategia de geracao
+#         do efeito do treinamento dos pesos.
 
-Metricas de cada texto gerado (so os tokens novos):
-    distinct-1 / distinct-2   fracao de palavras / pares de palavras unicos (diversidade)
-    repeticao                 fracao de trigramas repetidos
-    copia do treino           fracao de sequencias de 8 tokens que existem no texto de treino
-                              (mede o quanto o modelo esta "decorando")
-    amostras distintas        quantos textos diferentes saem de 3 sementes
+# Metricas de cada texto gerado (so os tokens novos):
+#    distinct-1 / distinct-2   fracao de palavras / pares de palavras unicos (diversidade)
+#    repeticao                 fracao de trigramas repetidos
+#    copia do treino           fracao de sequencias de 8 tokens que existem no texto de treino
+#                              (mede o quanto o modelo esta "decorando")
+#    amostras distintas        quantos textos diferentes saem de 3 sementes
 
-Uso (a partir da raiz do repositorio, depois de rodar treino_modelo.py):
-    python sprints/ch05/experiments/estrategias_geracao.py
-"""
+# Uso (a partir da raiz do repositorio, depois de rodar treino_modelo.py):
+#    python sprints/ch05/experiments/estrategias_geracao.py
+
 
 from pathlib import Path
 import argparse
@@ -63,9 +63,9 @@ def titulo(texto):
     print("=" * 78)
 
 
-# ---------------------------------------------------------------------------
-# Parte 1 - Exemplo do livro com um vocabulario de 9 palavras
-# ---------------------------------------------------------------------------
+# -------------------------------------------------------------
+# Parte 1 - Exemplo do livro com um vocabulario de 9 palavras |
+# -------------------------------------------------------------
 def parte1_exemplo_do_livro():
     titulo("Parte 1 - Exemplo do livro: 9 palavras, 1000 sorteios")
     vocab = ["closer", "every", "effort", "forward", "inches", "moves", "pizza", "toward", "you"]
@@ -94,9 +94,9 @@ def parte1_exemplo_do_livro():
                                    "probabilidades_top_k_3": [round(p, 4) for p in probas_topk.tolist()]}
 
 
-# ---------------------------------------------------------------------------
-# Parte 2 - Estrategias no GPT treinado e sem treino
-# ---------------------------------------------------------------------------
+# ----------------------------------------------------
+# Parte 2 - Estrategias no GPT treinado e sem treino |
+# ----------------------------------------------------
 def ngramas(tokens, n):
     return [tuple(tokens[i:i + n]) for i in range(len(tokens) - n + 1)]
 

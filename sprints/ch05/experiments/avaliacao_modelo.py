@@ -1,21 +1,21 @@
-"""Sprint 5 - Entregavel 2: avaliacao do modelo (secoes 5.1.2 e 5.1.3).
+# Sprint 5 - Entregavel 2: avaliacao do modelo (secoes 5.1.2 e 5.1.3).
 
-Mostra, passo a passo, como o livro mede o erro do GPT ANTES do treino:
+# Mostra, passo a passo, como o livro mede o erro do GPT ANTES do treino:
 
-  Parte 1  onde o modelo vai rodar (GPU ou CPU)
-  Parte 2  a cross-entropy calculada "na mao" com o exemplo do livro
-           ("every effort moves" / "I really like") e conferida com o PyTorch
-  Parte 3  perplexity
-  Parte 4  divisao do texto em treino (90%) e validacao (10%)
-  Parte 5  perda e perplexity de treino e validacao do modelo sem treino
+#  Parte 1  onde o modelo vai rodar (GPU ou CPU)
+#  Parte 2  a cross-entropy calculada "na mao" com o exemplo do livro
+#           ("every effort moves" / "I really like") e conferida com o PyTorch
+#  Parte 3  perplexity
+#  Parte 4  divisao do texto em treino (90%) e validacao (10%)
+#  Parte 5  perda e perplexity de treino e validacao do modelo sem treino
 
-Uso (a partir da raiz do repositorio):
-    python sprints/ch05/experiments/avaliacao_modelo.py
-    python sprints/ch05/experiments/avaliacao_modelo.py --config mini
-    python sprints/ch05/experiments/avaliacao_modelo.py --dados data/outro_texto.txt
+# Uso (a partir da raiz do repositorio):
+#    python sprints/ch05/experiments/avaliacao_modelo.py
+#    python sprints/ch05/experiments/avaliacao_modelo.py --config mini
+#    python sprints/ch05/experiments/avaliacao_modelo.py --dados data/outro_texto.txt
 
-Os numeros sao salvos em experiments/resultados/avaliacao_inicial.json.
-"""
+# Os numeros sao salvos em experiments/resultados/avaliacao_inicial.json.
+
 
 from pathlib import Path
 import argparse
@@ -57,9 +57,9 @@ def titulo(texto):
     print("=" * 78)
 
 
-# ---------------------------------------------------------------------------
-# Parte 1 - Dispositivo
-# ---------------------------------------------------------------------------
+# -----------------------
+# Parte 1 - Dispositivo |
+# -----------------------
 def parte1_dispositivo(preferencia):
     titulo("Parte 1 - Onde o modelo vai rodar")
     print(diagnostico_gpu())
@@ -69,9 +69,9 @@ def parte1_dispositivo(preferencia):
     return device
 
 
-# ---------------------------------------------------------------------------
-# Parte 2 - Cross-entropy passo a passo (secao 5.1.2)
-# ---------------------------------------------------------------------------
+# -----------------------------------------------------
+# Parte 2 - Cross-entropy passo a passo (secao 5.1.2) |
+# -----------------------------------------------------s
 def parte2_cross_entropy(model, tokenizer, device):
     titulo("Parte 2 - Cross-entropy passo a passo (exemplo do livro)")
 
@@ -133,9 +133,9 @@ def parte2_cross_entropy(model, tokenizer, device):
     return perda_pytorch.item()
 
 
-# ---------------------------------------------------------------------------
-# Parte 3 - Perplexity
-# ---------------------------------------------------------------------------
+# ----------------------
+# Parte 3 - Perplexity |
+# ----------------------
 def parte3_perplexity(perda, vocab_size):
     titulo("Parte 3 - Perplexity")
     ref = perda_chute_uniforme(vocab_size)
@@ -147,9 +147,9 @@ def parte3_perplexity(perda, vocab_size):
     RESULTADOS["perda_chute_uniforme"] = ref
 
 
-# ---------------------------------------------------------------------------
-# Parte 4 - Treino x validacao (secao 5.1.3)
-# ---------------------------------------------------------------------------
+# --------------------------------------------
+# Parte 4 - Treino x validacao (secao 5.1.3) |
+# --------------------------------------------
 def parte4_dados(caminho, tokenizer, cfg, batch_size):
     titulo("Parte 4 - Divisao em treino (90%) e validacao (10%)")
     texto = Path(caminho).read_text(encoding="utf-8")
@@ -180,9 +180,9 @@ def parte4_dados(caminho, tokenizer, cfg, batch_size):
     return train_loader, val_loader
 
 
-# ---------------------------------------------------------------------------
-# Parte 5 - Perdas iniciais (modelo sem treino)
-# ---------------------------------------------------------------------------
+# -----------------------------------------------
+# Parte 5 - Perdas iniciais (modelo sem treino) |
+# -----------------------------------------------
 def parte5_perdas_iniciais(model, train_loader, val_loader, device, vocab_size):
     titulo("Parte 5 - Perda de treino e validacao ANTES do treino")
     model.eval()   # desliga o dropout: a avaliacao tem que ser deterministica

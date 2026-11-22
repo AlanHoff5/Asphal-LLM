@@ -1,5 +1,5 @@
 # Chapter 2 - Build a Large Language Model (from scratch) - Sebastian Raschka
-# Asphal LLM - tokenizer for the cybersecurity corpus
+# Asphal LLM
 
 # 3.1 & 3.2
 

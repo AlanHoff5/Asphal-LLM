@@ -1,23 +1,23 @@
-"""Sprint 5 - Entregavel 3: treinamento do GPT (secao 5.2).
+# Sprint 5 - Entregavel 3: treinamento do GPT (secao 5.2).
 
-Treina o modelo com o laco do livro (train_model_simple) e registra:
-  - os parametros usados (modelo, epocas, lote, taxa de aprendizado, otimizador)
-  - as perdas de treino e validacao ao longo do treino
-  - um texto de exemplo ao fim de cada epoca
-  - tempo total, tokens por segundo e memoria de GPU usada
-  - o grafico das perdas e os pesos finais do modelo
+# Treina o modelo com o laco do livro (train_model_simple) e registra:
+#  - os parametros usados (modelo, epocas, lote, taxa de aprendizado, otimizador)
+#  - as perdas de treino e validacao ao longo do treino
+#  - um texto de exemplo ao fim de cada epoca
+#  - tempo total, tokens por segundo e memoria de GPU usada
+#  - o grafico das perdas e os pesos finais do modelo
 
-Uso (a partir da raiz do repositorio):
-    python sprints/ch05/experiments/treino_modelo.py                 # igual ao livro
-    python sprints/ch05/experiments/treino_modelo.py --config mini   # versao rapida
-    python sprints/ch05/experiments/treino_modelo.py --epocas 20 --lr 0.001 --nome lr_alta
-    python sprints/ch05/experiments/treino_modelo.py --lr 0.001 --warmup 0.2 --grad-clip 1.0
+# Uso (a partir da raiz do repositorio):
+#    python sprints/ch05/experiments/treino_modelo.py                 # igual ao livro
+#    python sprints/ch05/experiments/treino_modelo.py --config mini   # versao rapida
+#    python sprints/ch05/experiments/treino_modelo.py --epocas 20 --lr 0.001 --nome lr_alta
+#    python sprints/ch05/experiments/treino_modelo.py --lr 0.001 --warmup 0.2 --grad-clip 1.0
 
-Saidas:
-    experiments/resultados/<nome>.json   parametros, perdas, amostras e tempos
-    experiments/resultados/<nome>.png    grafico treino x validacao
-    models/ch05/<nome>.pth               pesos + otimizador (fora do git)
-"""
+# Saidas:
+#    experiments/resultados/<nome>.json   parametros, perdas, amostras e tempos
+#    experiments/resultados/<nome>.png    grafico treino x validacao
+#    models/ch05/<nome>.pth               pesos + otimizador (fora do git)
+
 
 from pathlib import Path
 import argparse
@@ -59,7 +59,7 @@ def titulo(texto):
 
 
 def medir_perdas_completas(model, train_loader, val_loader, device):
-    """Perda em TODOS os lotes (nao so eval_iter), para o antes/depois."""
+    # Perda em TODOS os lotes (nao so eval_iter), para o antes/depois.
     model.eval()
     treino = calc_loss_loader(train_loader, model, device)
     val = calc_loss_loader(val_loader, model, device)
@@ -95,9 +95,9 @@ def main():
         cfg = criar_config(cfg, drop_rate=args.drop_rate)
     nome = args.nome or f"treino_{args.config}"
 
-    # ------------------------------------------------------------------
-    # 1. Preparacao: dispositivo, dados, modelo e otimizador
-    # ------------------------------------------------------------------
+    # --------------------------------------------------------
+    # 1. Preparacao: dispositivo, dados, modelo e otimizador |
+    # --------------------------------------------------------
     titulo("1. Preparacao")
     device = escolher_dispositivo(args.device)
     print(f"Dispositivo: {descrever_dispositivo(device)}")
@@ -129,17 +129,17 @@ def main():
     for chave, valor in parametros.items():
         print(f"  {chave:<18} {valor}")
 
-    # ------------------------------------------------------------------
-    # 2. Estado inicial (pesos aleatorios)
-    # ------------------------------------------------------------------
+    # --------------------------------------
+    # 2. Estado inicial (pesos aleatorios) |
+    # --------------------------------------
     titulo("2. Antes do treino")
     perda_treino_ini, perda_val_ini = medir_perdas_completas(model, train_loader, val_loader, device)
     print(f"Perda treino {perda_treino_ini:.3f} | validacao {perda_val_ini:.3f} | "
           f"perplexity val {perplexidade(perda_val_ini):,.0f}")
 
-    # ------------------------------------------------------------------
-    # 3. Treino
-    # ------------------------------------------------------------------
+    # -----------
+    # 3. Treino |
+    # -----------
     titulo(f"3. Treinando por {args.epocas} epocas ({len(train_loader)} lotes por epoca)")
     if device.type == "cuda":
         torch.cuda.reset_peak_memory_stats(device)
@@ -160,9 +160,9 @@ def main():
         sys.exit(1)
     tempo_total = time.time() - inicio
 
-    # ------------------------------------------------------------------
-    # 4. Resultado
-    # ------------------------------------------------------------------
+    # --------------
+    # 4. Resultado |
+    # --------------
     titulo("4. Depois do treino")
     perda_treino_fim, perda_val_fim = medir_perdas_completas(model, train_loader, val_loader, device)
     tokens_treinados = parametros["tokens_treino"] * args.epocas
@@ -188,9 +188,9 @@ def main():
         print(f"Menor perda de validacao: {melhor['val_loss']:.3f} no passo {melhor['step']} "
               f"(epoca {melhor['epoca']:.1f}); depois disso a validacao piorou (overfitting)")
 
-    # ------------------------------------------------------------------
-    # 5. Salvar resultados, grafico e pesos
-    # ------------------------------------------------------------------
+    # ---------------------------------------
+    # 5. Salvar resultados, grafico e pesos |
+    # ---------------------------------------
     titulo("5. Arquivos gerados")
     RESULTADOS_DIR.mkdir(parents=True, exist_ok=True)
     grafico = plot_losses(historico["epocas"], historico["tokens_seen"],
