@@ -1,5 +1,5 @@
 # Chapter 3 - Build a Large Language Model (from scratch) - Sebastian Raschka
-# Asphal LLM - self-attention (com e sem pesos treinaveis)
+# Asphal LLM
 
 # 3.3 & 3.4
 
@@ -8,23 +8,22 @@ from torch import nn
 
 
 def attention_scores_simples(entradas):
-    """Autoatencao SEM pesos treinaveis (secao 3.3 do livro).
+    # Autoatencao SEM pesos treinaveis (secao 3.3 do livro).
 
-    Serve so para demonstrar a ideia central antes de introduzir Query,
-    Key e Value: o "attention score" entre dois tokens e o produto escalar
-    (dot product) dos seus proprios vetores de entrada, e o "vetor de
-    contexto" de um token e a media ponderada de todos os vetores de
-    entrada, usando esses scores normalizados (softmax) como peso.
+    # Serve so para demonstrar a ideia central antes de introduzir Query,
+    # Key e Value: o "attention score" entre dois tokens e o produto escalar
+    # (dot product) dos seus proprios vetores de entrada, e o "vetor de
+    # contexto" de um token e a media ponderada de todos os vetores de
+    # entrada, usando esses scores normalizados (softmax) como peso.
 
-    `entradas` tem shape (context_length, embedding_dim): uma unica
-    sequencia (sem dimensao de batch), como no exemplo do livro.
+    # `entradas` tem shape (context_length, embedding_dim): uma unica
+    # sequencia (sem dimensao de batch), como no exemplo do livro.
 
-    Retorna (attention_weights, context_vectors):
-      attention_weights: shape (context_length, context_length), cada
-        linha soma 1.0 (e uma distribuicao de probabilidade sobre os
-        tokens da sequencia).
-      context_vectors: shape (context_length, embedding_dim).
-    """
+    # Retorna (attention_weights, context_vectors):
+    #   attention_weights: shape (context_length, context_length), cada
+    #     linha soma 1.0 (e uma distribuicao de probabilidade sobre os
+    #     tokens da sequencia).
+    #   context_vectors: shape (context_length, embedding_dim).
     # scores[i, j] = produto escalar entre o token i e o token j: quanto
     # mais alinhados (similares) os dois vetores, maior o score.
     scores = entradas @ entradas.T
@@ -42,21 +41,20 @@ def attention_scores_simples(entradas):
 
 
 class SelfAttention_v1(nn.Module):
-    """Autoatencao COM pesos treinaveis, usando nn.Parameter (secao 3.4.1).
+    # Autoatencao COM pesos treinaveis, usando nn.Parameter (secao 3.4.1).
 
-    Introduz Query, Key e Value: em vez de usar o vetor de entrada
-    diretamente (como em attention_scores_simples), cada token e projetado
-    em tres papeis diferentes por matrizes de pesos treinaveis:
-      - Query (W_query): "o que este token esta procurando".
-      - Key (W_key): "o que este token oferece, para ser encontrado".
-      - Value (W_value): "o conteudo que este token entrega" ao vetor de
-        contexto, uma vez que sua relevancia (Key) foi avaliada.
+    # Introduz Query, Key e Value: em vez de usar o vetor de entrada
+    # diretamente (como em attention_scores_simples), cada token e projetado
+    # em tres papeis diferentes por matrizes de pesos treinaveis:
+    #   - Query (W_query): "o que este token esta procurando".
+    #   - Key (W_key): "o que este token oferece, para ser encontrado".
+    #   - Value (W_value): "o conteudo que este token entrega" ao vetor de
+    #     contexto, uma vez que sua relevancia (Key) foi avaliada.
 
-    Esta e a versao "didatica", com nn.Parameter cru (matmul explicito),
-    igual ao livro. A versao usada no restante do projeto e a
-    SelfAttention_v2 (com nn.Linear), que inicializa os pesos de forma mais
-    estavel e e o padrao usado pelo PyTorch.
-    """
+    # Esta e a versao "didatica", com nn.Parameter cru (matmul explicito),
+    # igual ao livro. A versao usada no restante do projeto e a
+    # SelfAttention_v2 (com nn.Linear), que inicializa os pesos de forma mais
+    # estavel e e o padrao usado pelo PyTorch.
 
     def __init__(self, d_in, d_out, qkv_bias=False):
         super().__init__()
@@ -96,13 +94,12 @@ class SelfAttention_v1(nn.Module):
 
 
 class SelfAttention_v2(nn.Module):
-    """Mesma ideia da SelfAttention_v1, mas com nn.Linear (secao 3.4.2).
+    # Mesma ideia da SelfAttention_v1, mas com nn.Linear (secao 3.4.2).
 
-    nn.Linear usa uma inicializacao de pesos (Kaiming/He) mais adequada
-    para treinamento estavel do que torch.rand puro, e e o jeito idiomatico
-    de declarar uma camada linear em PyTorch. Matematicamente calcula a
-    mesma coisa que a v1: y = x @ W^T + b.
-    """
+    # nn.Linear usa uma inicializacao de pesos (Kaiming/He) mais adequada
+    # para treinamento estavel do que torch.rand puro, e e o jeito idiomatico
+    # de declarar uma camada linear em PyTorch. Matematicamente calcula a
+    # mesma coisa que a v1: y = x @ W^T + b.
 
     def __init__(self, d_in, d_out, qkv_bias=False):
         super().__init__()
