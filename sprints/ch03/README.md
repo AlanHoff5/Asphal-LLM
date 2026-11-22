@@ -11,9 +11,7 @@ flowchart LR
   MH --> TB["Transformer Block\nSprint 4"]
 
   classDef done fill:#2d6a4f,color:#fff,stroke:none
-  classDef next fill:#1b4332,color:#ccc,stroke:none,stroke-dasharray:4
-  class SA,SP,CA,MH done
-  class TB next
+  class SA,SP,CA,MH,TB done
 ```
 
 ## Estrutura
@@ -89,9 +87,9 @@ Referência do livro: vetor de contexto do token "journey" = `[0.4419, 0.6515, 0
 
 | Suite | Testes |
 |---|---|
-| `test_self_attention.py` | 17 |
-| `test_causal_attention.py` | 17 |
-| `test_multi_head_attention.py` | 17 |
+| `test_self_attention.py` | 6 |
+| `test_causal_attention.py` | 5 |
+| `test_multi_head_attention.py` | 6 |
 | **Total** | **17** |
 
 Detalhes numéricos e respostas conceituais → [`docs/sprint3_analise.md`](docs/sprint3_analise.md)

@@ -11,7 +11,6 @@ flowchart LR
   LH --> G["Geração\nautoregressiva\n4.7"]
 
   classDef done fill:#2d6a4f,color:#fff,stroke:none
-  classDef next fill:#1b4332,color:#ccc,stroke:none,stroke-dasharray:4
   class D,TB,LN,LH,G done
 ```
 
