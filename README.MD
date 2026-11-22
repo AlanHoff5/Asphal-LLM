@@ -53,12 +53,12 @@ LLM fica em [`src/`](src/).
 |--------------------|----------------------------------|--------------------------------|
 | Preparação do ambiente | - [requirements.txt](requirements.txt)<br>- [test_ambiente_pytorch.py](sprints/ch01/tests/test_ambiente_pytorch.py) | [./sprints/ch01](sprints/ch01/) |
 | ✅ Cap. 1: Entendendo os Large Language Models | - [Glossário do Cap. 1](sprints/ch01/glossario/)<br>- [mapa_conceitual_gpt.md](sprints/ch01/mapa_conceitual_gpt.md) | [./sprints/ch01](sprints/ch01/) |
-| ✅ Cap. 2: Trabalhando com dados de texto | - [Notebook do Cap. 2](sprints/ch02/notebooks/InteligenciaArtificial_SistemasInteligentes.ipynb)<br>- [fluxo_sprint2.py](sprints/ch02/experiments/fluxo_sprint2.py) (resumo)<br>- [src/data/](src/data/) | [./sprints/ch02](sprints/ch02/) |
+| ✅ Cap. 2: Trabalhando com dados de texto | - [Notebook do Cap. 2](sprints/ch02/notebooks/ch02.ipynb)<br>- [fluxo_sprint2.py](sprints/ch02/experiments/fluxo_sprint2.py) (resumo)<br>- [src/data/](src/data/) | [./sprints/ch02](sprints/ch02/) |
 | ✅ Cap. 3: Implementando mecanismos de atenção | - [ch03.ipynb](sprints/ch03/notebooks/ch03.ipynb)<br>- [fluxo_sprint3.py](sprints/ch03/experiments/fluxo_sprint3.py) (resumo)<br>- [src/attention/](src/attention/) | [./sprints/ch03](sprints/ch03/) |
 | ✅ Cap. 4: Implementando um modelo GPT do zero | - [ch04.ipynb](sprints/ch04/notebooks/ch04.ipynb)<br>- [fluxo_sprint4.py](sprints/ch04/experiments/fluxo_sprint4.py) (resumo)<br>- [src/model/](src/model/) | [./sprints/ch04](sprints/ch04/) |
 | ✅ Cap. 5: Pré-treinamento em dados não rotulados | - [treino_modelo.py](sprints/ch05/experiments/treino_modelo.py)<br>- [estrategias_geracao.py](sprints/ch05/experiments/estrategias_geracao.py)<br>- [src/training/](src/training/) | [./sprints/ch05](sprints/ch05/) |
-| ⬜ Cap. 6: Fine-tuning para classificação de texto | Em breve | — |
-| ⬜ Cap. 7: Fine-tuning para seguir instruções | Em breve | — |
+| ✅ Cap. 6: Fine-tuning para classificação de texto | - [ch06.ipynb](sprints/ch06/notebooks/ch06.ipynb)<br>- [classificacao.py](sprints/ch06/experiments/classificacao.py)<br>- [src/finetuning/](src/finetuning/) | [./sprints/ch06](sprints/ch06/) |
+| ✅ Cap. 7: Fine-tuning para seguir instruções | - [instrucoes.py](sprints/ch06/experiments/instrucoes.py)<br>- [src/finetuning/instrucoes.py](src/finetuning/instrucoes.py) | [./sprints/ch06](sprints/ch06/) |
 
 <br>
 
@@ -98,9 +98,10 @@ Asphal-LLM/
 │   ├── data/             # tokenização, dataset, dataloader, embeddings (Cap. 2)
 │   ├── attention/        # self-attention, atenção causal e multi-head (Cap. 3)
 │   ├── model/            # GPTModel, Transformer Block, LayerNorm, geração (Cap. 4)
-│   └── training/         # perdas, laço de treino, gráficos, checkpoints (Cap. 5)
+│   ├── training/         # perdas, laço de treino, gráficos, checkpoints (Cap. 5)
+│   └── finetuning/       # pesos pré-treinados, classificador, instrucoes (Cap. 6-7)
 ├── sprints/              # material de cada capítulo/sprint (veja sprints/README.md)
-│   ├── ch01/ … ch05/     # glossário, docs, notebooks, experimentos e testes
+│   ├── ch01/ … ch06/     # glossário, docs, notebooks, experimentos e testes
 ├── data/                 # corpus de texto compartilhado entre capítulos
 ├── models/               # checkpoints treinados (não versionados)
 ├── conftest.py           # torna `src/` importável pelos testes de qualquer capítulo
@@ -155,6 +156,11 @@ python sprints/ch04/experiments/fluxo_sprint4.py
 # Capítulo 5: treinar o GPT e testar as estratégias de geração
 python sprints/ch05/experiments/treino_modelo.py
 python sprints/ch05/experiments/estrategias_geracao.py
+
+# Capítulo 6-7: fine-tuning (requer internet na 1ª execução + pip install transformers)
+python sprints/ch06/experiments/carregar_pesos_pretrained.py
+python sprints/ch06/experiments/classificacao.py
+python sprints/ch06/experiments/instrucoes.py
 ```
 
 Os testes de cada capítulo ficam na respectiva pasta em `sprints/`. O `pytest`, rodado a
