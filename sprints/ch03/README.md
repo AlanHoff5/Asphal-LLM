@@ -1,5 +1,7 @@
 # Capítulo 3 — Mecanismos de Atenção
 
+Status: ✅ concluída
+
 > Sprint 3 do projeto **Asphal-LLM** · continua a partir do [Capítulo 2](../ch02/)
 
 ```mermaid
