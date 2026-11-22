@@ -1,76 +1,99 @@
-# Capítulo 5 - Pré-treinamento em dados não rotulados (Sprint 5)
+# Capítulo 5 — Pré-treinamento em Dados Não Rotulados
 
-Status: ✅ implementação, experimentos e análise concluídos
+> Sprint 5 do projeto **Asphal-LLM** · continua a partir do [Capítulo 4](../ch04/)
 
-Capítulo 5 do livro (*Pretraining on Unlabeled Data*): avaliação do modelo
-com cross-entropy e perplexity, laço de treinamento, experimentos de
-treino, estratégias de geração (temperatura e top-k) e salvamento e
-carregamento dos pesos. Ponto de partida: o GPT do [Capítulo 4](../ch04/).
+```mermaid
+flowchart LR
+  D["DataLoader\nSprint 2"] --> LB["Cálculo da\nLoss 5.1"]
+  LB --> TL["Training Loop\n5.2"]
+  TL --> EX["Experimentos\n5.3"]
+  EX --> DEC["Estratégias de\nGeração 5.3"]
+  DEC --> SC["Salvar / Carregar\n5.4"]
+  SC --> PW["Pesos\nPré-treinados\n5.5"]
 
-## Conteúdo desta pasta
+  classDef done fill:#2d6a4f,color:#fff,stroke:none
+  class LB,TL,EX,DEC,SC,PW done
+```
+
+## Estrutura
 
 ```
 ch05/
-├── glossario/ch05.md                    # glossario tecnico do Capitulo 5
-├── docs/
-│   └── sprint5_analise.md               # analise tecnica (Entregaveis 2 a 7)
+├── README.md
+├── glossario/ch05.md                         # 32 termos do capítulo
+├── docs/sprint5_analise.md                   # análise técnica + respostas
 ├── experiments/
-│   ├── avaliacao_modelo.py              # Entregavel 2: cross-entropy e perplexity passo a passo
-│   ├── treino_modelo.py                 # Entregavel 3: treino do GPT (livro ou configuravel)
-│   ├── experimentos_treino.py           # Entregavel 4: fila de 8 experimentos + resumo
-│   ├── estrategias_geracao.py           # Entregavel 5: gulosa x temperatura x top-k
-│   ├── salvar_carregar.py               # Entregavel 6: carregar, conferir e continuar o treino
-│   └── resultados/                      # JSON e resumos (.md) de cada script; .png gerados localmente
+│   ├── avaliacao_modelo.py                   # 5.1: cross-entropy e perplexity
+│   ├── treino_modelo.py                      # 5.2: laço de treinamento
+│   ├── experimentos_treino.py                # 5.3: 8 experimentos comparativos
+│   ├── estrategias_geracao.py                # 5.3: gulosa × temperatura × top-k
+│   ├── salvar_carregar.py                    # 5.4: checkpoint e continuação
+│   └── resultados/                           # JSON e resumos de cada script
 └── tests/
-    ├── test_losses.py                   # secoes 5.1.2 e 5.1.3
-    ├── test_treino.py                   # secao 5.2 e apendice D
-    └── test_checkpoint.py               # secao 5.4
+    ├── test_losses.py                        # seções 5.1.2 e 5.1.3
+    ├── test_treino.py                        # seção 5.2 + apêndice D
+    └── test_checkpoint.py                   # seção 5.4
 ```
 
-O **código de implementação** fica em [`src/training/`](../../src/training/):
-`dispositivo.py`, `dados.py`, `losses.py`, `treino.py`, `graficos.py` e
-`checkpoint.py`. Ele reaproveita, sem alterações, o `create_dataloader_v1`
-(Sprint 2), o `GPTModel` e o `generate` (Sprint 4).
+O código reutilizável fica em [`src/training/`](../../src/training/):
+`losses.py`, `treino.py`, `checkpoint.py`, `dados.py`, `graficos.py`, `dispositivo.py`.
 
 ## Como rodar
 
-Use o ambiente do projeto com PyTorch CUDA para treinar na GPU
-(`python -m src.training.dispositivo` mostra se a GPU está sendo usada).
-
-```powershell
-# Testes automatizados da Sprint 5
+```bash
+# Testes
 python -m pytest sprints/ch05/tests/ -v
 
-# Entregavel 2 - avaliacao do modelo sem treino (< 1 min)
+# Avaliação inicial (< 1 min)
 python sprints/ch05/experiments/avaliacao_modelo.py
 
-# Entregavel 3 - treino do livro: GPT-2 124M, 10 epocas (~1 min na GTX 1650)
+# Treino do livro — GPT-2 124M, 10 épocas (~1 min na GTX 1650)
 python sprints/ch05/experiments/treino_modelo.py
-#   outras configuracoes: --config mini|small, --epocas, --lr, --batch-size,
-#   --drop-rate, --weight-decay, --warmup 0.2 --grad-clip 1.0, --nome
 
-# Entregavel 4 - os 8 experimentos em sequencia (~13 min) e o resumo comparativo
+# 8 experimentos comparativos (~13 min)
 python sprints/ch05/experiments/experimentos_treino.py
 
-# Entregaveis 5 e 6 - usam o modelo salvo pelo treino_modelo.py
+# Estratégias de geração e checkpoint (requer modelo salvo)
 python sprints/ch05/experiments/estrategias_geracao.py
 python sprints/ch05/experiments/salvar_carregar.py
 ```
 
-Os pesos são salvos em `models/ch05/` (fora do git: cerca de 1,9 GB com o
-otimizador). Os gráficos `.png` também são gerados localmente em
-`experiments/resultados/`.
+> Os pesos são salvos em `models/ch05/` (fora do git — ~1,9 GB com otimizador).
 
 ## Principais resultados
 
-| | Resultado |
+| Métrica | Resultado |
 |---|---|
-| Perda inicial (sem treino) | treino 10,988 · validação 10,981 (igual ao livro; chute uniforme = 10,825) |
-| Treino do livro, 10 épocas | treino **0,420** · validação **6,452** (livro: 0,391 · 6,452), em 63 s na GTX 1650 |
-| Overfitting | menor validação **6,087** na época 5; com 30 épocas: treino 0,006 e validação 7,297 |
-| Taxa de aprendizado | lr 0,001 não converge (val. 6,82); com warmup + cosine o mesmo lr chega a 6,23 |
-| Geração | top-k 25 + T 1,4 = mais diverso sem perder sentido; sem treino, nenhuma estratégia gera texto coerente |
-| Salvar e carregar | perda e texto idênticos após carregar; pesos 623 MB, com AdamW 1.862 MB |
+| Perda inicial (sem treino) | treino **10,988** · validação **10,981** |
+| Após 10 épocas (livro) | treino **0,420** · validação **6,452** |
+| Melhor validação | **6,087** na época 5 |
+| Tempo de treino | 63 s na GTX 1650 |
+| Geração | top-k 25 + T 1,4 = mais diverso sem perder sentido |
+| Checkpoint | pesos 623 MB · com AdamW 1.862 MB |
 
-Análise completa, tabelas e discussão em
-[`docs/sprint5_analise.md`](docs/sprint5_analise.md).
+<details>
+<summary>8 experimentos comparativos</summary>
+
+| Exp | Configuração | Val final |
+|---|---|---|
+| 01 | Baseline (livro) | 6,452 |
+| 02 | lr alta (0,001) | 6,820 (não converge) |
+| 03 | lr baixa (0,0001) | 6,618 |
+| 04 | 30 épocas | 7,297 (overfitting severo) |
+| 05 | Sem dropout/weight decay | 6,310 (overfitting mais rápido) |
+| 06 | Warmup + cosine decay + grad clip | **6,230** |
+| 07 | Config MINI (13M params) | 7,891 |
+| 08 | Config 124M completo | 6,452 |
+
+</details>
+
+## Resultados dos testes
+
+| Suite | Testes |
+|---|---|
+| `test_losses.py` | 8 |
+| `test_treino.py` | 6 |
+| `test_checkpoint.py` | 3 |
+| **Total** | **17** |
+
+Análise completa e discussão → [`docs/sprint5_analise.md`](docs/sprint5_analise.md)
