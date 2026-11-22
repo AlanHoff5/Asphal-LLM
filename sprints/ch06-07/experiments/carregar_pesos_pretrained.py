@@ -26,9 +26,9 @@ from src.model.generation import generate, text_to_token_ids, token_ids_to_text
 from src.training.dispositivo import get_device
 from src.finetuning.pesos_pretrained import baixar_gpt2_hf, carregar_pesos_gpt2, verificar_mapeamento
 
-# ---------------------------------------------------------------------------
-# Configuração
-# ---------------------------------------------------------------------------
+# --------------
+# Configuração |
+# --------------
 
 DEVICE     = get_device()
 CHECKPOINT = PROJECT_ROOT / "data" / "gpt2_pretrained.pth"
@@ -39,9 +39,9 @@ CFG_GPT2["qkv_bias"] = True
 
 PROMPT = "Every effort moves you"
 
-# ---------------------------------------------------------------------------
-# 1. Modelo com pesos ALEATÓRIOS (referência antes do carregamento)
-# ---------------------------------------------------------------------------
+# -------------------------------------------------------------------
+# 1. Modelo com pesos ALEATÓRIOS (referência antes do carregamento) |
+# -------------------------------------------------------------------
 
 print("=" * 60)
 print("1. MODELO COM PESOS ALEATÓRIOS")
@@ -64,9 +64,9 @@ print(f"Prompt : {PROMPT}")
 print(f"Gerado : {texto_aleatorio}")
 print()
 
-# ---------------------------------------------------------------------------
-# 2. Carrega os pesos do GPT-2 oficial (HuggingFace)
-# ---------------------------------------------------------------------------
+# ----------------------------------------------------
+# 2. Carrega os pesos do GPT-2 oficial (HuggingFace) |
+# ----------------------------------------------------
 
 print("=" * 60)
 print("2. CARREGANDO PESOS PRÉ-TREINADOS")
@@ -77,9 +77,9 @@ modelo_pretrained = GPTModel(CFG_GPT2).to(DEVICE)
 carregar_pesos_gpt2(modelo_pretrained, hf_model)
 modelo_pretrained.eval()
 
-# ---------------------------------------------------------------------------
-# 3. Verifica o mapeamento tensor a tensor
-# ---------------------------------------------------------------------------
+# ------------------------------------------
+# 3. Verifica o mapeamento tensor a tensor |
+# ------------------------------------------
 
 print()
 print("3. VERIFICAÇÃO DO MAPEAMENTO")
@@ -88,9 +88,9 @@ ok = verificar_mapeamento(modelo_pretrained, hf_model)
 print(f"Resultado: {'TODOS OK ✓' if ok else 'HÁ ERROS ✗'}")
 print()
 
-# ---------------------------------------------------------------------------
-# 4. Geração com pesos pré-treinados
-# ---------------------------------------------------------------------------
+# ------------------------------------
+# 4. Geração com pesos pré-treinados |
+# ------------------------------------
 
 print("=" * 60)
 print("4. MODELO COM PESOS PRÉ-TREINADOS")
@@ -106,9 +106,9 @@ print(f"Prompt : {PROMPT}")
 print(f"Gerado : {texto_pretrained}")
 print()
 
-# ---------------------------------------------------------------------------
-# 5. Comparação direta
-# ---------------------------------------------------------------------------
+# ----------------------
+# 5. Comparação direta |
+# ----------------------
 
 print("=" * 60)
 print("5. COMPARAÇÃO")
@@ -120,9 +120,9 @@ print("Observação: o modelo pré-treinado gera texto em inglês fluente porque
 print("já aprendeu padrões linguísticos em 1,5 B tokens de texto da web.")
 print("O modelo aleatório não sabe nada — cada token é um chute.")
 
-# ---------------------------------------------------------------------------
-# 6. Salva o modelo carregado para os próximos experimentos
-# ---------------------------------------------------------------------------
+# -----------------------------------------------------------
+# 6. Salva o modelo carregado para os próximos experimentos |
+# -----------------------------------------------------------
 
 torch.save({
     "model_state_dict": modelo_pretrained.state_dict(),
