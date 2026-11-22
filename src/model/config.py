@@ -1,10 +1,11 @@
 # Chapter 4 - Build a Large Language Model (from scratch) - Sebastian Raschka
-# Asphal LLM - configuracoes da arquitetura GPT
+# Asphal LLM
 
 # 4.1
 
-"""Configuracoes (hiperparametros de arquitetura) do modelo GPT.
+# Configuracoes (hiperparametros de arquitetura) do modelo GPT.
 
+"""
 Todas as classes de `src/model/` recebem um dicionario `cfg` com estas
 chaves. Chaves obrigatorias (as mesmas do livro):
 
@@ -24,9 +25,9 @@ Chaves opcionais (extensoes do projeto, usadas nos experimentos):
     drop_rate_shortcut  dropout antes de somar o atalho   (padrao: drop_rate)
     weight_tying        reusa a matriz do token embedding na camada de saida
                         (padrao: False, como no livro)
-
-Os tres dropouts separados sao o Exercicio 4.3 do livro.
 """
+# Os tres dropouts separados sao o Exercicio 4.3 do livro.
+
 
 # GPT-2 "small" (124M), exatamente como na secao 4.1 do livro.
 GPT_CONFIG_124M = {
@@ -62,12 +63,11 @@ GPT2_TAMANHOS = {
 
 
 def criar_config(base=None, **alteracoes):
-    """Devolve uma COPIA de `base` (padrao: GPT_CONFIG_MINI) com as chaves
-    alteradas. Evita modificar sem querer o dicionario global nos
-    experimentos.
+    # Devolve uma COPIA de `base` (padrao: GPT_CONFIG_MINI) com as chaves
+    # alteradas. Evita modificar sem querer o dicionario global nos
+    # experimentos.
 
-    Exemplo: criar_config(GPT_CONFIG_124M, n_layers=24, emb_dim=1024)
-    """
+    # Exemplo: criar_config(GPT_CONFIG_124M, n_layers=24, emb_dim=1024)
     cfg = dict(GPT_CONFIG_MINI if base is None else base)
     cfg.update(alteracoes)
     return cfg

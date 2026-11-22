@@ -1,5 +1,5 @@
 # Chapter 4 - Build a Large Language Model (from scratch) - Sebastian Raschka
-# Asphal LLM - modelo GPT completo
+# Asphal LLM 
 
 # 4.6
 
@@ -11,32 +11,31 @@ from src.model.transformer_block import TransformerBlock
 
 
 class GPTModel(nn.Module):
-    """Arquitetura GPT (decoder-only) completa.
+    # Arquitetura GPT (decoder-only) completa.
 
-        Token IDs                               (batch, num_tokens)
-          -> Token + Positional Embedding       (batch, num_tokens, emb_dim)   [Sprint 2]
-          -> Dropout
-          -> n_layers x TransformerBlock        (batch, num_tokens, emb_dim)   [Sprint 3 + 4]
-          -> LayerNorm final                    (batch, num_tokens, emb_dim)
-          -> Camada de saida (LM head)          (batch, num_tokens, vocab_size) = LOGITS
+        # Token IDs                               (batch, num_tokens)
+        #   -> Token + Positional Embedding       (batch, num_tokens, emb_dim)   [Sprint 2]
+        #   -> Dropout
+        #   -> n_layers x TransformerBlock        (batch, num_tokens, emb_dim)   [Sprint 3 + 4]
+        #   -> LayerNorm final                    (batch, num_tokens, emb_dim)
+        #   -> Camada de saida (LM head)          (batch, num_tokens, vocab_size) = LOGITS
 
-    Diferenca em relacao ao livro: em vez de criar `tok_emb` e `pos_emb`
-    aqui, reaproveitamos o `GPTInputEmbeddings` da Sprint 2, que faz
-    exatamente a soma token + posicao (e ja valida o tamanho do contexto).
-    O numero de parametros e o mesmo do livro.
+    # Diferenca em relacao ao livro: em vez de criar `tok_emb` e `pos_emb`
+    # aqui, reaproveitamos o `GPTInputEmbeddings` da Sprint 2, que faz
+    # exatamente a soma token + posicao (e ja valida o tamanho do contexto).
+    # O numero de parametros e o mesmo do livro.
 
-    - `trf_blocks`: nn.Sequential com n_layers blocos DIFERENTES (cada um
-      com seus proprios pesos).
-    - `final_norm`: necessaria porque, no Pre-LayerNorm, a saida do ultimo
-      bloco ainda nao foi normalizada.
-    - `out_head`: Linear(emb_dim -> vocab_size) sem bias. Para cada posicao
-      t, produz uma pontuacao (logit) para cada token do vocabulario ser o
-      token da posicao t + 1.
-    - Weight tying (opcional, cfg["weight_tying"]=True): a camada de saida
-      usa a MESMA matriz do token embedding (ambas tem shape
-      (vocab_size, emb_dim)), como no GPT-2 original. O livro deixa
-      desligado no Cap. 4 (163M parametros); ligado da os 124M do nome.
-    """
+    # - `trf_blocks`: nn.Sequential com n_layers blocos DIFERENTES (cada um
+    #   com seus proprios pesos).
+    # - `final_norm`: necessaria porque, no Pre-LayerNorm, a saida do ultimo
+    #   bloco ainda nao foi normalizada.
+    # - `out_head`: Linear(emb_dim -> vocab_size) sem bias. Para cada posicao
+    #   t, produz uma pontuacao (logit) para cada token do vocabulario ser o
+    #   token da posicao t + 1.
+    # - Weight tying (opcional, cfg["weight_tying"]=True): a camada de saida
+    #   usa a MESMA matriz do token embedding (ambas tem shape
+    #   (vocab_size, emb_dim)), como no GPT-2 original. O livro deixa
+    #   desligado no Cap. 4 (163M parametros); ligado da os 124M do nome.
 
     def __init__(self, cfg):
         super().__init__()
@@ -69,19 +68,19 @@ class GPTModel(nn.Module):
         return logits
 
 
-# ---------------------------------------------------------------------------
-# Utilitarios de contagem de parametros e memoria (secao 4.6 e Exercicio 4.2)
-# ---------------------------------------------------------------------------
+# -----------------------------------------------------------------------------
+# Utilitarios de contagem de parametros e memoria (secao 4.6 e Exercicio 4.2) |
+# -----------------------------------------------------------------------------
 
 def contar_parametros(model):
-    """Total de parametros. `model.parameters()` nao repete tensores
-    compartilhados, entao com weight tying a matriz conta uma vez so."""
+    # Total de parametros. `model.parameters()` nao repete tensores
+    # compartilhados, entao com weight tying a matriz conta uma vez so.
     return sum(p.numel() for p in model.parameters())
 
 
 def contar_parametros_sem_saida(model):
-    """Total descontando a camada de saida - e assim que o livro chega ao
-    "124M" sem implementar weight tying."""
+    # Total descontando a camada de saida - e assim que o livro chega ao
+    # "124M" sem implementar weight tying.
     total = contar_parametros(model)
     if model.out_head.weight is model.embeddings.token_embedding.weight:
         return total
@@ -89,18 +88,17 @@ def contar_parametros_sem_saida(model):
 
 
 def tamanho_em_mb(model, bytes_por_parametro=4):
-    """Memoria so dos pesos (float32 = 4 bytes). Treinar exige bem mais:
-    gradientes, estado do otimizador e ativacoes."""
+    # Memoria so dos pesos (float32 = 4 bytes). Treinar exige bem mais:
+    # gradientes, estado do otimizador e ativacoes.
     return contar_parametros(model) * bytes_por_parametro / (1024 * 1024)
 
 
 def parametros_esperados(cfg):
-    """Conta os parametros a partir da configuracao, sem instanciar o
-    modelo. Util para modelos grandes demais para a memoria (ex.: GPT-2 XL)
-    e para conferir a implementacao nos testes.
+    # Conta os parametros a partir da configuracao, sem instanciar o
+    # modelo. Util para modelos grandes demais para a memoria (ex.: GPT-2 XL)
+    # e para conferir a implementacao nos testes.
 
-    Devolve um dicionario com o total e a divisao por componente.
-    """
+    # Devolve um dicionario com o total e a divisao por componente.
     d = cfg["emb_dim"]
     v = cfg["vocab_size"]
     c = cfg["context_length"]

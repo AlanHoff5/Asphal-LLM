@@ -1,5 +1,5 @@
 # Chapter 4 - Build a Large Language Model (from scratch) - Sebastian Raschka
-# Asphal LLM - Transformer Block
+# Asphal LLM
 
 # 4.4 e 4.5
 
@@ -11,34 +11,33 @@ from src.model.layer_norm import LayerNorm
 
 
 class TransformerBlock(nn.Module):
-    """Unidade que se repete dentro do GPT (12x no GPT-2 small).
+    # Unidade que se repete dentro do GPT (12x no GPT-2 small).
 
-    Junta as pecas das Sprints anteriores e deste capitulo:
-      - Multi-Head Attention da Sprint 3 (src/attention/), que ja traz a
-        mascara causal;
-      - FeedForward com GELU (secao 4.3);
-      - duas LayerNorm (secao 4.2);
-      - dropout antes de cada soma;
-      - duas conexoes de atalho / residuais (secao 4.4).
+    # Junta as pecas das Sprints anteriores e deste capitulo:
+    #   - Multi-Head Attention da Sprint 3 (src/attention/), que ja traz a
+    #     mascara causal;
+    #   - FeedForward com GELU (secao 4.3);
+    #   - duas LayerNorm (secao 4.2);
+    #   - dropout antes de cada soma;
+    #  - duas conexoes de atalho / residuais (secao 4.4).
 
-    Estrutura (Pre-LayerNorm, como no GPT-2):
+    # Estrutura (Pre-LayerNorm, como no GPT-2):
 
-        x ──┬─> LayerNorm 1 -> Multi-Head Attention -> Dropout ──(+)──> x'
-            └──────────────────── atalho ──────────────────────────┘
-        x'──┬─> LayerNorm 2 -> FeedForward (GELU)   -> Dropout ──(+)──> saida
-            └──────────────────── atalho ──────────────────────────┘
+    #     x ──┬─> LayerNorm 1 -> Multi-Head Attention -> Dropout ──(+)──> x'
+    #         └──────────────────── atalho ──────────────────────────┘
+    #     x'──┬─> LayerNorm 2 -> FeedForward (GELU)   -> Dropout ──(+)──> saida
+    #         └──────────────────── atalho ──────────────────────────┘
 
-    Padrao de cada metade: NORMALIZA -> PROCESSA -> DROPOUT -> + ATALHO.
+    # Padrao de cada metade: NORMALIZA -> PROCESSA -> DROPOUT -> + ATALHO.
 
-    Por que o atalho (x + camada(x))? Cria um caminho curto para o gradiente
-    voltar ate as primeiras camadas no backpropagation, evitando o
-    "vanishing gradient". Para a soma funcionar, a saida da atencao e da
-    FeedForward precisa ter o MESMO shape da entrada: por isso d_in = d_out
-    = emb_dim na atencao, e a FeedForward volta para emb_dim.
+    # Por que o atalho (x + camada(x))? Cria um caminho curto para o gradiente
+    # voltar ate as primeiras camadas no backpropagation, evitando o
+    # "vanishing gradient". Para a soma funcionar, a saida da atencao e da
+    # FeedForward precisa ter o MESMO shape da entrada: por isso d_in = d_out
+    # = emb_dim na atencao, e a FeedForward volta para emb_dim.
 
-    Shapes: entrada (batch, num_tokens, emb_dim) -> saida (batch, num_tokens, emb_dim).
-    Como o shape nao muda, os blocos podem ser empilhados.
-    """
+    # Shapes: entrada (batch, num_tokens, emb_dim) -> saida (batch, num_tokens, emb_dim).
+    # Como o shape nao muda, os blocos podem ser empilhados.
 
     def __init__(self, cfg):
         super().__init__()
