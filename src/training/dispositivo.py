@@ -7,16 +7,15 @@ import torch
 
 
 def escolher_dispositivo(preferencia="auto"):
-    """Devolve o torch.device onde o modelo e os lotes vao rodar.
+    # Devolve o torch.device onde o modelo e os lotes vao rodar.
 
-    "auto" tenta, nesta ordem:
-      1. cuda  -> GPU NVIDIA (precisa do PyTorch instalado com CUDA)
-      2. xpu   -> GPU Intel (precisa do PyTorch instalado com XPU)
-      3. mps   -> GPU de Mac (Apple Silicon)
-      4. cpu   -> processador (sempre funciona, mas e o mais lento)
+    # "auto" tenta, nesta ordem:
+    #   1. cuda  -> GPU NVIDIA (precisa do PyTorch instalado com CUDA)
+    #   2. xpu   -> GPU Intel (precisa do PyTorch instalado com XPU)
+    #   3. mps   -> GPU de Mac (Apple Silicon)
+    #   4. cpu   -> processador (sempre funciona, mas e o mais lento)
 
-    Tambem aceita um nome fixo, por exemplo "cpu" ou "cuda".
-    """
+    # Tambem aceita um nome fixo, por exemplo "cpu" ou "cuda".
     if preferencia != "auto":
         return torch.device(preferencia)
     if torch.cuda.is_available():
@@ -29,7 +28,7 @@ def escolher_dispositivo(preferencia="auto"):
 
 
 def descrever_dispositivo(device):
-    """Texto curto para imprimir no log: qual GPU/CPU esta sendo usada."""
+    # Texto curto para imprimir no log: qual GPU/CPU esta sendo usada.
     if device.type == "cuda":
         nome = torch.cuda.get_device_name(device)
         memoria = torch.cuda.get_device_properties(device).total_memory / 1024 ** 3
@@ -42,11 +41,10 @@ def descrever_dispositivo(device):
 
 
 def diagnostico_gpu():
-    """Mostra por que a GPU esta (ou nao esta) sendo usada.
+    # Mostra por que a GPU esta (ou nao esta) sendo usada.
 
-    O caso mais comum: o PyTorch foi instalado na versao "+cpu", que nao
-    tem suporte a GPU nenhuma, mesmo que o computador tenha uma.
-    """
+    # O caso mais comum: o PyTorch foi instalado na versao "+cpu", que nao
+    # tem suporte a GPU nenhuma, mesmo que o computador tenha uma.
     linhas = [f"PyTorch {torch.__version__}"]
     if torch.version.cuda:
         linhas.append(f"Compilado com CUDA {torch.version.cuda}")

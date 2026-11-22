@@ -1,5 +1,5 @@
 # Chapter 5 - Build a Large Language Model (from scratch) - Sebastian Raschka
-# Asphal LLM - divisao treino/validacao e DataLoaders do treinamento
+# Asphal LLM
 
 # 5.1.3
 
@@ -7,12 +7,11 @@ from src.data.dataloader import create_dataloader_v1
 
 
 def dividir_treino_validacao(texto, train_ratio=0.90):
-    """Divide o texto em duas partes, pelos CARACTERES (como no livro):
-    os primeiros `train_ratio` (90%) para treino e o resto (10%) para validacao.
+    # Divide o texto em duas partes, pelos CARACTERES (como no livro):
+    # os primeiros `train_ratio` (90%) para treino e o resto (10%) para validacao.
 
-    A divisao e feita ANTES de tokenizar, e o trecho de validacao fica no
-    final do texto. O modelo nunca aprende com ele: so e avaliado nele.
-    """
+    # A divisao e feita ANTES de tokenizar, e o trecho de validacao fica no
+    # final do texto. O modelo nunca aprende com ele: so e avaliado nele.
     if not 0.0 < train_ratio < 1.0:
         raise ValueError("train_ratio deve ficar entre 0 e 1")
     indice = int(train_ratio * len(texto))
@@ -21,16 +20,15 @@ def dividir_treino_validacao(texto, train_ratio=0.90):
 
 def criar_loaders_treino_validacao(texto, tokenizer, cfg, batch_size=2,
                                    train_ratio=0.90, stride=None):
-    """Cria os dois DataLoaders usados no treino e na avaliacao.
+    # Cria os dois DataLoaders usados no treino e na avaliacao.
 
-    - max_length = cfg["context_length"]: cada amostra tem o tamanho do contexto.
-    - stride = max_length (padrao): janelas sem sobreposicao, como no livro.
-    - treino: shuffle=True e drop_last=True (lotes embaralhados e completos).
-    - validacao: shuffle=False e drop_last=False (sempre os mesmos lotes,
-      nenhum token de validacao e descartado).
+    # - max_length = cfg["context_length"]: cada amostra tem o tamanho do contexto.
+    # - stride = max_length (padrao): janelas sem sobreposicao, como no livro.
+    # - treino: shuffle=True e drop_last=True (lotes embaralhados e completos).
+    # - validacao: shuffle=False e drop_last=False (sempre os mesmos lotes,
+    #   nenhum token de validacao e descartado).
 
-    Reaproveita o create_dataloader_v1 da Sprint 2.
-    """
+    # Reaproveita o create_dataloader_v1 da Sprint 2.
     contexto = cfg["context_length"]
     stride = stride or contexto
     texto_treino, texto_val = dividir_treino_validacao(texto, train_ratio)
@@ -57,5 +55,5 @@ def criar_loaders_treino_validacao(texto, tokenizer, cfg, batch_size=2,
 
 
 def contar_tokens_do_loader(loader):
-    """Quantos tokens de ENTRADA o loader entrega (soma de todos os lotes)."""
+    # Quantos tokens de ENTRADA o loader entrega (soma de todos os lotes).
     return sum(entrada.numel() for entrada, _ in loader)

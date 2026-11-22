@@ -5,12 +5,11 @@
 
 
 def plot_losses(epochs_seen, tokens_seen, train_losses, val_losses, arquivo, titulo=None):
-    """Desenha as perdas de treino e validacao.
+    # Desenha as perdas de treino e validacao.
 
-    Eixo de baixo: epocas. Eixo de cima: tokens vistos (mesma curva, outra
-    escala). Se a curva de validacao para de cair enquanto a de treino
-    continua caindo, e sinal de overfitting.
-    """
+    # Eixo de baixo: epocas. Eixo de cima: tokens vistos (mesma curva, outra
+    # escala). Se a curva de validacao para de cair enquanto a de treino
+    # continua caindo, e sinal de overfitting.
     import matplotlib
     matplotlib.use("Agg")                      # salva em arquivo, sem abrir janela
     import matplotlib.pyplot as plt
@@ -36,11 +35,10 @@ def plot_losses(epochs_seen, tokens_seen, train_losses, val_losses, arquivo, tit
 
 
 def plot_comparacao(series, chave, arquivo, titulo):
-    """Uma curva por experimento no mesmo grafico.
+    # Uma curva por experimento no mesmo grafico.
 
-    series: {nome_do_experimento: historico}, com historico["epocas"] e
-    historico[chave] (por exemplo "val_losses" ou "train_losses").
-    """
+    # series: {nome_do_experimento: historico}, com historico["epocas"] e
+    # historico[chave] (por exemplo "val_losses" ou "train_losses").
     import matplotlib
     matplotlib.use("Agg")
     import matplotlib.pyplot as plt

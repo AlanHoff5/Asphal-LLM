@@ -1,5 +1,5 @@
 # Chapter 5 - Build a Large Language Model (from scratch) - Sebastian Raschka
-# Asphal LLM - laco de treinamento do GPT
+# Asphal LLM 
 
 # 5.2 (+ apendice D: warmup, cosine decay e gradient clipping)
 
@@ -13,11 +13,10 @@ from src.training.losses import calc_loss_batch, calc_loss_loader
 
 
 def evaluate_model(model, train_loader, val_loader, device, eval_iter):
-    """Mede a perda de treino e de validacao usando `eval_iter` lotes de cada.
+    # Mede a perda de treino e de validacao usando `eval_iter` lotes de cada.
 
-    model.eval() desliga o dropout para a medida ser justa; no final volta
-    para model.train(), porque esta funcao e chamada NO MEIO do treino.
-    """
+    # model.eval() desliga o dropout para a medida ser justa; no final volta
+    # para model.train(), porque esta funcao e chamada NO MEIO do treino.
     model.eval()
     with torch.no_grad():
         train_loss = calc_loss_loader(train_loader, model, device, num_batches=eval_iter)
@@ -27,8 +26,8 @@ def evaluate_model(model, train_loader, val_loader, device, eval_iter):
 
 
 def generate_and_print_sample(model, tokenizer, device, start_context, max_new_tokens=50):
-    """Gera um trecho de texto (decodificacao gulosa) para VER a evolucao do
-    modelo ao fim de cada epoca. Devolve o texto gerado."""
+    # Gera um trecho de texto (decodificacao gulosa) para VER a evolucao do
+    # modelo ao fim de cada epoca. Devolve o texto gerado.
     model.eval()
     context_size = model.cfg["context_length"]      # o GPTModel guarda a config
     encoded = text_to_token_ids(start_context, tokenizer).to(device)
@@ -42,21 +41,20 @@ def generate_and_print_sample(model, tokenizer, device, start_context, max_new_t
 
 def train_model_simple(model, train_loader, val_loader, optimizer, device,
                        num_epochs, eval_freq, eval_iter, start_context, tokenizer):
-    """Laco de treino do livro (secao 5.2).
+    # Laco de treino do livro (secao 5.2).
 
-    Para cada epoca e para cada lote:
-        1. optimizer.zero_grad()   apaga os gradientes do lote anterior
-        2. calc_loss_batch(...)    forward + cross-entropy
-        3. loss.backward()         calcula os gradientes (retropropagacao)
-        4. optimizer.step()        o AdamW atualiza os pesos
-    A cada `eval_freq` passos mede as perdas de treino/validacao e, ao fim de
-    cada epoca, gera um texto de exemplo.
+    # Para cada epoca e para cada lote:
+    #     1. optimizer.zero_grad()   apaga os gradientes do lote anterior
+    #     2. calc_loss_batch(...)    forward + cross-entropy
+    #     3. loss.backward()         calcula os gradientes (retropropagacao)
+    #     4. optimizer.step()        o AdamW atualiza os pesos
+    # A cada `eval_freq` passos mede as perdas de treino/validacao e, ao fim de
+    # cada epoca, gera um texto de exemplo.
 
-    Diferenca em relacao ao livro: alem das tres listas do livro
-    (train_losses, val_losses, track_tokens_seen), devolve um dicionario
-    `historico` com o passo e a epoca de cada medida, as amostras de texto
-    e o tempo de cada epoca, para o relatorio e os graficos.
-    """
+    # Diferenca em relacao ao livro: alem das tres listas do livro
+    # (train_losses, val_losses, track_tokens_seen), devolve um dicionario
+    # `historico` com o passo e a epoca de cada medida, as amostras de texto
+    # e o tempo de cada epoca, para o relatorio e os graficos.
     historico = {
         "train_losses": [], "val_losses": [], "tokens_seen": [],
         "steps": [], "epocas": [], "amostras": [], "tempo_por_epoca_s": [],
@@ -94,13 +92,12 @@ def train_model_simple(model, train_loader, val_loader, optimizer, device,
 
 
 def taxa_de_aprendizado(global_step, peak_lr, initial_lr, min_lr, warmup_steps, total_steps):
-    """Taxa de aprendizado de cada passo (apendice D do livro).
+    # Taxa de aprendizado de cada passo (apendice D do livro).
 
-    - warmup: nos primeiros `warmup_steps` passos sobe em linha reta de
-      initial_lr ate peak_lr (passos pequenos enquanto os pesos sao aleatorios);
-    - cosine decay: depois desce em meia onda de cosseno ate min_lr
-      (passos finos no fim, para nao estragar o que ja foi aprendido).
-    """
+    # - warmup: nos primeiros `warmup_steps` passos sobe em linha reta de
+    #   initial_lr ate peak_lr (passos pequenos enquanto os pesos sao aleatorios);
+    # - cosine decay: depois desce em meia onda de cosseno ate min_lr
+    #   (passos finos no fim, para nao estragar o que ja foi aprendido).
     if global_step < warmup_steps:
         return initial_lr + global_step * (peak_lr - initial_lr) / warmup_steps
     progresso = (global_step - warmup_steps) / max(1, total_steps - warmup_steps)
@@ -110,19 +107,18 @@ def taxa_de_aprendizado(global_step, peak_lr, initial_lr, min_lr, warmup_steps, 
 def train_model(model, train_loader, val_loader, optimizer, device,
                 num_epochs, eval_freq, eval_iter, start_context, tokenizer,
                 warmup_steps, initial_lr=3e-05, min_lr=1e-6, grad_clip=1.0):
-    """Laco de treino do apendice D: o mesmo do train_model_simple, mais
-    tres tecnicas para deixar o treino mais estavel.
+    # Laco de treino do apendice D: o mesmo do train_model_simple, mais
+    # tres tecnicas para deixar o treino mais estavel.
 
-    1. warmup + cosine decay: a taxa de aprendizado muda a cada passo
-       (taxa_de_aprendizado). O pico e o lr configurado no otimizador.
-    2. gradient clipping: depois do backward, se a norma do gradiente passar
-       de `grad_clip`, ele e reduzido ate o limite. Evita os "saltos" da perda
-       causados por gradientes enormes. Como no livro, so e aplicado depois
-       do warmup.
+    # 1. warmup + cosine decay: a taxa de aprendizado muda a cada passo
+    #    (taxa_de_aprendizado). O pico e o lr configurado no otimizador.
+    # 2. gradient clipping: depois do backward, se a norma do gradiente passar
+    #    de `grad_clip`, ele e reduzido ate o limite. Evita os "saltos" da perda
+    #    causados por gradientes enormes. Como no livro, so e aplicado depois
+    #    do warmup.
 
-    Devolve o mesmo `historico` do train_model_simple, mais a lista "lrs"
-    com a taxa usada em cada passo.
-    """
+    # Devolve o mesmo `historico` do train_model_simple, mais a lista "lrs"
+    #com a taxa usada em cada passo.
     historico = {
         "train_losses": [], "val_losses": [], "tokens_seen": [],
         "steps": [], "epocas": [], "amostras": [], "tempo_por_epoca_s": [], "lrs": [],
